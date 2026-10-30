@@ -1,0 +1,20 @@
+{
+ "browser-use": {
+  "files": 404,
+  "file_list": 3705,
+  "names_per_file": 29763,
+  "signatures": 66544
+ },
+ "cmux": {
+  "files": 150,
+  "file_list": 1419,
+  "names_per_file": 4641,
+  "signatures": 11273
+ },
+ "gigatoken": {
+  "files": 60,
+  "file_list": 488,
+  "names_per_file": 5598,
+  "signatures": 17432
+ }
+}

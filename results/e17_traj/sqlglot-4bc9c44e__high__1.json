@@ -1,0 +1,602 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "Feat(sqlite): support binary `MATCH` operator\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_sqlite.py::TestSQLite::test_sqlite",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class SQLite|sqlite",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 379,
+   "output_tokens": 124
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Match|MATCH",
+    "path": "sqlglot"
+   },
+   "output_chars": 7377,
+   "output_tokens": 2106
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_sqlite.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2057
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 1860
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1200,
+    "end_line": 1410
+   },
+   "output_chars": 8060,
+   "output_tokens": 2160
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 7200,
+    "end_line": 7250
+   },
+   "output_chars": 1470,
+   "output_tokens": 435
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_sqlite.py::TestSQLite::test_sqlite -q"
+   },
+   "output_chars": 3018,
+   "output_tokens": 753
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "BINARY_PARSERS|RANGE_PARSERS|TokenType.MATCH|binary_range_parser",
+    "path": "sqlglot"
+   },
+   "output_chars": 3524,
+   "output_tokens": 1018
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1360,
+    "end_line": 1430
+   },
+   "output_chars": 2553,
+   "output_tokens": 780
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2100,
+    "end_line": 2290
+   },
+   "output_chars": 8060,
+   "output_tokens": 1789
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*\\(Binary",
+    "path": "sqlglot/expressions.py"
+   },
+   "output_chars": 1887,
+   "output_tokens": 520
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 900,
+    "end_line": 970
+   },
+   "output_chars": 3663,
+   "output_tokens": 877
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5000,
+    "end_line": 5065
+   },
+   "output_chars": 2883,
+   "output_tokens": 707
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 280,
+    "end_line": 380
+   },
+   "output_chars": 2485,
+   "output_tokens": 683
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 630,
+    "end_line": 720
+   },
+   "output_chars": 3879,
+   "output_tokens": 1099
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "start_line": 185,
+    "end_line": 300
+   },
+   "output_chars": 5510,
+   "output_tokens": 1241
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "\"MATCH\"",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 5060,
+    "end_line": 5285
+   },
+   "output_chars": 4836,
+   "output_tokens": 1418
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 20,
+    "end_line": 75
+   },
+   "output_chars": 2064,
+   "output_tokens": 573
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 70,
+    "end_line": 150
+   },
+   "output_chars": 1928,
+   "output_tokens": 548
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 760,
+    "end_line": 850
+   },
+   "output_chars": 3662,
+   "output_tokens": 1018
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Operator:|operator_sql|class .*\\(exp.Operator|def .*sql\\(.*Operator",
+    "path": "sqlglot"
+   },
+   "output_chars": 241,
+   "output_tokens": 71
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def binary\\(",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 67,
+   "output_tokens": 20
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3890,
+    "end_line": 3925
+   },
+   "output_chars": 1494,
+   "output_tokens": 378
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.Glob|def like_sql|def glob_sql|def overlaps_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 304,
+   "output_tokens": 81
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3760,
+    "end_line": 3850
+   },
+   "output_chars": 3741,
+   "output_tokens": 969
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5060,
+    "end_line": 5100
+   },
+   "output_chars": 1754,
+   "output_tokens": 433
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "self\\._retreat\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 2592,
+   "output_tokens": 698
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "old": "class Mod(Binary):\n    pass\n\n\nclass Mul(Binary):\n",
+    "new": "class Mod(Binary):\n    pass\n\n\nclass Match(Binary, Predicate):\n    pass\n\n\nclass Mul(Binary):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "    def glob_sql(self, expression: exp.Glob) -> str:\n        return self.binary(expression, \"GLOB\")\n\n    def gt_sql(self, expression: exp.GT) -> str:\n",
+    "new": "    def glob_sql(self, expression: exp.Glob) -> str:\n        return self.binary(expression, \"GLOB\")\n\n    def match_sql(self, expression: exp.Match) -> str:\n        return self.binary(expression, \"MATCH\")\n\n    def gt_sql(self, expression: exp.GT) -> str:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "        def _parse_unique(self) -> exp.UniqueColumnConstraint:\n            # Do not consume more tokens if UNIQUE is used as a standalone constraint, e.g:\n            # CREATE TABLE foo (bar TEXT UNIQUE REFERENCES baz ...)\n            if self._curr.text.upper() in self.CONSTRAINT_PARSERS:\n                return self.expression(exp.UniqueColumnConstraint)\n\n            return super()._parse_unique()\n\n        def _parse_attach_detach(self, is_attach=True) -> exp.Attach | exp.Detach:\n",
+    "new": "        def _parse_unique(self) -> exp.UniqueColumnConstraint:\n            # Do not consume more tokens if UNIQUE is used as a standalone constraint, e.g:\n            # CREATE TABLE foo (bar TEXT UNIQUE REFERENCES baz ...)\n            if self._curr.text.upper() in self.CONSTRAINT_PARSERS:\n                return self.expression(exp.UniqueColumnConstraint)\n\n            return super()._parse_unique()\n\n        def _parse_range(self, this: t.Optional[exp.Expression] = None) -> t.Optional[exp.Expression]:\n            this = this or self._parse_bitwise()\n            index = self._index\n            negate = self._match(TokenType.NOT)\n\n            if (\n                self._curr\n                and self._curr.token_type == TokenType.VAR\n                and self._curr.text.upper() == \"MATCH\"\n            ):\n                self._advance()\n                this = self.expression(\n                    exp.Match, this=this, expression=self._parse_bitwise()\n                )\n                if negate:\n                    this = self._negate_range(this)\n                return super()._parse_range(this)\n\n            self._retreat(index)\n            return super()._parse_range(this)\n\n        def _parse_attach_detach(self, is_attach=True) -> exp.Attach | exp.Detach:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_sqlite.py::TestSQLite::test_sqlite -q"
+   },
+   "output_chars": 89,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_sqlite.py -q"
+   },
+   "output_chars": 65,
+   "output_tokens": 21
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _retreat",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 49,
+   "output_tokens": 17
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1795,
+    "end_line": 1822
+   },
+   "output_chars": 1214,
+   "output_tokens": 332
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "start_line": 124,
+    "end_line": 168
+   },
+   "output_chars": 1961,
+   "output_tokens": 410
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 5230,
+    "end_line": 5265
+   },
+   "output_chars": 655,
+   "output_tokens": 203
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3785,
+    "end_line": 3810
+   },
+   "output_chars": 1106,
+   "output_tokens": 272
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "        def _parse_range(self, this: t.Optional[exp.Expression] = None) -> t.Optional[exp.Expression]:\n",
+    "new": "        def _parse_range(\n            self, this: t.Optional[exp.Expression] = None\n        ) -> t.Optional[exp.Expression]:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "old": "class Like(Binary, Predicate):\n    pass\n\n\nclass LT(Binary, Predicate):\n    pass\n\n\nclass LTE(Binary, Predicate):\n    pass\n\n\nclass Mod(Binary):\n    pass\n\n\nclass Match(Binary, Predicate):\n    pass\n\n\nclass Mul(Binary):\n",
+    "new": "class Like(Binary, Predicate):\n    pass\n\n\nclass LT(Binary, Predicate):\n    pass\n\n\nclass LTE(Binary, Predicate):\n    pass\n\n\nclass Match(Binary, Predicate):\n    pass\n\n\nclass Mod(Binary):\n    pass\n\n\nclass Mul(Binary):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -q"
+   },
+   "output_chars": 699,
+   "output_tokens": 74
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added SQLite binary MATCH parsing while preserving MATCH as an identifier in other contexts, introduced a Match binary expression and SQL generation, and verified the SQLite tests and full dialect suite pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 305,
+   "cached_tokens": 0,
+   "output_tokens": 93,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2729,
+   "cached_tokens": 0,
+   "output_tokens": 137,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9416,
+   "cached_tokens": 2726,
+   "output_tokens": 72,
+   "reasoning_tokens": 36,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10252,
+   "cached_tokens": 9413,
+   "output_tokens": 176,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14573,
+   "cached_tokens": 10249,
+   "output_tokens": 204,
+   "reasoning_tokens": 34,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19431,
+   "cached_tokens": 14570,
+   "output_tokens": 84,
+   "reasoning_tokens": 53,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19529,
+   "cached_tokens": 19428,
+   "output_tokens": 375,
+   "reasoning_tokens": 196,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23579,
+   "cached_tokens": 19526,
+   "output_tokens": 65,
+   "reasoning_tokens": 34,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23675,
+   "cached_tokens": 23576,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 24099,
+   "cached_tokens": 23672,
+   "output_tokens": 180,
+   "reasoning_tokens": 137,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 24371,
+   "cached_tokens": 24096,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 25386,
+   "cached_tokens": 24368,
+   "output_tokens": 1205,
+   "reasoning_tokens": 1169,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27035,
+   "cached_tokens": 25383,
+   "output_tokens": 964,
+   "reasoning_tokens": 931,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28708,
+   "cached_tokens": 27032,
+   "output_tokens": 513,
+   "reasoning_tokens": 434,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29233,
+   "cached_tokens": 28705,
+   "output_tokens": 181,
+   "reasoning_tokens": 33,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29426,
+   "cached_tokens": 29230,
+   "output_tokens": 828,
+   "reasoning_tokens": 403,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30266,
+   "cached_tokens": 29423,
+   "output_tokens": 55,
+   "reasoning_tokens": 19,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30353,
+   "cached_tokens": 30263,
+   "output_tokens": 46,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30431,
+   "cached_tokens": 30350,
+   "output_tokens": 129,
+   "reasoning_tokens": 98,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30588,
+   "cached_tokens": 30428,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30965,
+   "cached_tokens": 30585,
+   "output_tokens": 321,
+   "reasoning_tokens": 204,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32200,
+   "cached_tokens": 30962,
+   "output_tokens": 374,
+   "reasoning_tokens": 281,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32586,
+   "cached_tokens": 32197,
+   "output_tokens": 179,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32777,
+   "cached_tokens": 32583,
+   "output_tokens": 116,
+   "reasoning_tokens": 91,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32978,
+   "cached_tokens": 32774,
+   "output_tokens": 230,
+   "reasoning_tokens": 177,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 135.3,
+ "usage": {
+  "input_tokens": 594891,
+  "cached_tokens": 561539,
+  "output_tokens": 6631,
+  "reasoning_tokens": 4403
+ },
+ "diff": "diff --git a/sqlglot/dialects/sqlite.py b/sqlglot/dialects/sqlite.py\nindex edad636..1852f3c 100644\n--- a/sqlglot/dialects/sqlite.py\n+++ b/sqlglot/dialects/sqlite.py\n@@ -135,6 +135,29 @@ class SQLite(Dialect):\n \n             return super()._parse_unique()\n \n+        def _parse_range(\n+            self, this: t.Optional[exp.Expression] = None\n+        ) -> t.Optional[exp.Expression]:\n+            this = this or self._parse_bitwise()\n+            index = self._index\n+            negate = self._match(TokenType.NOT)\n+\n+            if (\n+                self._curr\n+                and self._curr.token_type == TokenType.VAR\n+                and self._curr.text.upper() == \"MATCH\"\n+            ):\n+                self._advance()\n+                this = self.expression(\n+                    exp.Match, this=this, expression=self._parse_bitwise()\n+                )\n+                if negate:\n+                    this = self._negate_range(this)\n+                return super()._parse_range(this)\n+\n+            self._retreat(index)\n+            return super()._parse_range(this)\n+\n         def _parse_attach_detach(self, is_attach=True) -> exp.Attach | exp.Detach:\n             self._match(TokenType.DATABASE)\n             this = self._parse_expression()\ndiff --git a/sqlglot/expressions.py b/sqlglot/expressions.py\nindex 9866b0e..5a46397 100644\n--- a/sqlglot/expressions.py\n+++ b/sqlglot/expressions.py\n@@ -5241,6 +5241,10 @@ class LTE(Binary, Predicate):\n     pass\n \n \n+class Match(Binary, Predicate):\n+    pass\n+\n+\n class Mod(Binary):\n     pass\n \ndiff --git a/sqlglot/generator.py b/sqlglot/generator.py\nindex 632da37..7d0da1a 100644\n--- a/sqlglot/generator.py\n+++ b/sqlglot/generator.py\n@@ -3793,6 +3793,9 @@ class Generator(metaclass=_Generator):\n     def glob_sql(self, expression: exp.Glob) -> str:\n         return self.binary(expression, \"GLOB\")\n \n+    def match_sql(self, expression: exp.Match) -> str:\n+        return self.binary(expression, \"MATCH\")\n+\n     def gt_sql(self, expression: exp.GT) -> str:\n         return self.binary(expression, \">\")\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

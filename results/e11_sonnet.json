@@ -1,0 +1,171 @@
+{
+ "summary": {
+  "pass_": "16/16",
+  "spec_tokens": 206,
+  "pyx_tokens_per_run": 587,
+  "python_tokens_e10": 580,
+  "pyx_pct_of_python": 101
+ },
+ "rows": [
+  {
+   "task": "is_pal",
+   "ok": true,
+   "pyx_tokens": 32,
+   "err": "",
+   "pyx": "fn is_pal(s) {\n  t = [c.lower() for c in s if c.isalnum()]\n  ret t == t[::-1]\n}\n",
+   "out": 53,
+   "cost": 0.057099000000000004,
+   "reason": "completed"
+  },
+  {
+   "task": "is_pal",
+   "ok": true,
+   "pyx_tokens": 32,
+   "err": "",
+   "pyx": "fn is_pal(s) {\n  t = [c.lower() for c in s if c.isalnum()]\n  ret t == t[::-1]\n}\n",
+   "out": 53,
+   "cost": 0.057099000000000004,
+   "reason": "completed"
+  },
+  {
+   "task": "rle",
+   "ok": true,
+   "pyx_tokens": 79,
+   "err": "",
+   "pyx": "fn rle(s) {\n  out = []\n  i = 0\n  while i < len(s) {\n    j = i\n    while j < len(s) && s[j] == s[i] {\n      j += 1\n    }\n    out.append(s[i] + str(j - i))\n    i = j\n  }\n  ret \"\".join(out)\n}\n",
+   "out": 106,
+   "cost": 0.057593,
+   "reason": "completed"
+  },
+  {
+   "task": "rle",
+   "ok": true,
+   "pyx_tokens": 79,
+   "err": "",
+   "pyx": "fn rle(s) {\n  out = []\n  i = 0\n  while i < len(s) {\n    j = i\n    while j < len(s) && s[j] == s[i] {\n      j += 1\n    }\n    out.append(s[i] + str(j - i))\n    i = j\n  }\n  ret \"\".join(out)\n}\n",
+   "out": 106,
+   "cost": 0.057593,
+   "reason": "completed"
+  },
+  {
+   "task": "merge",
+   "ok": true,
+   "pyx_tokens": 70,
+   "err": "",
+   "pyx": "fn merge(iv) {\n  out = []\n  for s, e in sorted(iv) {\n    if out && s <= out[-1][1] {\n      out[-1][1] = max(out[-1][1], e)\n    } el {\n      out.append([s, e])\n    }\n  }\n  ret out\n}\n",
+   "out": 103,
+   "cost": 0.057603,
+   "reason": "completed"
+  },
+  {
+   "task": "merge",
+   "ok": true,
+   "pyx_tokens": 70,
+   "err": "",
+   "pyx": "fn merge(iv) {\n  out = []\n  for s, e in sorted(iv) {\n    if out && s <= out[-1][1] {\n      out[-1][1] = max(out[-1][1], e)\n    } el {\n      out.append([s, e])\n    }\n  }\n  ret out\n}\n",
+   "out": 100,
+   "cost": 0.057573,
+   "reason": "completed"
+  },
+  {
+   "task": "roman",
+   "ok": true,
+   "pyx_tokens": 117,
+   "err": "",
+   "pyx": "fn roman(s) {\n  v = {\"I\": 1, \"V\": 5, \"X\": 10, \"L\": 50, \"C\": 100, \"D\": 500, \"M\": 1000}\n  total = 0\n  for i in range(len(s)) {\n    if i + 1 < len(s) && v[s[i]] < v[s[i + 1]] {\n      total -= v[s[i]]\n    } el {\n      total += v[s[i]]\n    }\n  }\n  ret total\n}\n",
+   "out": 155,
+   "cost": 0.058047,
+   "reason": "completed"
+  },
+  {
+   "task": "roman",
+   "ok": true,
+   "pyx_tokens": 117,
+   "err": "",
+   "pyx": "fn roman(s) {\n  v = {\"I\": 1, \"V\": 5, \"X\": 10, \"L\": 50, \"C\": 100, \"D\": 500, \"M\": 1000}\n  t = 0\n  for i in range(len(s)) {\n    if i + 1 < len(s) && v[s[i]] < v[s[i + 1]] {\n      t -= v[s[i]]\n    } el {\n      t += v[s[i]]\n    }\n  }\n  ret t\n}\n",
+   "out": 155,
+   "cost": 0.058047,
+   "reason": "completed"
+  },
+  {
+   "task": "two_sum",
+   "ok": true,
+   "pyx_tokens": 52,
+   "err": "",
+   "pyx": "fn two_sum(nums, target) {\n  seen = {}\n  for i, x in enumerate(nums) {\n    if target - x in seen {\n      ret [seen[target - x], i]\n    }\n    seen[x] = i\n  }\n}\n",
+   "out": 86,
+   "cost": 0.057477,
+   "reason": "completed"
+  },
+  {
+   "task": "two_sum",
+   "ok": true,
+   "pyx_tokens": 52,
+   "err": "",
+   "pyx": "fn two_sum(nums, target) {\n  seen = {}\n  for i, x in enumerate(nums) {\n    if target - x in seen {\n      ret [seen[target - x], i]\n    }\n    seen[x] = i\n  }\n}\n",
+   "out": 86,
+   "cost": 0.057477,
+   "reason": "completed"
+  },
+  {
+   "task": "lcp",
+   "ok": true,
+   "pyx_tokens": 56,
+   "err": "",
+   "pyx": "fn lcp(xs) {\n  if !xs {\n    ret \"\"\n  }\n  p = xs[0]\n  for s in xs[1:] {\n    while !s.startswith(p) {\n      p = p[:-1]\n    }\n  }\n  ret p\n}\n",
+   "out": 89,
+   "cost": 0.057439000000000004,
+   "reason": "completed"
+  },
+  {
+   "task": "lcp",
+   "ok": true,
+   "pyx_tokens": 56,
+   "err": "",
+   "pyx": "fn lcp(xs) {\n  if !xs {\n    ret \"\"\n  }\n  p = xs[0]\n  for s in xs[1:] {\n    while !s.startswith(p) {\n      p = p[:-1]\n    }\n  }\n  ret p\n}\n",
+   "out": 89,
+   "cost": 0.057439000000000004,
+   "reason": "completed"
+  },
+  {
+   "task": "balanced",
+   "ok": true,
+   "pyx_tokens": 81,
+   "err": "",
+   "pyx": "fn balanced(s) {\n  pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n  st = []\n  for c in s {\n    if c in \"([{\" {\n      st.append(c)\n    } ef c in pairs {\n      if !st || st.pop() != pairs[c] {\n        ret F\n      }\n    }\n  }\n  ret !st\n}\n",
+   "out": 125,
+   "cost": 0.057799,
+   "reason": "completed"
+  },
+  {
+   "task": "balanced",
+   "ok": true,
+   "pyx_tokens": 81,
+   "err": "",
+   "pyx": "fn balanced(s) {\n  pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n  st = []\n  for c in s {\n    if c in \"([{\" {\n      st.append(c)\n    } ef c in pairs {\n      if !st || st.pop() != pairs[c] {\n        ret F\n      }\n    }\n  }\n  ret !st\n}\n",
+   "out": 125,
+   "cost": 0.057799,
+   "reason": "completed"
+  },
+  {
+   "task": "primes",
+   "ok": true,
+   "pyx_tokens": 118,
+   "err": "",
+   "pyx": "fn primes(n) {\n  if n < 2 {\n    ret []\n  }\n  sieve = [T] * (n + 1)\n  sieve[0] = sieve[1] = F\n  for i in range(2, int(n ** 0.5) + 1) {\n    if sieve[i] {\n      for j in range(i * i, n + 1, i) {\n        sieve[j] = F\n      }\n    }\n  }\n  ret [i for i in range(n + 1) if sieve[i]]\n}\n",
+   "out": 165,
+   "cost": 0.058155,
+   "reason": "completed"
+  },
+  {
+   "task": "primes",
+   "ok": true,
+   "pyx_tokens": 82,
+   "err": "",
+   "pyx": "fn primes(n) {\n  sieve = [T] * (n + 1)\n  out = []\n  for i in range(2, n + 1) {\n    if sieve[i] {\n      out.append(i)\n      for j in range(i * i, n + 1, i) {\n        sieve[j] = F\n      }\n    }\n  }\n  ret out\n}\n",
+   "out": 116,
+   "cost": 0.057665,
+   "reason": "completed"
+  }
+ ]
+}

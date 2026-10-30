@@ -1,0 +1,74 @@
+diff --git a/sqlglot/dialects/snowflake.py b/sqlglot/dialects/snowflake.py
+index 70c649870..c44dffecc 100644
+--- a/sqlglot/dialects/snowflake.py
++++ b/sqlglot/dialects/snowflake.py
+@@ -152,6 +152,7 @@ class Snowflake(Dialect):
+             "FILE FORMAT": TokenType.FILE_FORMAT,
+             "GET": TokenType.GET,
+             "INTEGRATION": TokenType.INTEGRATION,
++            "LS": TokenType.LIST,
+             "MATCH_CONDITION": TokenType.MATCH_CONDITION,
+             "MATCH_RECOGNIZE": TokenType.MATCH_RECOGNIZE,
+             "MINUS": TokenType.EXCEPT,
+diff --git a/sqlglot/expressions/query.py b/sqlglot/expressions/query.py
+index bfa3b52a9..782ac713a 100644
+--- a/sqlglot/expressions/query.py
++++ b/sqlglot/expressions/query.py
+@@ -954,6 +954,12 @@ class Get(Expression):
+     arg_types = {"this": True, "target": True, "properties": False}
+ 
+ 
++class ListStage(Expression):
++    """Lists files in a Snowflake stage or Git repository clone."""
++
++    arg_types = {"this": True, "pattern": False}
++
++
+ class Table(Expression, Selectable):
+     arg_types = {
+         "this": False,
+diff --git a/sqlglot/generator.py b/sqlglot/generator.py
+index 5c8ba85af..8485bb0bf 100644
+--- a/sqlglot/generator.py
++++ b/sqlglot/generator.py
+@@ -6229,6 +6229,11 @@ class Generator:
+         self.unsupported("Unsupported INSTALL statement")
+         return ""
+ 
++    def liststage_sql(self, expression: exp.ListStage) -> str:
++        pattern = self.sql(expression, "pattern")
++        pattern = f" PATTERN = {pattern}" if pattern else ""
++        return f"LIST {self.sql(expression, 'this')}{pattern}"
++
+     def get_put_sql(self, expression: exp.Put | exp.Get) -> str:
+         # Snowflake GET/PUT statements:
+         #   PUT <file> <internalStage> <properties>
+diff --git a/sqlglot/parsers/snowflake.py b/sqlglot/parsers/snowflake.py
+index bf2f709cb..d2f8a2bf4 100644
+--- a/sqlglot/parsers/snowflake.py
++++ b/sqlglot/parsers/snowflake.py
+@@ -767,6 +767,7 @@ class SnowflakeParser(parser.Parser):
+     STATEMENT_PARSERS = {
+         **parser.Parser.STATEMENT_PARSERS,
+         TokenType.GET: lambda self: self._parse_get(),
++        TokenType.LIST: lambda self: self._parse_list_stage(),
+         TokenType.PUT: lambda self: self._parse_put(),
+         TokenType.SHOW: lambda self: self._parse_show(),
+         TokenType.UNDROP: lambda self: self._parse_undrop(),
+@@ -1278,6 +1279,16 @@ class SnowflakeParser(parser.Parser):
+             exp.Get(this=self._parse_string(), target=target, properties=self._parse_properties())
+         )
+ 
++    def _parse_list_stage(self) -> exp.ListStage:
++        this = self._parse_location_path() if self._curr else None
++        pattern = None
++        if self._match_text_seq("PATTERN", "="):
++            pattern = self._parse_string()
++            if pattern is None:
++                self.raise_error("Expected string after PATTERN =")
++
++        return self.expression(exp.ListStage(this=this, pattern=pattern))
++
+     def _parse_location_property(self) -> exp.LocationProperty:
+         self._match(TokenType.EQ)
+         return self.expression(exp.LocationProperty(this=self._parse_location_path()))

@@ -1,0 +1,245 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(mysql): support SHOW TABLES IN <schema> parsing\n\nMariaDB and MySQL both accept `SHOW TABLES IN schema` as a synonym\nfor `SHOW TABLES FROM schema`, but the parser only handled `FROM`.\nThe `IN` token was being consumed as a potential log-file specifier\n(for BINLOG/RELAYLOG EVENTS) and then lost, leaving the schema\nidentifier unconsumed and raising a ParseError.\n\nSave the parser index before consuming `IN`; if no string literal\nfollows, retreat so the schema-name branch can match `IN` as an\nalias for `FROM`. BINLOG/RELAYLOG EVENTS behavior is preserved by\nthe existing test_show_events coverage.\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_mysql.py::TestMySQL::test_show_tables",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Show|show_statement|BINLOG|RELAYLOG",
+    "path": "sqlglot/parsers/mysql.py"
+   },
+   "output_chars": 375,
+   "output_tokens": 110
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 1,
+    "end_line": 75
+   },
+   "output_chars": 2309,
+   "output_tokens": 663
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "MySQLParser"
+   },
+   "output_chars": 1435,
+   "output_tokens": 406
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_show_mysql"
+   },
+   "output_chars": 64,
+   "output_tokens": 19
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "_parse_show_mysql"
+   },
+   "output_chars": 36,
+   "output_tokens": 13
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 145,
+    "end_line": 215
+   },
+   "output_chars": 3838,
+   "output_tokens": 989
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 390,
+    "end_line": 465
+   },
+   "output_chars": 3144,
+   "output_tokens": 728
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_show"
+   },
+   "output_chars": 47,
+   "output_tokens": 15
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_index =|index = self._index|self._retreat",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 1840,
+   "output_tokens": 564
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "        log = self._parse_string() if self._match_text_seq(\"IN\") else None\n\n        if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"):\n",
+    "new": "        in_index = self._index\n        log = self._parse_string() if self._match_text_seq(\"IN\") else None\n        if log is None:\n            self._retreat(in_index)\n\n        if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "            if self._match(TokenType.FROM):\n                db = self._parse_id_var()\n",
+    "new": "            if self._match(TokenType.FROM) or self._match_text_seq(\"IN\"):\n                db = self._parse_id_var()\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_mysql.py -k 'test_show_tables or test_show_events'"
+   },
+   "output_chars": 511,
+   "output_tokens": 157
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated MySQL SHOW parsing to recognize IN as a schema introducer while preserving IN string literals used as log specifiers. Verified test_show_tables and test_show_events pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 636,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 756,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 915,
+   "cached_tokens": 0,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1623,
+   "cached_tokens": 0,
+   "output_tokens": 21,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2061,
+   "cached_tokens": 1620,
+   "output_tokens": 21,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2112,
+   "cached_tokens": 2058,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2155,
+   "cached_tokens": 2109,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3189,
+   "cached_tokens": 2152,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3962,
+   "cached_tokens": 3186,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4008,
+   "cached_tokens": 3959,
+   "output_tokens": 86,
+   "reasoning_tokens": 45,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4669,
+   "cached_tokens": 4005,
+   "output_tokens": 177,
+   "reasoning_tokens": 43,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4858,
+   "cached_tokens": 4666,
+   "output_tokens": 83,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4953,
+   "cached_tokens": 4855,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5156,
+   "cached_tokens": 4950,
+   "output_tokens": 50,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 51.1,
+ "usage": {
+  "input_tokens": 41053,
+  "cached_tokens": 33560,
+  "output_tokens": 671,
+  "reasoning_tokens": 88
+ },
+ "diff": "diff --git a/sqlglot/parsers/mysql.py b/sqlglot/parsers/mysql.py\nindex d8abbea..3edf259 100644\n--- a/sqlglot/parsers/mysql.py\n+++ b/sqlglot/parsers/mysql.py\n@@ -408,7 +408,10 @@ class MySQLParser(parser.Parser):\n         else:\n             target_id = None\n \n+        in_index = self._index\n         log = self._parse_string() if self._match_text_seq(\"IN\") else None\n+        if log is None:\n+            self._retreat(in_index)\n \n         if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"):\n             position = self._parse_number() if self._match_text_seq(\"FROM\") else None\n@@ -417,7 +420,7 @@ class MySQLParser(parser.Parser):\n             position = None\n             db = None\n \n-            if self._match(TokenType.FROM):\n+            if self._match(TokenType.FROM) or self._match_text_seq(\"IN\"):\n                 db = self._parse_id_var()\n             elif self._match(TokenType.DOT):\n                 db = target_id\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

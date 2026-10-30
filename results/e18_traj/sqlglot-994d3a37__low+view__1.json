@@ -1,0 +1,426 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "feat(parser)!: robust STAR with EXCLUDE (redshift)\n\n* feat(parser)!: robust STAR with EXCLUDE (redshift)\n\n* add test\n\n* refactor\n\n* PR feedback 1 (george)\n\n* refactor comments\n\n* fix parsing\n\n* add more tests\n\n* fix style\n\n* remove comment\n\n* ref\n\n* refactor roundtrips\n\n* revert change\n\n* mypy\n\n* refactor\n\n* Update sqlglot/dialects/redshift.py\n\n---------\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 231,
+   "output_tokens": 77
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "Star"
+   },
+   "output_chars": 50,
+   "output_tokens": 14
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Redshift"
+   },
+   "output_chars": 991,
+   "output_tokens": 276
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "Star"
+   },
+   "output_chars": 552,
+   "output_tokens": 238
+  },
+  {
+   "tool": "tests_for",
+   "args": {
+    "name": "EXCLUDE"
+   },
+   "output_chars": 785,
+   "output_tokens": 285
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 440,
+    "end_line": 500
+   },
+   "output_chars": 3226,
+   "output_tokens": 977
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 1,
+    "end_line": 100
+   },
+   "output_chars": 3759,
+   "output_tokens": 975
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_star"
+   },
+   "output_chars": 47,
+   "output_tokens": 15
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "_parse_star"
+   },
+   "output_chars": 43,
+   "output_tokens": 20
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7600,
+    "end_line": 7695
+   },
+   "output_chars": 4173,
+   "output_tokens": 1018
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "EXCLUDE|_parse.*exclude",
+    "path": "sqlglot"
+   },
+   "output_chars": 2141,
+   "output_tokens": 615
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8780,
+    "end_line": 8860
+   },
+   "output_chars": 3120,
+   "output_tokens": 779
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 1810,
+    "end_line": 1830
+   },
+   "output_chars": 918,
+   "output_tokens": 243
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 1578,
+    "end_line": 1595
+   },
+   "output_chars": 780,
+   "output_tokens": 205
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "STAR_EXCEPT"
+   },
+   "output_chars": 34,
+   "output_tokens": 13
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1225,
+    "end_line": 1260
+   },
+   "output_chars": 2023,
+   "output_tokens": 468
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "except_=",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 67,
+   "output_tokens": 19
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2079
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_select",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 161,
+   "output_tokens": 44
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3395,
+    "end_line": 3448
+   },
+   "output_chars": 1993,
+   "output_tokens": 482
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3480,
+    "end_line": 3555
+   },
+   "output_chars": 3255,
+   "output_tokens": 775
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_projections"
+   },
+   "output_chars": 120,
+   "output_tokens": 38
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3359,
+    "end_line": 3393
+   },
+   "output_chars": 1784,
+   "output_tokens": 414
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_table(",
+    "new": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_projections(self) -> t.List[exp.Expression]:\n            projections = super()._parse_projections()\n            if self._match_text_seq(\"EXCLUDE\"):\n                excluded = self._parse_star_op(\"EXCLUDE\")\n                star = next((projection for projection in projections if isinstance(projection, exp.Star)), None)\n                if star and excluded:\n                    star.set(\"except_\", excluded)\n            return projections\n\n        def _parse_table("
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "            if self._match_text_seq(\"EXCLUDE\"):\n                excluded = self._parse_star_op(\"EXCLUDE\")\n",
+    "new": "            if self._match_text_seq(\"EXCLUDE\", advance=False):\n                excluded = self._parse_star_op(\"EXCLUDE\")\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2143
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "                excluded = self._parse_star_op(\"EXCLUDE\")\n                star = next((projection for projection in projections if isinstance(projection, exp.Star)), None)\n",
+    "new": "                self._match_text_seq(\"EXCLUDE\")\n                excluded = (\n                    self._parse_wrapped_csv(self._parse_expression)\n                    if self._match(TokenType.L_PAREN, advance=False)\n                    else self._parse_csv(self._parse_expression)\n                )\n                star = next((projection for projection in projections if isinstance(projection, exp.Star)), None)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2225
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Implemented Redshift projection-level EXCLUDE parsing and association with a STAR projection. The targeted identity test still exposes an unsupported case (`col2 EXCLUDE(...)`), so the fix is incomplete."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 592,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 698,
+   "cached_tokens": 0,
+   "output_tokens": 78,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1626,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2649,
+   "cached_tokens": 1623,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3671,
+   "cached_tokens": 2646,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3717,
+   "cached_tokens": 3668,
+   "output_tokens": 91,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5489,
+   "cached_tokens": 3714,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6313,
+   "cached_tokens": 5486,
+   "output_tokens": 233,
+   "reasoning_tokens": 72,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7540,
+   "cached_tokens": 6310,
+   "output_tokens": 91,
+   "reasoning_tokens": 55,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9721,
+   "cached_tokens": 7537,
+   "output_tokens": 66,
+   "reasoning_tokens": 35,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9842,
+   "cached_tokens": 9718,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10369,
+   "cached_tokens": 9839,
+   "output_tokens": 64,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11219,
+   "cached_tokens": 10366,
+   "output_tokens": 71,
+   "reasoning_tokens": 48,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11339,
+   "cached_tokens": 11216,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11798,
+   "cached_tokens": 11336,
+   "output_tokens": 233,
+   "reasoning_tokens": 65,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12043,
+   "cached_tokens": 11795,
+   "output_tokens": 156,
+   "reasoning_tokens": 65,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12211,
+   "cached_tokens": 12040,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14399,
+   "cached_tokens": 12208,
+   "output_tokens": 206,
+   "reasoning_tokens": 53,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14617,
+   "cached_tokens": 14396,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16887,
+   "cached_tokens": 14614,
+   "output_tokens": 100,
+   "reasoning_tokens": 44,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 66.0,
+ "usage": {
+  "input_tokens": 166740,
+  "cached_tokens": 148512,
+  "output_tokens": 1668,
+  "reasoning_tokens": 465
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex b988957..3f19d47 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -94,6 +94,20 @@ class Redshift(Postgres):\n \n         SUPPORTS_IMPLICIT_UNNEST = True\n \n+        def _parse_projections(self) -> t.List[exp.Expression]:\n+            projections = super()._parse_projections()\n+            if self._match_text_seq(\"EXCLUDE\", advance=False):\n+                self._match_text_seq(\"EXCLUDE\")\n+                excluded = (\n+                    self._parse_wrapped_csv(self._parse_expression)\n+                    if self._match(TokenType.L_PAREN, advance=False)\n+                    else self._parse_csv(self._parse_expression)\n+                )\n+                star = next((projection for projection in projections if isinstance(projection, exp.Star)), None)\n+                if star and excluded:\n+                    star.set(\"except_\", excluded)\n+            return projections\n+\n         def _parse_table(\n             self,\n             schema: bool = False,\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_redshift.py::TestRedshift::test_identity"
+  ]
+ }
+}

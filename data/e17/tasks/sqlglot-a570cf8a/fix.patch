@@ -1,0 +1,51 @@
+diff --git a/sqlglot/optimizer/resolver.py b/sqlglot/optimizer/resolver.py
+index c98e7901b..a0ce93274 100644
+--- a/sqlglot/optimizer/resolver.py
++++ b/sqlglot/optimizer/resolver.py
+@@ -96,9 +96,8 @@ class Resolver:
+     def get_source_columns_from_set_op(self, expression: exp.Expr) -> list[str]:
+         if isinstance(expression, exp.Select):
+             return expression.named_selects
+-        if isinstance(expression, exp.Subquery) and isinstance(expression.this, exp.SetOperation):
+-            # Different types of SET modifiers can be chained together if they're explicitly grouped by nesting
+-            return self.get_source_columns_from_set_op(expression.this)
++        if isinstance(expression, exp.Subquery):
++            return self.get_source_columns_from_set_op(expression.unnest())
+         if not isinstance(expression, exp.SetOperation):
+             raise OptimizeError(f"Unknown set operation: {expression}")
+ 
+diff --git a/sqlglot/parser.py b/sqlglot/parser.py
+index 87d58123e..cb6500a93 100644
+--- a/sqlglot/parser.py
++++ b/sqlglot/parser.py
+@@ -5950,6 +5950,12 @@ class Parser:
+         if isinstance(expression, exp.Values):
+             expression = self._values_to_select(expression)
+ 
++        if isinstance(this, exp.Alias) and isinstance(this.this, exp.Subquery):
++            subquery = this.this
++            subquery.set("alias", exp.TableAlias(this=this.args["alias"]))
++            subquery.add_comments(this.pop_comments())
++            this = subquery
++
+         return self.expression(
+             operation(
+                 this=this,
+diff --git a/sqlglot/parsers/bigquery.py b/sqlglot/parsers/bigquery.py
+index 72f1c4a0c..034ec65e2 100644
+--- a/sqlglot/parsers/bigquery.py
++++ b/sqlglot/parsers/bigquery.py
+@@ -199,10 +199,12 @@ class BigQueryParser(parser.Parser):
+         TokenType.GRANT,
+     } - {TokenType.ASC, TokenType.DESC}
+ 
++    # FULL, LEFT and RIGHT are reserved, so they're never (implicit) aliases; excluding
++    # them also disambiguates set operation modifiers, e.g FULL OUTER UNION ALL BY NAME
+     ALIAS_TOKENS: t.ClassVar = {
+         *parser.Parser.ALIAS_TOKENS,
+         TokenType.GRANT,
+-    } - {TokenType.ASC, TokenType.DESC}
++    } - {TokenType.ASC, TokenType.DESC, *parser.Parser.JOIN_SIDES}
+ 
+     TABLE_ALIAS_TOKENS: t.ClassVar = {
+         *parser.Parser.TABLE_ALIAS_TOKENS,

@@ -1,0 +1,98 @@
+diff -ruN a/src/config.js b/src/config.js
+--- a/src/config.js	2026-10-30 13:50:15
++++ b/src/config.js	2026-10-30 13:51:51
+@@ -8,9 +8,9 @@
+     bulkQty: 10,
+     bulkBps: 1000,
+     vipTiers: [
+-      { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false },
+-      { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false },
+-      { name: "gold", minSpendCents: 100000, discountBps: 1000, freeShipping: true },
++      { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false, pointsMultiplier: 1 },
++      { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false, pointsMultiplier: 1 },
++      { name: "gold", minSpendCents: 100000, discountBps: 1000, freeShipping: true, pointsMultiplier: 2 },
+     ],
+   };
+ }
+diff -ruN a/src/customers.js b/src/customers.js
+--- a/src/customers.js	2026-10-30 13:50:52
++++ b/src/customers.js	2026-10-30 13:51:51
+@@ -9,6 +9,7 @@
+     email: input.email,
+     region: input.region || state.config.defaultRegion,
+     lifetimeSpendCents: 0,
++    points: 0,
+   };
+   state.db.customers.set(customer.id, customer);
+   return customer;
+@@ -36,6 +37,13 @@
+   const c = getCustomer(id);
+   if (!c) return;
+   c.lifetimeSpendCents = Math.max(0, c.lifetimeSpendCents + deltaCents);
++}
++
++// Adds `delta` (may be negative) loyalty points, never below 0.
++export function adjustPoints(id, delta) {
++  const c = getCustomer(id);
++  if (!c) return;
++  c.points = Math.max(0, c.points + delta);
+ }
+ 
+ export function listCustomers() {
+diff -ruN a/src/index.js b/src/index.js
+--- a/src/index.js	2026-10-30 13:50:35
++++ b/src/index.js	2026-10-30 13:51:51
+@@ -56,6 +56,7 @@
+       const c = getCustomer(id);
+       return c ? tierOf(c).name : undefined;
+     }),
++    points: plain((id) => { const c = getCustomer(id); return c ? c.points : undefined; }),
+     stock: plain(stockOf),
+     outbox: plain(listOutbox),
+     audit: plain(entries),
+diff -ruN a/src/orders.js b/src/orders.js
+--- a/src/orders.js	2026-10-30 13:50:52
++++ b/src/orders.js	2026-10-30 13:51:51
+@@ -1,5 +1,5 @@
+ import { state, nextOrderId } from "./state.js";
+-import { getCustomer, adjustSpend } from "./customers.js";
++import { getCustomer, adjustSpend, adjustPoints, tierOf } from "./customers.js";
+ import { getProduct } from "./catalog.js";
+ import { reserve } from "./inventory.js";
+ import { checkCoupon, computeTotal, getCoupon, recordCouponUse } from "./pricing.js";
+@@ -19,6 +19,7 @@
+     this.lineNetCents = {};
+     this.refundedByLine = {};
+     this.refundedCents = 0;
++    this.pointsMultiplier = 1;
+     this.createdAt = state.clock.now();
+     this.paidAt = null;
+   }
+@@ -96,8 +97,10 @@
+   if (order.couponCode) recordCouponUse(order.couponCode);
+ 
+   order.status = "paid";
++  order.pointsMultiplier = tierOf(customer).pointsMultiplier || 1;
+   order.paidAt = state.clock.now();
+   adjustSpend(customer.id, order.pricing.totalCents);
++  adjustPoints(customer.id, Math.floor(order.pricing.totalCents / 100) * order.pointsMultiplier);
+   record("checkout", orderId, String(order.pricing.totalCents));
+   queueEmail(customer, "order_confirmation", orderId);
+   return order;
+diff -ruN a/src/refunds.js b/src/refunds.js
+--- a/src/refunds.js	2026-10-30 13:50:52
++++ b/src/refunds.js	2026-10-30 13:51:51
+@@ -1,4 +1,4 @@
+-import { getCustomer, adjustSpend } from "./customers.js";
++import { getCustomer, adjustSpend, adjustPoints } from "./customers.js";
+ import { release } from "./inventory.js";
+ import { record } from "./audit.js";
+ import { queueEmail } from "./notifications.js";
+@@ -53,6 +53,7 @@
+   order.refundedCents += amount;
+   release(lines);
+   adjustSpend(order.customerId, -amount);
++  adjustPoints(order.customerId, -Math.floor(amount / 100) * order.pointsMultiplier);
+   record("refund", orderId, String(amount));
+   const customer = getCustomer(order.customerId);
+   if (customer) queueEmail(customer, "refund_issued", orderId);

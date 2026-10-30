@@ -1,0 +1,867 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "feat(hive)!: support FROM-first multi-table INSERT\n\nParse Hive/Spark `FROM x INSERT ... SELECT ... [INSERT ... SELECT ...]`\ninto exp.MultitableInserts with no kind, including a leading CTE, and\ngenerate it back in that form; other dialects get an unsupported warning.\nLATERAL VIEWs after a leading FROM are now parsed once for every\nFROM-first statement, so `FROM x LATERAL VIEW ... SELECT ...` parses too.\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_hive.py::TestHive::test_lateral_view\ntests/dialects/test_hive.py::TestHive::test_multitable_inserts\ntests/dialects/test_spark.py::TestSpark::test_multitable_inserts",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MultitableInserts|multitable_inserts|LATERAL VIEW|lateral_view",
+    "path": "sqlglot"
+   },
+   "output_chars": 2241,
+   "output_tokens": 613
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3560,
+    "end_line": 3685
+   },
+   "output_chars": 5442,
+   "output_tokens": 1227
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 5735,
+    "end_line": 5795
+   },
+   "output_chars": 2727,
+   "output_tokens": 677
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/query.py",
+    "start_line": 550,
+    "end_line": 600
+   },
+   "output_chars": 1230,
+   "output_tokens": 312
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FROM_FIRST|from_first|from-first|_parse_from|LATERAL",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 509,
+   "output_tokens": 132
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3860,
+    "end_line": 4055
+   },
+   "output_chars": 8060,
+   "output_tokens": 1879
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4070,
+    "end_line": 4230
+   },
+   "output_chars": 6600,
+   "output_tokens": 1515
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4490,
+    "end_line": 4685
+   },
+   "output_chars": 7831,
+   "output_tokens": 1918
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8690,
+    "end_line": 8760
+   },
+   "output_chars": 3561,
+   "output_tokens": 895
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MULTITABLE|multitable|FROM.*INSERT|INSERT.*SELECT|from_first",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 239,
+   "output_tokens": 75
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_multitable_inserts|test_lateral_view",
+    "path": "tests/dialects"
+   },
+   "output_chars": 283,
+   "output_tokens": 81
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/hive.py"
+   },
+   "output_chars": 4518,
+   "output_tokens": 1305
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/spark.py"
+   },
+   "output_chars": 1462,
+   "output_tokens": 435
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_statement|def _parse_query",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 233,
+   "output_tokens": 70
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "unsupported.*dialect|unsupported_level|UNSUPPORTED",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 1668,
+   "output_tokens": 364
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_hive.py",
+    "start_line": 250,
+    "end_line": 310
+   },
+   "output_chars": 4243,
+   "output_tokens": 1158
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_hive.py",
+    "start_line": 1170,
+    "end_line": 1245
+   },
+   "output_chars": 3625,
+   "output_tokens": 924
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_spark.py",
+    "start_line": 1280,
+    "end_line": 1350
+   },
+   "output_chars": 6005,
+   "output_tokens": 1920
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/hive.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2061
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/spark.py"
+   },
+   "output_chars": 5762,
+   "output_tokens": 1539
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_hive.py::TestHive::test_lateral_view tests/dialects/test_hive.py::TestHive::test_multitable_inserts tests/dialects/test_spark.py::TestSpark::test_multitable_inserts -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2020
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2360,
+    "end_line": 2450
+   },
+   "output_chars": 3685,
+   "output_tokens": 885
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4750,
+    "end_line": 4930
+   },
+   "output_chars": 7576,
+   "output_tokens": 1837
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1020,
+    "end_line": 1150
+   },
+   "output_chars": 6028,
+   "output_tokens": 1527
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/hive.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2166
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/spark.py"
+   },
+   "output_chars": 8060,
+   "output_tokens": 1911
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 800,
+    "end_line": 850
+   },
+   "output_chars": 2361,
+   "output_tokens": 493
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4360,
+    "end_line": 4435
+   },
+   "output_chars": 3621,
+   "output_tokens": 814
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_select\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 28,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4030,
+    "end_line": 4075
+   },
+   "output_chars": 1935,
+   "output_tokens": 450
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_table\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 27,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5060,
+    "end_line": 5175
+   },
+   "output_chars": 4766,
+   "output_tokens": 1135
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5170,
+    "end_line": 5215
+   },
+   "output_chars": 2009,
+   "output_tokens": 499
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/query.py",
+    "start_line": 1320,
+    "end_line": 1415
+   },
+   "output_chars": 3625,
+   "output_tokens": 887
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FROM_FIRST|SUPPORTS.*FROM|def _parse_statement",
+    "path": "sqlglot"
+   },
+   "output_chars": 1065,
+   "output_tokens": 313
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Spark2Parser|class Spark2",
+    "path": "sqlglot"
+   },
+   "output_chars": 182,
+   "output_tokens": 60
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3643,
+    "end_line": 3790
+   },
+   "output_chars": 6672,
+   "output_tokens": 1489
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def insert_sql|def select_sql|def from_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 182,
+   "output_tokens": 51
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 2320,
+    "end_line": 2368
+   },
+   "output_chars": 2521,
+   "output_tokens": 621
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 2368,
+    "end_line": 2395
+   },
+   "output_chars": 1325,
+   "output_tokens": 345
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_ddl_select",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 57,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 9050,
+    "end_line": 9085
+   },
+   "output_chars": 1410,
+   "output_tokens": 331
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "    SUPPORTS_NTH_VALUE_FROM_MODIFIER: t.ClassVar = False\n",
+    "new": "    SUPPORTS_NTH_VALUE_FROM_MODIFIER: t.ClassVar = False\n    SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS: t.ClassVar = False\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "    def _parse_statement(self) -> exp.Expr | None:\n        if not self._curr:\n            return None\n\n        if self._match_set(self.STATEMENT_PARSERS):\n",
+    "new": "    def _parse_statement(self) -> exp.Expr | None:\n        if not self._curr:\n            return None\n\n        if (\n            self.SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS\n            and self._curr.token_type == TokenType.FROM\n        ):\n            return self._parse_from_first_statement()\n\n        if self._match_set(self.STATEMENT_PARSERS):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "    def _parse_insert_table(self) -> exp.Expr | None:\n",
+    "new": "    def _parse_from_first_statement(self) -> exp.Expr:\n        from_ = self._parse_from(joins=True, consume_pipe=True)\n        if not from_:\n            return self._parse_select() or exp.select(\"*\")\n\n        laterals = list(iter(self._parse_lateral, None))\n        comments = from_.comments\n\n        if self._curr and self._curr.token_type == TokenType.INSERT:\n            inserts = []\n            while self._match(TokenType.INSERT):\n                insert_comments = ensure_list(self._prev_comments)\n                insert = self._parse_insert()\n                if insert:\n                    insert.add_comments(insert_comments, prepend=True)\n                    inserts.append(insert)\n\n            return self.expression(\n                exp.MultitableInserts(\n                    expressions=inserts,\n                    kind=None,\n                    source=from_.this,\n                    laterals=laterals or None,\n                ),\n                comments=comments,\n            )\n\n        query = self._parse_select()\n        if not query:\n            query = exp.select(\"*\")\n\n        select = query if isinstance(query, exp.Select) else query.find(exp.Select)\n        if select:\n            select.set(\"from_\", from_)\n            if laterals:\n                select.set(\"laterals\", laterals + (select.args.get(\"laterals\") or []))\n\n        if comments:\n            query.add_comments(comments, prepend=True)\n        return query\n\n    def _parse_insert_table(self) -> exp.Expr | None:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/hive.py",
+    "old": "class HiveParser(parser.Parser):\n    LOG_DEFAULTS_TO_LN = True\n",
+    "new": "class HiveParser(parser.Parser):\n    SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS = True\n    LOG_DEFAULTS_TO_LN = True\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions/query.py",
+    "old": "class MultitableInserts(Expression):\n    arg_types = {\"expressions\": True, \"kind\": True, \"source\": True}\n",
+    "new": "class MultitableInserts(Expression):\n    arg_types = {\"expressions\": True, \"kind\": False, \"source\": True, \"laterals\": False, \"with_\": False}\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class HiveGenerator|SUPPORTS_.*INSERT|def multitableinserts_sql",
+    "path": "sqlglot/generators/hive.py"
+   },
+   "output_chars": 46,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/hive.py",
+    "start_line": 220,
+    "end_line": 275
+   },
+   "output_chars": 1831,
+   "output_tokens": 499
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3400,
+    "end_line": 3460
+   },
+   "output_chars": 2776,
+   "output_tokens": 604
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3460,
+    "end_line": 3505
+   },
+   "output_chars": 2298,
+   "output_tokens": 564
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def seg\\(",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 57,
+   "output_tokens": 21
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1020,
+    "end_line": 1050
+   },
+   "output_chars": 1390,
+   "output_tokens": 349
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generators/hive.py",
+    "old": "class HiveGenerator(generator.Generator):\n    BYTE_STRING_FUNCTION = \"UNHEX\"\n",
+    "new": "class HiveGenerator(generator.Generator):\n    SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS = True\n    BYTE_STRING_FUNCTION = \"UNHEX\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "    def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n        kind = self.sql(expression, \"kind\")\n        expressions = self.seg(self.expressions(expression, sep=\" \"))\n        res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n        return res\n",
+    "new": "    def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n        kind = self.sql(expression, \"kind\")\n\n        if kind is None:\n            if not getattr(self, \"SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS\", False):\n                self.unsupported(\"FROM-first multi-table INSERT is not supported\")\n\n            source = self.sql(expression, \"source\")\n            laterals = self.expressions(expression, key=\"laterals\", sep=\" \")\n            inserts = self.expressions(expression, sep=\" \")\n            sql = f\"FROM {source}{self.seg(laterals) if laterals else ''}{self.seg(inserts) if inserts else ''}\"\n            return self.prepend_ctes(expression, sql)\n\n        expressions = self.seg(self.expressions(expression, sep=\" \"))\n        res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n        return self.prepend_ctes(expression, res)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def sql\\(",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 18,
+   "output_tokens": 7
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1129,
+    "end_line": 1170
+   },
+   "output_chars": 1736,
+   "output_tokens": 412
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "    def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n        kind = self.sql(expression, \"kind\")\n\n        if kind is None:\n",
+    "new": "    def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n        kind = expression.args.get(\"kind\")\n\n        if kind is None:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "        expressions = self.seg(self.expressions(expression, sep=\" \"))\n        res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n",
+    "new": "        kind_sql = self.sql(expression, \"kind\")\n        expressions = self.seg(self.expressions(expression, sep=\" \"))\n        res = f\"INSERT {kind_sql}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 429,
+   "cached_tokens": 0,
+   "output_tokens": 82,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1235,
+   "cached_tokens": 0,
+   "output_tokens": 149,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3770,
+   "cached_tokens": 1232,
+   "output_tokens": 192,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10291,
+   "cached_tokens": 3767,
+   "output_tokens": 171,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12764,
+   "cached_tokens": 10288,
+   "output_tokens": 168,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 20581,
+   "cached_tokens": 12761,
+   "output_tokens": 92,
+   "reasoning_tokens": 21,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22704,
+   "cached_tokens": 20578,
+   "output_tokens": 288,
+   "reasoning_tokens": 103,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31867,
+   "cached_tokens": 22701,
+   "output_tokens": 73,
+   "reasoning_tokens": 37,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32765,
+   "cached_tokens": 31864,
+   "output_tokens": 58,
+   "reasoning_tokens": 26,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32843,
+   "cached_tokens": 32762,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 33338,
+   "cached_tokens": 32840,
+   "output_tokens": 655,
+   "reasoning_tokens": 623,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34013,
+   "cached_tokens": 33335,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 35193,
+   "cached_tokens": 34010,
+   "output_tokens": 42,
+   "reasoning_tokens": 6,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 35745,
+   "cached_tokens": 35190,
+   "output_tokens": 460,
+   "reasoning_tokens": 421,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 37103,
+   "cached_tokens": 35742,
+   "output_tokens": 827,
+   "reasoning_tokens": 789,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 38254,
+   "cached_tokens": 37100,
+   "output_tokens": 865,
+   "reasoning_tokens": 832,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 39190,
+   "cached_tokens": 38251,
+   "output_tokens": 215,
+   "reasoning_tokens": 179,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 40905,
+   "cached_tokens": 39187,
+   "output_tokens": 366,
+   "reasoning_tokens": 327,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 41333,
+   "cached_tokens": 40902,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 42000,
+   "cached_tokens": 41330,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 42391,
+   "cached_tokens": 41997,
+   "output_tokens": 1295,
+   "reasoning_tokens": 1262,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 43715,
+   "cached_tokens": 42388,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 44091,
+   "cached_tokens": 43712,
+   "output_tokens": 1108,
+   "reasoning_tokens": 1029,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 45211,
+   "cached_tokens": 44088,
+   "output_tokens": 159,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 45382,
+   "cached_tokens": 45208,
+   "output_tokens": 633,
+   "reasoning_tokens": 246,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 46027,
+   "cached_tokens": 45379,
+   "output_tokens": 114,
+   "reasoning_tokens": 32,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 46153,
+   "cached_tokens": 46024,
+   "output_tokens": 125,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 46290,
+   "cached_tokens": 46150,
+   "output_tokens": 65,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 46375,
+   "cached_tokens": 46287,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 46921,
+   "cached_tokens": 46372,
+   "output_tokens": 64,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 47600,
+   "cached_tokens": 46918,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 48210,
+   "cached_tokens": 47597,
+   "output_tokens": 254,
+   "reasoning_tokens": 223,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 48496,
+   "cached_tokens": 48207,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 48891,
+   "cached_tokens": 48493,
+   "output_tokens": 97,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 49000,
+   "cached_tokens": 48888,
+   "output_tokens": 330,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 49342,
+   "cached_tokens": 48997,
+   "output_tokens": 155,
+   "reasoning_tokens": 124,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 49515,
+   "cached_tokens": 49339,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 49973,
+   "cached_tokens": 49512,
+   "output_tokens": 154,
+   "reasoning_tokens": 42,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 50139,
+   "cached_tokens": 49970,
+   "output_tokens": 214,
+   "reasoning_tokens": 89,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "max_steps",
+ "wall_s": 201.1,
+ "usage": {
+  "input_tokens": 1440045,
+  "cached_tokens": 1389366,
+  "output_tokens": 9783,
+  "reasoning_tokens": 6525
+ },
+ "diff": "diff --git a/sqlglot/expressions/query.py b/sqlglot/expressions/query.py\nindex 782ac71..7e66e1c 100644\n--- a/sqlglot/expressions/query.py\n+++ b/sqlglot/expressions/query.py\n@@ -572,7 +572,7 @@ class ConditionalInsert(Expression):\n \n \n class MultitableInserts(Expression):\n-    arg_types = {\"expressions\": True, \"kind\": True, \"source\": True}\n+    arg_types = {\"expressions\": True, \"kind\": False, \"source\": True, \"laterals\": False, \"with_\": False}\n \n \n class OnCondition(Expression):\ndiff --git a/sqlglot/generator.py b/sqlglot/generator.py\nindex e0d16e8..b3698b5 100644\n--- a/sqlglot/generator.py\n+++ b/sqlglot/generator.py\n@@ -5763,10 +5763,22 @@ class Generator:\n         return f\"{condition}{insert}\"\n \n     def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n-        kind = self.sql(expression, \"kind\")\n+        kind = expression.args.get(\"kind\")\n+\n+        if kind is None:\n+            if not getattr(self, \"SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS\", False):\n+                self.unsupported(\"FROM-first multi-table INSERT is not supported\")\n+\n+            source = self.sql(expression, \"source\")\n+            laterals = self.expressions(expression, key=\"laterals\", sep=\" \")\n+            inserts = self.expressions(expression, sep=\" \")\n+            sql = f\"FROM {source}{self.seg(laterals) if laterals else ''}{self.seg(inserts) if inserts else ''}\"\n+            return self.prepend_ctes(expression, sql)\n+\n+        kind_sql = self.sql(expression, \"kind\")\n         expressions = self.seg(self.expressions(expression, sep=\" \"))\n-        res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n-        return res\n+        res = f\"INSERT {kind_sql}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n+        return self.prepend_ctes(expression, res)\n \n     def oncondition_sql(self, expression: exp.OnCondition) -> str:\n         # Static options like \"NULL ON ERROR\" are stored as strings, in contrast to \"DEFAULT <expr> ON ERROR\"\ndiff --git a/sqlglot/generators/hive.py b/sqlglot/generators/hive.py\nindex 0bf87c0..2d21647 100644\n--- a/sqlglot/generators/hive.py\n+++ b/sqlglot/generators/hive.py\n@@ -220,6 +220,7 @@ def _to_date_sql(self: HiveGenerator, expression: exp.TsOrDsToDate) -> str:\n \n \n class HiveGenerator(generator.Generator):\n+    SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS = True\n     BYTE_STRING_FUNCTION = \"UNHEX\"\n     SELECT_KINDS: tuple[str, ...] = ()\n     TRY_SUPPORTED = False\ndiff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 0106fad..aa1d508 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -1957,6 +1957,7 @@ class Parser:\n     # Whether NTH_VALUE accepts the FROM FIRST | LAST modifier before its OVER clause,\n     # e.g. NTH_VALUE(x, 2) FROM LAST IGNORE NULLS OVER (...) (Oracle, Snowflake)\n     SUPPORTS_NTH_VALUE_FROM_MODIFIER: t.ClassVar = False\n+    SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS: t.ClassVar = False\n \n     # Type names that denote a different type when they're quoted, so quoting has to be\n     # preserved instead of resolving them into the built-in type of the same name. These\n@@ -2399,6 +2400,12 @@ class Parser:\n         if not self._curr:\n             return None\n \n+        if (\n+            self.SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS\n+            and self._curr.token_type == TokenType.FROM\n+        ):\n+            return self._parse_from_first_statement()\n+\n         if self._match_set(self.STATEMENT_PARSERS):\n             comments = self._prev_comments\n             stmt = self.STATEMENT_PARSERS[self._prev.token_type](self)\n@@ -3744,6 +3751,47 @@ class Parser:\n             comments=comments,\n         )\n \n+    def _parse_from_first_statement(self) -> exp.Expr:\n+        from_ = self._parse_from(joins=True, consume_pipe=True)\n+        if not from_:\n+            return self._parse_select() or exp.select(\"*\")\n+\n+        laterals = list(iter(self._parse_lateral, None))\n+        comments = from_.comments\n+\n+        if self._curr and self._curr.token_type == TokenType.INSERT:\n+            inserts = []\n+            while self._match(TokenType.INSERT):\n+                insert_comments = ensure_list(self._prev_comments)\n+                insert = self._parse_insert()\n+                if insert:\n+                    insert.add_comments(insert_comments, prepend=True)\n+                    inserts.append(insert)\n+\n+            return self.expression(\n+                exp.MultitableInserts(\n+                    expressions=inserts,\n+                    kind=None,\n+                    source=from_.this,\n+                    laterals=laterals or None,\n+                ),\n+                comments=comments,\n+            )\n+\n+        query = self._parse_select()\n+        if not query:\n+            query = exp.select(\"*\")\n+\n+        select = query if isinstance(query, exp.Select) else query.find(exp.Select)\n+        if select:\n+            select.set(\"from_\", from_)\n+            if laterals:\n+                select.set(\"laterals\", laterals + (select.args.get(\"laterals\") or []))\n+\n+        if comments:\n+            query.add_comments(comments, prepend=True)\n+        return query\n+\n     def _parse_insert_table(self) -> exp.Expr | None:\n         this = self._parse_table(schema=True, parse_partition=True)\n         if isinstance(this, exp.Table) and self._match(TokenType.ALIAS, advance=False):\ndiff --git a/sqlglot/parsers/hive.py b/sqlglot/parsers/hive.py\nindex efcdba5..b6b76e6 100644\n--- a/sqlglot/parsers/hive.py\n+++ b/sqlglot/parsers/hive.py\n@@ -51,6 +51,7 @@ def _build_date_add(args: list) -> exp.TsOrDsAdd:\n \n \n class HiveParser(parser.Parser):\n+    SUPPORTS_FROM_FIRST_MULTITABLE_INSERTS = True\n     LOG_DEFAULTS_TO_LN = True\n     STRICT_CAST = False\n     VALUES_FOLLOWED_BY_PAREN = False\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_hive.py::TestHive::test_multitable_inserts"
+  ]
+ }
+}

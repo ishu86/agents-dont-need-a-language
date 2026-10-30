@@ -1,0 +1,60 @@
+diff -ruN a/src/customers.ts b/src/customers.ts
+--- a/src/customers.ts	2026-10-30 13:51:17
++++ b/src/customers.ts	2026-10-30 13:51:51
+@@ -1,4 +1,5 @@
+ import { state } from "./state.ts";
++import { record } from "./audit.ts";
+ 
+ export function addCustomer(input: any): any {
+   if (!input.id || !input.name) throw "invalid: id and name required";
+@@ -9,9 +10,18 @@
+     email: input.email,
+     region: input.region || state.config.defaultRegion,
+     lifetimeSpendCents: 0,
++    taxExempt: false,
+   };
+   state.db.customers.set(customer.id, customer);
+   return customer;
++}
++
++export function setTaxExempt(id: string, exempt: boolean): any {
++  const c = getCustomer(id);
++  if (!c) throw `not_found: unknown customer ${id}`;
++  c.taxExempt = !!exempt;
++  record("tax_exempt_set", id, String(c.taxExempt));
++  return c;
+ }
+ 
+ export function getCustomer(id: string): any {
+diff -ruN a/src/index.ts b/src/index.ts
+--- a/src/index.ts	2026-10-30 13:51:17
++++ b/src/index.ts	2026-10-30 13:51:51
+@@ -3,7 +3,7 @@
+ import { makeConfig } from "./config.ts";
+ import { addProduct, getProduct, listProducts } from "./catalog.ts";
+ import { addStock, stockOf } from "./inventory.ts";
+-import { addCustomer, getCustomer, tierOf } from "./customers.ts";
++import { addCustomer, getCustomer, setTaxExempt, tierOf } from "./customers.ts";
+ import { addCoupon, ruleRegistry } from "./pricing.ts";
+ import "./rules/bulk.ts";
+ import "./rules/vip.ts";
+@@ -42,6 +42,7 @@
+     addStock: result(addStock),
+     addCustomer: result(addCustomer),
+     addCoupon: result(addCoupon),
++    setTaxExempt: result(setTaxExempt),
+     createOrder: result(createOrder),
+     addItem: result(addItem),
+     applyCoupon: result(applyCoupon),
+diff -ruN a/src/pricing.ts b/src/pricing.ts
+--- a/src/pricing.ts	2026-10-30 13:51:17
++++ b/src/pricing.ts	2026-10-30 13:51:51
+@@ -65,7 +65,7 @@
+   const taxableSub = sumCents(lines.filter((l: any) => l.taxable).map((l: any) => l.lineCents));
+   const taxableDiscount = p.subtotalCents ? Math.round((p.discountCents * taxableSub) / p.subtotalCents) : 0;
+   p.taxableCents = taxableSub - taxableDiscount;
+-  p.taxCents = taxFor(order.shipRegion, p.taxableCents);
++  p.taxCents = customer.taxExempt ? 0 : taxFor(order.shipRegion, p.taxableCents);
+ 
+   const weightG = lines.reduce((w: number, l: any) => w + l.weightG * l.qty, 0);
+   p.shippingCents = shippingFor(order, tier, weightG);

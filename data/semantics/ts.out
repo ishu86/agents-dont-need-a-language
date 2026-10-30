@@ -1,0 +1,18 @@
+int_overflow 2**31*2	4294967296
+big_int 2**64+1	18446744073709552000
+div 7/2	3.5
+int_div -7//2	-4
+mod -7%3	-1
+round 2.5	3
+round 0.5	1
+len emoji 'a👍'	3
+upper 'ß'	SS
+sort [10,9,1]	[1, 10, 9]
+index out of range	undefined
+0.1+0.2	0.30000000000000004
+float fmt 1.0	1
+1/0	Infinity
+max empty	-Infinity
+str*3	ababab
+'10' < '9'	true
+int('08')	8

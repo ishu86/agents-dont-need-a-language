@@ -1,0 +1,390 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(snowflake): parse LIST and LS stage commands\n\n* fix(snowflake): preserve LIST and LS stage commands\n\n* fix(snowflake): model LIST and LS as stage expressions\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_alias",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "LIST|LS",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 126,
+   "output_tokens": 43
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_list_stage_alias",
+    "path": "tests"
+   },
+   "output_chars": 75,
+   "output_tokens": 21
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 3600,
+    "end_line": 3650
+   },
+   "output_chars": 2669,
+   "output_tokens": 633
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 1,
+    "end_line": 150
+   },
+   "output_chars": 5809,
+   "output_tokens": 1693
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ListStage|LIST_STAGE|list_stage|_parse_list",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ListStage",
+    "path": "."
+   },
+   "output_chars": 464,
+   "output_tokens": 121
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Stage",
+    "path": "sqlglot/exp.py"
+   },
+   "output_chars": 291,
+   "output_tokens": 136
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 291,
+   "output_tokens": 92
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*Stage|class .*Command",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 123,
+   "output_tokens": 33
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DirectoryStage|parse_command",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 124,
+   "output_tokens": 26
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 900,
+    "end_line": 970
+   },
+   "output_chars": 2792,
+   "output_tokens": 602
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1,
+    "end_line": 100
+   },
+   "output_chars": 3392,
+   "output_tokens": 914
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "STATEMENT_PARSERS|_parse_directory|LIST",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 260,
+   "output_tokens": 70
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 730,
+    "end_line": 790
+   },
+   "output_chars": 2762,
+   "output_tokens": 680
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TokenType.LIST|TokenType.LS|class .*Stage",
+    "path": "sqlglot"
+   },
+   "output_chars": 231,
+   "output_tokens": 68
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/dml.py",
+    "start_line": 175,
+    "end_line": 210
+   },
+   "output_chars": 904,
+   "output_tokens": 223
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TokenType.LIST",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 76,
+   "output_tokens": 21
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 475,
+    "end_line": 510
+   },
+   "output_chars": 1083,
+   "output_tokens": 279
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_statement|STATEMENT_PARSERS",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 304,
+   "output_tokens": 89
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2390,
+    "end_line": 2420
+   },
+   "output_chars": 1269,
+   "output_tokens": 303
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_get|def _parse_put|_parse_table_parts",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 820,
+   "output_tokens": 208
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 336,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 456,
+   "cached_tokens": 0,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 543,
+   "cached_tokens": 0,
+   "output_tokens": 25,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 600,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1282,
+   "cached_tokens": 0,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3023,
+   "cached_tokens": 1279,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3072,
+   "cached_tokens": 3020,
+   "output_tokens": 23,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3227,
+   "cached_tokens": 3069,
+   "output_tokens": 47,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3421,
+   "cached_tokens": 3224,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3544,
+   "cached_tokens": 3418,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3621,
+   "cached_tokens": 3541,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3692,
+   "cached_tokens": 3618,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4341,
+   "cached_tokens": 3689,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5302,
+   "cached_tokens": 4338,
+   "output_tokens": 40,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5423,
+   "cached_tokens": 5299,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6150,
+   "cached_tokens": 5420,
+   "output_tokens": 84,
+   "reasoning_tokens": 46,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6313,
+   "cached_tokens": 6147,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6583,
+   "cached_tokens": 6310,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6644,
+   "cached_tokens": 6580,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6966,
+   "cached_tokens": 6641,
+   "output_tokens": 98,
+   "reasoning_tokens": 61,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7164,
+   "cached_tokens": 6963,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7512,
+   "cached_tokens": 7161,
+   "output_tokens": 112,
+   "reasoning_tokens": 67,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7843,
+   "cached_tokens": 7509,
+   "output_tokens": 12,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 69.9,
+ "usage": {
+  "input_tokens": 97058,
+  "cached_tokens": 87226,
+  "output_tokens": 928,
+  "reasoning_tokens": 192
+ },
+ "diff": "",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_alias"
+  ]
+ }
+}

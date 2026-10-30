@@ -1,0 +1,298 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "Fix(redshift): do not inherit postgres `ROUND` generator\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_redshift",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Redshift|ROUND",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 29,
+   "output_tokens": 8
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2009
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Round",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 92,
+   "output_tokens": 26
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_redshift",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 31,
+   "output_tokens": 9
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ROUND",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 85,
+   "output_tokens": 24
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 680,
+    "end_line": 730
+   },
+   "output_chars": 2539,
+   "output_tokens": 559
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 1,
+    "end_line": 80
+   },
+   "output_chars": 3927,
+   "output_tokens": 1050
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "round_sql",
+    "path": "sqlglot"
+   },
+   "output_chars": 92,
+   "output_tokens": 26
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 710,
+    "end_line": 750
+   },
+   "output_chars": 2053,
+   "output_tokens": 397
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_redshift -q"
+   },
+   "output_chars": 1335,
+   "output_tokens": 328
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def round_sql",
+    "path": "sqlglot"
+   },
+   "output_chars": 92,
+   "output_tokens": 26
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.Round|Round",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def func\\(|def function_fallback_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 90,
+   "output_tokens": 26
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3930,
+    "end_line": 3995
+   },
+   "output_chars": 2685,
+   "output_tokens": 675
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        LIMIT_FETCH = \"LIMIT\"\n\n        # Redshift doesn't have `WITH` as part of their with_properties so we remove it\n",
+    "new": "        LIMIT_FETCH = \"LIMIT\"\n\n        def round_sql(self, expression: exp.Round) -> str:\n            return self.function_fallback_sql(expression)\n\n        # Redshift doesn't have `WITH` as part of their with_properties so we remove it\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_redshift -q"
+   },
+   "output_chars": 48,
+   "output_tokens": 20
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py -q"
+   },
+   "output_chars": 101,
+   "output_tokens": 22
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Overrode Redshift's ROUND generator to use the generic function fallback instead of PostgreSQL's double-precision-to-decimal cast logic. The targeted test and full Redshift dialect test file pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 308,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 419,
+   "cached_tokens": 0,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 472,
+   "cached_tokens": 0,
+   "output_tokens": 26,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2518,
+   "cached_tokens": 0,
+   "output_tokens": 109,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2715,
+   "cached_tokens": 2515,
+   "output_tokens": 104,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4483,
+   "cached_tokens": 2712,
+   "output_tokens": 63,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4954,
+   "cached_tokens": 4480,
+   "output_tokens": 170,
+   "reasoning_tokens": 133,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5463,
+   "cached_tokens": 4951,
+   "output_tokens": 65,
+   "reasoning_tokens": 37,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5565,
+   "cached_tokens": 5460,
+   "output_tokens": 154,
+   "reasoning_tokens": 122,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5733,
+   "cached_tokens": 5562,
+   "output_tokens": 50,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5820,
+   "cached_tokens": 5730,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6541,
+   "cached_tokens": 5817,
+   "output_tokens": 355,
+   "reasoning_tokens": 237,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6908,
+   "cached_tokens": 6538,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6974,
+   "cached_tokens": 6905,
+   "output_tokens": 43,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7050,
+   "cached_tokens": 6971,
+   "output_tokens": 67,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 52.2,
+ "usage": {
+  "input_tokens": 65923,
+  "cached_tokens": 57641,
+  "output_tokens": 1338,
+  "reasoning_tokens": 611
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex 538ec7d..5c477b6 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -164,6 +164,9 @@ class Redshift(Postgres):\n         SUPPORTS_BETWEEN_FLAGS = False\n         LIMIT_FETCH = \"LIMIT\"\n \n+        def round_sql(self, expression: exp.Round) -> str:\n+            return self.function_fallback_sql(expression)\n+\n         # Redshift doesn't have `WITH` as part of their with_properties so we remove it\n         WITH_PROPERTIES_PREFIX = \" \"\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

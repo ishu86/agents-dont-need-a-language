@@ -1,0 +1,313 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(postgres): generate float if the type has precision\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "identity|FLOAT|float",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 174,
+   "output_tokens": 33
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 233,
+   "output_tokens": 74
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def .*type|DataType.Type.FLOAT|precision",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 6121,
+   "output_tokens": 1744
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 390,
+    "end_line": 450
+   },
+   "output_chars": 3028,
+   "output_tokens": 649
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_identity",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 8
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 310,
+    "end_line": 345
+   },
+   "output_chars": 1949,
+   "output_tokens": 472
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 660,
+    "end_line": 720
+   },
+   "output_chars": 2793,
+   "output_tokens": 616
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DataType.Type.FLOAT",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "datatype_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 66,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1310,
+    "end_line": 1360
+   },
+   "output_chars": 2490,
+   "output_tokens": 608
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 90,
+    "end_line": 150
+   },
+   "output_chars": 2568,
+   "output_tokens": 608
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        def datatype_sql(self, expression: exp.DataType) -> str:\n            \"\"\"\n            Redshift converts the `TEXT` data type to `VARCHAR(255)` by default when people more generally mean\n",
+    "new": "        def datatype_sql(self, expression: exp.DataType) -> str:\n            if expression.is_type(exp.DataType.Type.FLOAT) and expression.expressions:\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n\n            \"\"\"\n            Redshift converts the `TEXT` data type to `VARCHAR(255)` by default when people more generally mean\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "            if expression.is_type(exp.DataType.Type.FLOAT) and expression.expressions:\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n",
+    "new": "            if expression.is_type(exp.DataType.Type.DOUBLE) and expression.expressions:\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated Redshift datatype generation to emit FLOAT with its precision parameters, preserving FLOAT(n) during roundtrips. The targeted identity test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 306,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 398,
+   "cached_tokens": 0,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 476,
+   "cached_tokens": 0,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 581,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2372,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3068,
+   "cached_tokens": 2369,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3117,
+   "cached_tokens": 3065,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3635,
+   "cached_tokens": 3114,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4298,
+   "cached_tokens": 3632,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4342,
+   "cached_tokens": 4295,
+   "output_tokens": 28,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4399,
+   "cached_tokens": 4339,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5053,
+   "cached_tokens": 4396,
+   "output_tokens": 53,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5725,
+   "cached_tokens": 5050,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5769,
+   "cached_tokens": 5722,
+   "output_tokens": 244,
+   "reasoning_tokens": 85,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6025,
+   "cached_tokens": 5766,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6313,
+   "cached_tokens": 6022,
+   "output_tokens": 137,
+   "reasoning_tokens": 34,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6462,
+   "cached_tokens": 6310,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6522,
+   "cached_tokens": 6459,
+   "output_tokens": 44,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 51.2,
+ "usage": {
+  "input_tokens": 68861,
+  "cached_tokens": 60539,
+  "output_tokens": 914,
+  "reasoning_tokens": 134
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex 1430f1e..0500871 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -412,6 +412,9 @@ class Redshift(Postgres):\n             return super().cast_sql(expression, safe_prefix=safe_prefix)\n \n         def datatype_sql(self, expression: exp.DataType) -> str:\n+            if expression.is_type(exp.DataType.Type.DOUBLE) and expression.expressions:\n+                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n+\n             \"\"\"\n             Redshift converts the `TEXT` data type to `VARCHAR(255)` by default when people more generally mean\n             VARCHAR of max length which is `VARCHAR(max)` in Redshift. Therefore if we get a `TEXT` data type\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

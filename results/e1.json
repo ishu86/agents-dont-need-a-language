@@ -1,0 +1,38 @@
+{
+ "python": {
+  "files": 274,
+  "tokens": 657460,
+  "no_comments": 590653,
+  "no_types": 644415,
+  "no_ws": 588081,
+  "lines": 74133,
+  "pct_comments": 10.2,
+  "pct_type_annotations": 2.0,
+  "pct_whitespace": 10.6,
+  "tokens_per_line": 8.87
+ },
+ "typescript": {
+  "files": 106,
+  "tokens": 184663,
+  "no_comments": 179056,
+  "no_types": 176719,
+  "no_ws": 167801,
+  "lines": 20710,
+  "pct_comments": 3.0,
+  "pct_type_annotations": 4.3,
+  "pct_whitespace": 9.1,
+  "tokens_per_line": 8.92
+ },
+ "rust": {
+  "files": 59,
+  "tokens": 272068,
+  "no_comments": 193196,
+  "no_types": 262937,
+  "no_ws": 251730,
+  "lines": 26365,
+  "pct_comments": 29.0,
+  "pct_type_annotations": 3.4,
+  "pct_whitespace": 7.5,
+  "tokens_per_line": 10.32
+ }
+}

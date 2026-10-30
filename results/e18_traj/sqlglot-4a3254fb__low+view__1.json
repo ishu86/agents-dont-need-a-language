@@ -1,0 +1,372 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK. printf cleanup\n\n* feat(snowflake)!: transpilation support MAP_PICK. single args, list and array handled\n\n* feat(snowflake)!: transpilation support MAP_PICK. review comments and simplified single args, list and array handled\n\n* feat(snowflake)!: transpilation support MAP_PICK. review comments and simplified single args, list and array handled\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_duckdb.py::TestDuckDB::test_map_pick",
+ "steps": [
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MAP_PICK|map_pick",
+    "path": "."
+   },
+   "output_chars": 816,
+   "output_tokens": 255
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Snowflake"
+   },
+   "output_chars": 702,
+   "output_tokens": 199
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "MapPick"
+   },
+   "output_chars": 64,
+   "output_tokens": 18
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "MapPick"
+   },
+   "output_chars": 40,
+   "output_tokens": 15
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "MAP_PICK"
+   },
+   "output_chars": 28,
+   "output_tokens": 6
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 2550,
+    "end_line": 2620
+   },
+   "output_chars": 3173,
+   "output_tokens": 877
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Map.*Filter|MAP_ENTRIES|ARRAY_CONTAINS",
+    "path": "sqlglot"
+   },
+   "output_chars": 1423,
+   "output_tokens": 405
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "map_pick"
+   },
+   "output_chars": 28,
+   "output_tokens": 6
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 3710,
+    "end_line": 3760
+   },
+   "output_chars": 2306,
+   "output_tokens": 524
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "MapDelete"
+   },
+   "output_chars": 889,
+   "output_tokens": 284
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "mapdelete_sql"
+   },
+   "output_chars": 68,
+   "output_tokens": 23
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "MapPick"
+   },
+   "output_chars": 40,
+   "output_tokens": 15
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/array.py",
+    "start_line": 280,
+    "end_line": 325
+   },
+   "output_chars": 1023,
+   "output_tokens": 272
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MapDelete|MapSize|MapPick",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 194,
+   "output_tokens": 60
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 800,
+    "end_line": 875
+   },
+   "output_chars": 3266,
+   "output_tokens": 748
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "MapDelete"
+   },
+   "output_chars": 66,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 900,
+    "end_line": 965
+   },
+   "output_chars": 3692,
+   "output_tokens": 942
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "old": "            \"MD5_HEX\": exp.MD5.from_arg_list,",
+    "new": "            \"MAP_PICK\": exp.MapPick.from_arg_list,\n            \"MD5_HEX\": exp.MD5.from_arg_list,"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 3723,
+    "end_line": 3745
+   },
+   "output_chars": 1113,
+   "output_tokens": 259
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "        def mapsize_sql(self, expression: exp.MapSize) -> str:\n",
+    "new": "        def mappick_sql(self, expression: exp.MapPick) -> str:\n            keys = expression.expressions\n            x_dot_key = exp.Dot(this=exp.to_identifier(\"x\"), expression=exp.to_identifier(\"key\"))\n\n            if len(keys) == 1:\n                predicate = exp.ArrayContains(this=keys[0], expression=x_dot_key)\n            else:\n                predicate = exp.In(this=x_dot_key, expressions=keys)\n\n            result = exp.func(\n                \"MAP_FROM_ENTRIES\",\n                exp.ArrayFilter(\n                    this=exp.func(\"MAP_ENTRIES\", expression.this),\n                    expression=exp.Lambda(this=predicate, expressions=[exp.to_identifier(\"x\")]),\n                ),\n            )\n            return self.sql(result)\n\n        def mapsize_sql(self, expression: exp.MapSize) -> str:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_map_pick tests/dialects/test_snowflake.py -q"
+   },
+   "output_chars": 192,
+   "output_tokens": 31
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added Snowflake parsing for MAP_PICK and DuckDB transpilation that filters map entries using either a list/array of keys or multiple key arguments. The targeted DuckDB test and Snowflake dialect tests pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 631,
+   "cached_tokens": 0,
+   "output_tokens": 37,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 934,
+   "cached_tokens": 0,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1164,
+   "cached_tokens": 0,
+   "output_tokens": 19,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1212,
+   "cached_tokens": 1161,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1255,
+   "cached_tokens": 1209,
+   "output_tokens": 19,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1291,
+   "cached_tokens": 1252,
+   "output_tokens": 81,
+   "reasoning_tokens": 41,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2260,
+   "cached_tokens": 1288,
+   "output_tokens": 49,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2725,
+   "cached_tokens": 2257,
+   "output_tokens": 19,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2761,
+   "cached_tokens": 2722,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3335,
+   "cached_tokens": 2758,
+   "output_tokens": 63,
+   "reasoning_tokens": 41,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3693,
+   "cached_tokens": 3332,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3747,
+   "cached_tokens": 3690,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3790,
+   "cached_tokens": 3744,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4109,
+   "cached_tokens": 3787,
+   "output_tokens": 48,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4228,
+   "cached_tokens": 4106,
+   "output_tokens": 62,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5049,
+   "cached_tokens": 4225,
+   "output_tokens": 19,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5097,
+   "cached_tokens": 5046,
+   "output_tokens": 119,
+   "reasoning_tokens": 80,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6169,
+   "cached_tokens": 5094,
+   "output_tokens": 76,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6257,
+   "cached_tokens": 6166,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6566,
+   "cached_tokens": 6254,
+   "output_tokens": 241,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6819,
+   "cached_tokens": 6563,
+   "output_tokens": 61,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6922,
+   "cached_tokens": 6816,
+   "output_tokens": 57,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 70.0,
+ "usage": {
+  "input_tokens": 80014,
+  "cached_tokens": 71470,
+  "output_tokens": 1160,
+  "reasoning_tokens": 232
+ },
+ "diff": "diff --git a/sqlglot/dialects/duckdb.py b/sqlglot/dialects/duckdb.py\nindex 8f3f00d..994ba3e 100644\n--- a/sqlglot/dialects/duckdb.py\n+++ b/sqlglot/dialects/duckdb.py\n@@ -3741,6 +3741,24 @@ class DuckDB(Dialect):\n             )\n             return self.sql(result)\n \n+        def mappick_sql(self, expression: exp.MapPick) -> str:\n+            keys = expression.expressions\n+            x_dot_key = exp.Dot(this=exp.to_identifier(\"x\"), expression=exp.to_identifier(\"key\"))\n+\n+            if len(keys) == 1:\n+                predicate = exp.ArrayContains(this=keys[0], expression=x_dot_key)\n+            else:\n+                predicate = exp.In(this=x_dot_key, expressions=keys)\n+\n+            result = exp.func(\n+                \"MAP_FROM_ENTRIES\",\n+                exp.ArrayFilter(\n+                    this=exp.func(\"MAP_ENTRIES\", expression.this),\n+                    expression=exp.Lambda(this=predicate, expressions=[exp.to_identifier(\"x\")]),\n+                ),\n+            )\n+            return self.sql(result)\n+\n         def mapsize_sql(self, expression: exp.MapSize) -> str:\n             return self.func(\"CARDINALITY\", expression.this)\n \ndiff --git a/sqlglot/dialects/snowflake.py b/sqlglot/dialects/snowflake.py\nindex 221f94e..db0990a 100644\n--- a/sqlglot/dialects/snowflake.py\n+++ b/sqlglot/dialects/snowflake.py\n@@ -955,6 +955,7 @@ class Snowflake(Dialect):\n                 expression=seq_get(args, 1),\n                 case_insensitive=True,\n             ),\n+            \"MAP_PICK\": exp.MapPick.from_arg_list,\n             \"MD5_HEX\": exp.MD5.from_arg_list,\n             \"MD5_BINARY\": exp.MD5Digest.from_arg_list,\n             \"MD5_NUMBER_LOWER64\": exp.MD5NumberLower64.from_arg_list,\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

@@ -1,0 +1,529 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "feat(mysql): Support `CHANGE COLUMN`.\n\nIn MySQL, `CHANGE COLUMN` will redefine a column, optionally renaming\nit:\n\n```\nCHANGE [COLUMN] old_col_name new_col_name column_definition\n    [FIRST | AFTER col_name]\n```\n\nWhen factoring this in, I evaluated two options:\n\n* Create a separate `ChangeColumn` type similar to the `ModifyColumn`\n  type. Given that the `MODIFY` and `CHANGE` syntax are nearly identical\n  except for the ability to rename the column, this seemed like the wrong\n  approach.\n\n* Add a `rename_from` attribute to the `ModifyColumn` implementation,\n  accepting the \"original\" column name.\n\nEven though `ChangeColumn` seemed to be a more orthogonal change with\ncleaner code, I chose the latter because it seemed more semantically\ncorrect: apart from a `new_col_name`, they share the same syntax and\nbehaviour.\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_mysql.py::TestMySQL::test_ddl",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ModifyColumn|modify_column",
+    "path": ""
+   },
+   "output_chars": 253,
+   "output_tokens": 67
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "CHANGE COLUMN|CHANGE",
+    "path": "sqlglot"
+   },
+   "output_chars": 1302,
+   "output_tokens": 368
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/ddl.py",
+    "start_line": 200,
+    "end_line": 285
+   },
+   "output_chars": 2132,
+   "output_tokens": 538
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 280,
+    "end_line": 370
+   },
+   "output_chars": 3409,
+   "output_tokens": 793
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3970,
+    "end_line": 4035
+   },
+   "output_chars": 3039,
+   "output_tokens": 763
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_ddl",
+    "path": "tests/dialects/test_mysql.py"
+   },
+   "output_chars": 27,
+   "output_tokens": 9
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ModifyColumn|ADD COLUMN|ALTER TABLE",
+    "path": "tests/dialects/test_mysql.py"
+   },
+   "output_chars": 3201,
+   "output_tokens": 734
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_mysql.py",
+    "start_line": 1,
+    "end_line": 80
+   },
+   "output_chars": 5014,
+   "output_tokens": 1163
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_alter_table_modify|TokenType.MODIFY|ModifyColumn",
+    "path": "sqlglot"
+   },
+   "output_chars": 629,
+   "output_tokens": 175
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "first|after",
+    "path": "sqlglot/expressions/ddl.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 220,
+    "end_line": 280
+   },
+   "output_chars": 2554,
+   "output_tokens": 647
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ColumnPosition|position=|AfterColumn|First",
+    "path": "sqlglot"
+   },
+   "output_chars": 4479,
+   "output_tokens": 1251
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class ColumnDef|ColumnDef",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 200,
+   "output_tokens": 53
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/hive.py",
+    "start_line": 225,
+    "end_line": 270
+   },
+   "output_chars": 1837,
+   "output_tokens": 418
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/hive.py",
+    "start_line": 470,
+    "end_line": 505
+   },
+   "output_chars": 1625,
+   "output_tokens": 354
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_mysql.py::TestMySQL::test_ddl -q"
+   },
+   "output_chars": 5947,
+   "output_tokens": 1364
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7130,
+    "end_line": 7180
+   },
+   "output_chars": 2049,
+   "output_tokens": 453
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/query.py",
+    "start_line": 480,
+    "end_line": 520
+   },
+   "output_chars": 1085,
+   "output_tokens": 268
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1128,
+    "end_line": 1162
+   },
+   "output_chars": 1643,
+   "output_tokens": 396
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 900,
+    "end_line": 940
+   },
+   "output_chars": 1489,
+   "output_tokens": 316
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "position\\\"|position',|\"position\"",
+    "path": "sqlglot/generators"
+   },
+   "output_chars": 1984,
+   "output_tokens": 538
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "modifycolumn_sql|SUPPORTS_MODIFY_COLUMN|ColumnDef",
+    "path": "sqlglot/generators/mysql.py"
+   },
+   "output_chars": 38,
+   "output_tokens": 11
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1150,
+    "end_line": 1170
+   },
+   "output_chars": 1104,
+   "output_tokens": 266
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/mysql.py",
+    "start_line": 1,
+    "end_line": 90
+   },
+   "output_chars": 3008,
+   "output_tokens": 837
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SUPPORTS_MODIFY_COLUMN",
+    "path": "sqlglot"
+   },
+   "output_chars": 196,
+   "output_tokens": 59
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 390,
+    "end_line": 460
+   },
+   "output_chars": 2972,
+   "output_tokens": 753
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALTER_PARSERS =|\"CHANGE\"",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALTER_PARSERS",
+    "path": "sqlglot"
+   },
+   "output_chars": 1161,
+   "output_tokens": 370
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1420,
+    "end_line": 1465
+   },
+   "output_chars": 2499,
+   "output_tokens": 662
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions/ddl.py",
+    "old": "class ModifyColumn(Expression):\n    pass\n",
+    "new": "class ModifyColumn(Expression):\n    arg_types = {\"this\": True, \"rename_from\": False}\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "    ALTER_PARSERS = {\n        **parser.Parser.ALTER_PARSERS,\n        \"MODIFY\": lambda self: self._parse_alter_table_modify(),\n        \"AUTO_INCREMENT\": lambda self: self._parse_property_assignment(exp.AutoIncrementProperty),\n    }\n",
+    "new": "    ALTER_PARSERS = {\n        **parser.Parser.ALTER_PARSERS,\n        \"CHANGE\": lambda self: self._parse_alter_table_change(),\n        \"MODIFY\": lambda self: self._parse_alter_table_modify(),\n        \"AUTO_INCREMENT\": lambda self: self._parse_property_assignment(exp.AutoIncrementProperty),\n    }\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "    def modifycolumn_sql(self, expression: exp.ModifyColumn) -> str:\n        if not self.SUPPORTS_MODIFY_COLUMN:\n            self.unsupported(\"MODIFY COLUMN is not supported in this dialect\")\n        return f\"MODIFY COLUMN {self.sql(expression, 'this')}\"\n",
+    "new": "    def modifycolumn_sql(self, expression: exp.ModifyColumn) -> str:\n        if not self.SUPPORTS_MODIFY_COLUMN:\n            self.unsupported(\"MODIFY COLUMN is not supported in this dialect\")\n\n        rename_from = self.sql(expression, \"rename_from\")\n        if rename_from:\n            return f\"CHANGE COLUMN {rename_from} {self.sql(expression, 'this')}\"\n\n        return f\"MODIFY COLUMN {self.sql(expression, 'this')}\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "    def _parse_alter_table_modify(self) -> exp.Expr | None:\n        self._match(TokenType.COLUMN)\n\n        column = self._parse_field(any_token=True)\n        if column is None:\n            return None\n\n        column_def = self._parse_column_def(column)\n        if not isinstance(column_def, exp.ColumnDef):\n            return None\n\n        return self.expression(exp.ModifyColumn(this=column_def))\n\n    def _parse_generated_as_identity(\n",
+    "new": "    def _parse_alter_table_modify(self) -> exp.Expr | None:\n        self._match(TokenType.COLUMN)\n\n        column = self._parse_field(any_token=True)\n        if column is None:\n            return None\n\n        column_def = self._parse_column_def(column)\n        if not isinstance(column_def, exp.ColumnDef):\n            return None\n\n        return self.expression(exp.ModifyColumn(this=column_def))\n\n    def _parse_alter_table_change(self) -> exp.Expr | None:\n        self._match(TokenType.COLUMN)\n\n        rename_from = self._parse_field(any_token=True)\n        column = self._parse_field(any_token=True)\n        if rename_from is None or column is None:\n            return None\n\n        column_def = self._parse_column_def(column)\n        if not isinstance(column_def, exp.ColumnDef):\n            return None\n\n        return self.expression(exp.ModifyColumn(this=column_def, rename_from=rename_from))\n\n    def _parse_generated_as_identity(\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_mysql.py::TestMySQL::test_ddl -q"
+   },
+   "output_chars": 108,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_singlestore.py -q"
+   },
+   "output_chars": 119,
+   "output_tokens": 22
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_mysql.py -q"
+   },
+   "output_chars": 151,
+   "output_tokens": 29
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ModifyColumn\\(",
+    "path": "sqlglot"
+   },
+   "output_chars": 278,
+   "output_tokens": 69
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "-q"
+   },
+   "output_chars": 1705,
+   "output_tokens": 429
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -q"
+   },
+   "output_chars": 908,
+   "output_tokens": 99
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Implemented MySQL CHANGE COLUMN parsing and generation using ModifyColumn with a rename_from attribute. CHANGE COLUMN supports optional COLUMN, renaming, column definitions, and FIRST/AFTER positioning. MySQL and Singlestore tests passed; all dialect tests passed (728 tests, 11,031 subtests). The full suite could not collect because duckdb is not installed."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 486,
+   "cached_tokens": 0,
+   "output_tokens": 89,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1130,
+   "cached_tokens": 0,
+   "output_tokens": 182,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4196,
+   "cached_tokens": 1127,
+   "output_tokens": 124,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5690,
+   "cached_tokens": 4193,
+   "output_tokens": 64,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6412,
+   "cached_tokens": 5687,
+   "output_tokens": 197,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10096,
+   "cached_tokens": 6409,
+   "output_tokens": 223,
+   "reasoning_tokens": 48,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12337,
+   "cached_tokens": 10093,
+   "output_tokens": 324,
+   "reasoning_tokens": 178,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13872,
+   "cached_tokens": 12334,
+   "output_tokens": 212,
+   "reasoning_tokens": 178,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14848,
+   "cached_tokens": 13869,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14896,
+   "cached_tokens": 14845,
+   "output_tokens": 39,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15316,
+   "cached_tokens": 14893,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16023,
+   "cached_tokens": 15313,
+   "output_tokens": 837,
+   "reasoning_tokens": 395,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16892,
+   "cached_tokens": 16020,
+   "output_tokens": 377,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17281,
+   "cached_tokens": 16889,
+   "output_tokens": 84,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17428,
+   "cached_tokens": 17278,
+   "output_tokens": 119,
+   "reasoning_tokens": 53,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17665,
+   "cached_tokens": 17425,
+   "output_tokens": 67,
+   "reasoning_tokens": 46,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18172,
+   "cached_tokens": 17662,
+   "output_tokens": 233,
+   "reasoning_tokens": 208,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18515,
+   "cached_tokens": 18169,
+   "output_tokens": 141,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 78.3,
+ "usage": {
+  "input_tokens": 221255,
+  "cached_tokens": 202206,
+  "output_tokens": 3380,
+  "reasoning_tokens": 1267
+ },
+ "diff": "diff --git a/sqlglot/expressions/ddl.py b/sqlglot/expressions/ddl.py\nindex 9576a1a..829c917 100644\n--- a/sqlglot/expressions/ddl.py\n+++ b/sqlglot/expressions/ddl.py\n@@ -246,7 +246,7 @@ class AlterColumn(Expression):\n \n \n class ModifyColumn(Expression):\n-    pass\n+    arg_types = {\"this\": True, \"rename_from\": False}\n \n \n class AlterIndex(Expression):\ndiff --git a/sqlglot/generator.py b/sqlglot/generator.py\nindex e47b24b..b1fa353 100644\n--- a/sqlglot/generator.py\n+++ b/sqlglot/generator.py\n@@ -4009,6 +4009,11 @@ class Generator:\n     def modifycolumn_sql(self, expression: exp.ModifyColumn) -> str:\n         if not self.SUPPORTS_MODIFY_COLUMN:\n             self.unsupported(\"MODIFY COLUMN is not supported in this dialect\")\n+\n+        rename_from = self.sql(expression, \"rename_from\")\n+        if rename_from:\n+            return f\"CHANGE COLUMN {rename_from} {self.sql(expression, 'this')}\"\n+\n         return f\"MODIFY COLUMN {self.sql(expression, 'this')}\"\n \n     def alterindex_sql(self, expression: exp.AlterIndex) -> str:\ndiff --git a/sqlglot/parsers/mysql.py b/sqlglot/parsers/mysql.py\nindex 8fb5301..91b5595 100644\n--- a/sqlglot/parsers/mysql.py\n+++ b/sqlglot/parsers/mysql.py\n@@ -252,6 +252,7 @@ class MySQLParser(parser.Parser):\n \n     ALTER_PARSERS = {\n         **parser.Parser.ALTER_PARSERS,\n+        \"CHANGE\": lambda self: self._parse_alter_table_change(),\n         \"MODIFY\": lambda self: self._parse_alter_table_modify(),\n         \"AUTO_INCREMENT\": lambda self: self._parse_property_assignment(exp.AutoIncrementProperty),\n     }\n@@ -328,6 +329,20 @@ class MySQLParser(parser.Parser):\n \n         return self.expression(exp.ModifyColumn(this=column_def))\n \n+    def _parse_alter_table_change(self) -> exp.Expr | None:\n+        self._match(TokenType.COLUMN)\n+\n+        rename_from = self._parse_field(any_token=True)\n+        column = self._parse_field(any_token=True)\n+        if rename_from is None or column is None:\n+            return None\n+\n+        column_def = self._parse_column_def(column)\n+        if not isinstance(column_def, exp.ColumnDef):\n+            return None\n+\n+        return self.expression(exp.ModifyColumn(this=column_def, rename_from=rename_from))\n+\n     def _parse_generated_as_identity(\n         self,\n     ) -> (\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

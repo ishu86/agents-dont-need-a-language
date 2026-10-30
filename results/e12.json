@@ -1,0 +1,6 @@
+{
+ "model_calls": 11998,
+ "read_only_tool_calls_pct": 28.2,
+ "calls_mergeable_pct": 11.8,
+ "context_tokens_saved_pct": 10.7
+}

@@ -1,0 +1,171 @@
+{
+ "summary": {
+  "pass_": "16/16",
+  "spec_tokens": 206,
+  "pyx_tokens_per_run": 726,
+  "python_tokens_e10": 549,
+  "pyx_pct_of_python": 132
+ },
+ "rows": [
+  {
+   "task": "is_pal",
+   "ok": true,
+   "pyx_tokens": 33,
+   "err": "",
+   "pyx": "fn is_pal(s) {\n  t = \"\".join(c.lower() for c in s if c.isalnum())\n  ret t == t[::-1]\n}\n",
+   "out": 336,
+   "cost": 0.0032029000000000003,
+   "reason": "completed"
+  },
+  {
+   "task": "is_pal",
+   "ok": true,
+   "pyx_tokens": 34,
+   "err": "",
+   "pyx": "fn is_pal(s) {\n  t = \"\".join([c.lower() for c in s if c.isalnum()])\n  ret t == t[::-1]\n}\n",
+   "out": 431,
+   "cost": 0.0032504000000000005,
+   "reason": "completed"
+  },
+  {
+   "task": "rle",
+   "ok": true,
+   "pyx_tokens": 98,
+   "err": "",
+   "pyx": "fn rle(s) {\n  if len(s) == 0 {\n    ret \"\"\n  }\n  out = []\n  i = 0\n  while i < len(s) {\n    c = s[i]\n    n = 1\n    while i + n < len(s) && s[i + n] == c {\n      n += 1\n    }\n    out.append(c + str(n))\n    i += n\n  }\n  ret \"\".join(out)\n}\n",
+   "out": 513,
+   "cost": 0.0032896,
+   "reason": "completed"
+  },
+  {
+   "task": "rle",
+   "ok": true,
+   "pyx_tokens": 96,
+   "err": "",
+   "pyx": "fn rle(s) {\n  if len(s) == 0 {\n    ret \"\"\n  }\n  out = \"\"\n  cur = s[0]\n  n = 1\n  for c in s[1:] {\n    if c == cur {\n      n += 1\n    }\n    el {\n      out += cur + str(n)\n      cur = c\n      n = 1\n    }\n  }\n  ret out + cur + str(n)\n}\n",
+   "out": 633,
+   "cost": 0.0033496000000000003,
+   "reason": "completed"
+  },
+  {
+   "task": "merge",
+   "ok": true,
+   "pyx_tokens": 127,
+   "err": "",
+   "pyx": "fn merge(iv) {\n  if len(iv) == 0 {\n    ret []\n  }\n  s = sorted(iv, key=lambda p: p[0])\n  out = [[s[0][0], s[0][1]]]\n  for p in s[1:] {\n    last = out[-1]\n    if p[0] <= last[1] {\n      if p[1] > last[1] {\n        last[1] = p[1]\n      }\n    } el {\n      out.append([p[0], p[1]])\n    }\n  }\n  ret out\n}\n",
+   "out": 748,
+   "cost": 0.0034091000000000004,
+   "reason": "completed"
+  },
+  {
+   "task": "merge",
+   "ok": true,
+   "pyx_tokens": 126,
+   "err": "",
+   "pyx": "fn merge(iv) {\n  if len(iv) == 0 {\n    ret []\n  }\n  xs = sorted(iv, key=lambda p: p[0])\n  out = [[xs[0][0], xs[0][1]]]\n  for p in xs[1:] {\n    if p[0] <= out[-1][1] {\n      if p[1] > out[-1][1] {\n        out[-1][1] = p[1]\n      }\n    } el {\n      out.append([p[0], p[1]])\n    }\n  }\n  ret out\n}\n",
+   "out": 775,
+   "cost": 0.0034226000000000005,
+   "reason": "completed"
+  },
+  {
+   "task": "roman",
+   "ok": true,
+   "pyx_tokens": 120,
+   "err": "",
+   "pyx": "fn roman(s) {\n  vals = {\"I\": 1, \"V\": 5, \"X\": 10, \"L\": 50, \"C\": 100, \"D\": 500, \"M\": 1000}\n  total = 0\n  n = len(s)\n  for i in range(n) {\n    v = vals[s[i]]\n    if i + 1 < n && v < vals[s[i + 1]] {\n      total -= v\n    } el {\n      total += v\n    }\n  }\n  ret total\n}\n",
+   "out": 653,
+   "cost": 0.0033578,
+   "reason": "completed"
+  },
+  {
+   "task": "roman",
+   "ok": true,
+   "pyx_tokens": 117,
+   "err": "",
+   "pyx": "fn roman(s) {\n  v = {\"I\": 1, \"V\": 5, \"X\": 10, \"L\": 50, \"C\": 100, \"D\": 500, \"M\": 1000}\n  total = 0\n  for i in range(len(s)) {\n    cur = v[s[i]]\n    if i + 1 < len(s) && cur < v[s[i + 1]] {\n      total -= cur\n    } el {\n      total += cur\n    }\n  }\n  ret total\n}\n",
+   "out": 898,
+   "cost": 0.0034803000000000004,
+   "reason": "completed"
+  },
+  {
+   "task": "two_sum",
+   "ok": true,
+   "pyx_tokens": 62,
+   "err": "",
+   "pyx": "fn two_sum(nums, target) {\n  seen = {}\n  for i in range(len(nums)) {\n    need = target - nums[i]\n    if need in seen {\n      ret [seen[need], i]\n    }\n    seen[nums[i]] = i\n  }\n  ret nil\n}\n",
+   "out": 528,
+   "cost": 0.0033013,
+   "reason": "completed"
+  },
+  {
+   "task": "two_sum",
+   "ok": true,
+   "pyx_tokens": 61,
+   "err": "",
+   "pyx": "fn two_sum(nums, target) {\n  seen = {}\n  for i in range(len(nums)) {\n    need = target - nums[i]\n    if need in seen {\n      ret [seen[need], i]\n    }\n    seen[nums[i]] = i\n  }\n  ret []\n}\n",
+   "out": 442,
+   "cost": 0.0007569499999999999,
+   "reason": "completed"
+  },
+  {
+   "task": "lcp",
+   "ok": true,
+   "pyx_tokens": 57,
+   "err": "",
+   "pyx": "fn lcp(xs) {\n  if len(xs) == 0 {\n    ret \"\"\n  }\n  p = xs[0]\n  for s in xs {\n    while !s.startswith(p) {\n      p = p[:-1]\n    }\n  }\n  ret p\n}\n",
+   "out": 550,
+   "cost": 0.0033089,
+   "reason": "completed"
+  },
+  {
+   "task": "lcp",
+   "ok": true,
+   "pyx_tokens": 86,
+   "err": "",
+   "pyx": "fn lcp(xs) {\n  if len(xs) == 0 {\n    ret \"\"\n  }\n  p = xs[0]\n  for s in xs[1:] {\n    i = 0\n    while i < len(p) && i < len(s) && p[i] == s[i] {\n      i += 1\n    }\n    p = p[:i]\n  }\n  ret p\n}\n",
+   "out": 123,
+   "cost": 0.02543745,
+   "reason": "completed"
+  },
+  {
+   "task": "balanced",
+   "ok": true,
+   "pyx_tokens": 111,
+   "err": "",
+   "pyx": "fn balanced(s) {\n  stack = []\n  pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n  for c in s {\n    if c == \"(\" || c == \"[\" || c == \"{\" {\n      stack.append(c)\n    } ef c == \")\" || c == \"]\" || c == \"}\" {\n      if len(stack) == 0 || stack[-1] != pairs[c] {\n        ret F\n      }\n      stack.pop()\n    }\n  }\n  ret len(stack) == 0\n}\n",
+   "out": 172,
+   "cost": 0.02555995,
+   "reason": "completed"
+  },
+  {
+   "task": "balanced",
+   "ok": true,
+   "pyx_tokens": 81,
+   "err": "",
+   "pyx": "fn balanced(s) {\n  stack = []\n  pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n  for c in s {\n    if c in \"([{\" {\n      stack.append(c)\n    } ef c in pairs {\n      if !stack || stack.pop() != pairs[c] {\n        ret F\n      }\n    }\n  }\n  ret !stack\n}\n",
+   "out": 130,
+   "cost": 0.02545495,
+   "reason": "completed"
+  },
+  {
+   "task": "primes",
+   "ok": true,
+   "pyx_tokens": 122,
+   "err": "",
+   "pyx": "fn primes(n) {\n  if n < 2 {\n    ret []\n  }\n  sieve = [T for _ in range(n + 1)]\n  sieve[0] = F\n  sieve[1] = F\n  for i in range(2, int(n ** 0.5) + 1) {\n    if sieve[i] {\n      for j in range(i * i, n + 1, i) {\n        sieve[j] = F\n      }\n    }\n  }\n  ret [i for i in range(n + 1) if sieve[i]]\n}\n",
+   "out": 172,
+   "cost": 0.02554895,
+   "reason": "completed"
+  },
+  {
+   "task": "primes",
+   "ok": true,
+   "pyx_tokens": 121,
+   "err": "",
+   "pyx": "fn primes(n) {\n  if n < 2 {\n    ret []\n  }\n  sieve = [T] * (n + 1)\n  sieve[0] = F\n  sieve[1] = F\n  i = 2\n  while i * i <= n {\n    if sieve[i] {\n      j = i * i\n      while j <= n {\n        sieve[j] = F\n        j += i\n      }\n    }\n    i += 1\n  }\n  ret [k for k in range(n + 1) if sieve[k]]\n}\n",
+   "out": 167,
+   "cost": 0.025536450000000002,
+   "reason": "completed"
+  }
+ ]
+}

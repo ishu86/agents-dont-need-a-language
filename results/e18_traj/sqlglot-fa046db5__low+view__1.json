@@ -1,0 +1,241 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(redshift): do not inherit postgres `ROUND` generator\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_redshift",
+ "steps": [
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "visit_Round"
+   },
+   "output_chars": 31,
+   "output_tokens": 7
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "RedshiftCompiler"
+   },
+   "output_chars": 27,
+   "output_tokens": 6
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "Round"
+   },
+   "output_chars": 202,
+   "output_tokens": 78
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 363,
+   "output_tokens": 134
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Round|ROUND|round",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2009
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "visit_Round|Round",
+    "path": "sqlglot"
+   },
+   "output_chars": 352,
+   "output_tokens": 104
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "round_sql"
+   },
+   "output_chars": 67,
+   "output_tokens": 20
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Postgres"
+   },
+   "output_chars": 1122,
+   "output_tokens": 314
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 690,
+    "end_line": 725
+   },
+   "output_chars": 1619,
+   "output_tokens": 346
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_redshift",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 31,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 713,
+    "end_line": 740
+   },
+   "output_chars": 1420,
+   "output_tokens": 278
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 1,
+    "end_line": 45
+   },
+   "output_chars": 2454,
+   "output_tokens": 662
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "round_sql",
+    "path": "sqlglot"
+   },
+   "output_chars": 92,
+   "output_tokens": 26
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "    class Generator(Postgres.Generator):\n        LOCKING_READS_SUPPORTED = False",
+    "new": "    class Generator(Postgres.Generator):\n        def round_sql(self, expression: exp.Round) -> str:\n            return self.func(\"ROUND\", self.sql(expression, \"this\"), self.sql(expression, \"decimals\"))\n\n        LOCKING_READS_SUPPORTED = False"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_redshift"
+   },
+   "output_chars": 480,
+   "output_tokens": 144
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Overrode Redshift's ROUND SQL generator to avoid inheriting PostgreSQL's type-annotation and casting behavior. The targeted Redshift test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 505,
+   "cached_tokens": 0,
+   "output_tokens": 66,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 690,
+   "cached_tokens": 0,
+   "output_tokens": 23,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 858,
+   "cached_tokens": 0,
+   "output_tokens": 96,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3099,
+   "cached_tokens": 0,
+   "output_tokens": 131,
+   "reasoning_tokens": 19,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3957,
+   "cached_tokens": 3096,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4282,
+   "cached_tokens": 3954,
+   "output_tokens": 43,
+   "reasoning_tokens": 6,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4998,
+   "cached_tokens": 4279,
+   "output_tokens": 91,
+   "reasoning_tokens": 64,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5126,
+   "cached_tokens": 4995,
+   "output_tokens": 143,
+   "reasoning_tokens": 31,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5281,
+   "cached_tokens": 5123,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5469,
+   "cached_tokens": 5278,
+   "output_tokens": 45,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 33.9,
+ "usage": {
+  "input_tokens": 34265,
+  "cached_tokens": 26725,
+  "output_tokens": 707,
+  "reasoning_tokens": 120
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex 538ec7d..e1c4342 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -144,6 +144,9 @@ class Redshift(Postgres):\n         SINGLE_TOKENS.pop(\"#\")\n \n     class Generator(Postgres.Generator):\n+        def round_sql(self, expression: exp.Round) -> str:\n+            return self.func(\"ROUND\", self.sql(expression, \"this\"), self.sql(expression, \"decimals\"))\n+\n         LOCKING_READS_SUPPORTED = False\n         QUERY_HINTS = False\n         VALUES_AS_TABLE = False\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

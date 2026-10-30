@@ -1,0 +1,881 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "feat(parser)!: robust STAR with EXCLUDE (redshift)\n\n* feat(parser)!: robust STAR with EXCLUDE (redshift)\n\n* add test\n\n* refactor\n\n* PR feedback 1 (george)\n\n* refactor comments\n\n* fix parsing\n\n* add more tests\n\n* fix style\n\n* remove comment\n\n* ref\n\n* refactor roundtrips\n\n* revert change\n\n* mypy\n\n* refactor\n\n* Update sqlglot/dialects/redshift.py\n\n---------\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 231,
+   "output_tokens": 77
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "STAR|EXCLUDE|identity",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 174,
+   "output_tokens": 33
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_identity|EXCLUDE",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 1894,
+   "output_tokens": 651
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 290,
+    "end_line": 355
+   },
+   "output_chars": 4097,
+   "output_tokens": 1131
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 1,
+    "end_line": 380
+   },
+   "output_chars": 8061,
+   "output_tokens": 2001
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "EXCLUDE",
+    "path": "sqlglot"
+   },
+   "output_chars": 2141,
+   "output_tokens": 615
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2078
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8790,
+    "end_line": 8870
+   },
+   "output_chars": 3236,
+   "output_tokens": 814
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 1805,
+    "end_line": 1840
+   },
+   "output_chars": 1589,
+   "output_tokens": 404
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 1570,
+    "end_line": 1610
+   },
+   "output_chars": 1851,
+   "output_tokens": 462
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 1200,
+    "end_line": 1255
+   },
+   "output_chars": 2297,
+   "output_tokens": 521
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 440,
+    "end_line": 515
+   },
+   "output_chars": 4169,
+   "output_tokens": 1221
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_star_ops|_parse_select\\(|_parse_projections|STAR_EXCEPT",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 1416,
+   "output_tokens": 339
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3340,
+    "end_line": 3515
+   },
+   "output_chars": 7415,
+   "output_tokens": 1726
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3280,
+    "end_line": 3345
+   },
+   "output_chars": 2735,
+   "output_tokens": 653
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_expressions|def _parse_expression\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 133,
+   "output_tokens": 35
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7700,
+    "end_line": 7765
+   },
+   "output_chars": 2698,
+   "output_tokens": 667
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ExcludeColumnConstraint|except_.*Star|class Star",
+    "path": "sqlglot/expressions.py"
+   },
+   "output_chars": 142,
+   "output_tokens": 35
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 4610,
+    "end_line": 4655
+   },
+   "output_chars": 1187,
+   "output_tokens": 344
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Star.*except_|except_.*Star|STAR_EXCEPT|STAR_REPLACE",
+    "path": "sqlglot"
+   },
+   "output_chars": 413,
+   "output_tokens": 131
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 2915,
+    "end_line": 2970
+   },
+   "output_chars": 2648,
+   "output_tokens": 662
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_dialect.py",
+    "start_line": 50,
+    "end_line": 100
+   },
+   "output_chars": 2209,
+   "output_tokens": 449
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_dialect.py",
+    "start_line": 90,
+    "end_line": 115
+   },
+   "output_chars": 1121,
+   "output_tokens": 212
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.Select:|def select_sql|def select\\(",
+    "path": "sqlglot/generator.py sqlglot/dialects/duckdb.py sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 419,
+   "output_tokens": 174
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.Select:|def select_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 62,
+   "output_tokens": 17
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.Select:|SELECT|star_sql",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 2078,
+   "output_tokens": 636
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.Select:|SELECT|star_sql",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 1034,
+   "output_tokens": 267
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TRANSFORMS =|exp.Star|STAR_EXCEPT",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 284,
+   "output_tokens": 81
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 2860,
+    "end_line": 2930
+   },
+   "output_chars": 3351,
+   "output_tokens": 734
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_star_op|STAR_OP",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 155,
+   "output_tokens": 43
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7645,
+    "end_line": 7695
+   },
+   "output_chars": 2051,
+   "output_tokens": 486
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3500,
+    "end_line": 3575
+   },
+   "output_chars": 3181,
+   "output_tokens": 771
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_alias|RESERVED_KEYWORDS|IDENTIFIER_TOKENS",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 103,
+   "output_tokens": 28
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7510,
+    "end_line": 7575
+   },
+   "output_chars": 2846,
+   "output_tokens": 689
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def query_modifiers",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 83,
+   "output_tokens": 24
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 2810,
+    "end_line": 2865
+   },
+   "output_chars": 2839,
+   "output_tokens": 679
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class TokenType|IDENTIFIER =|QUOTED_IDENTIFIER",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 135,
+   "output_tokens": 37
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_table(\n",
+    "new": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_alias(\n            self, this: t.Optional[exp.Expression], explicit: bool = False\n        ) -> t.Optional[exp.Expression]:\n            # EXCLUDE can be a trailing modifier for the whole projection list. Don't\n            # consume it as an implicit alias when it is followed by an exclusion list.\n            if (\n                not explicit\n                and getattr(self, \"_redshift_projection_depth\", 0)\n                and self._curr\n                and self._curr.text.upper() == \"EXCLUDE\"\n                and self._next\n                and (\n                    self._next.token_type == TokenType.L_PAREN\n                    or self._next.token_type in (TokenType.VAR, TokenType.IDENTIFIER)\n                )\n            ):\n                return this\n\n            return super()._parse_alias(this, explicit=explicit)\n\n        def _parse_projections(self) -> t.List[exp.Expression]:\n            depth = getattr(self, \"_redshift_projection_depth\", 0)\n            self._redshift_projection_depth = depth + 1\n            try:\n                projections = super()._parse_projections()\n            finally:\n                self._redshift_projection_depth = depth\n\n            if self._curr and self._curr.text.upper() == \"EXCLUDE\":\n                next_token = self._next\n                if next_token and (\n                    next_token.token_type == TokenType.L_PAREN\n                    or next_token.token_type in (TokenType.VAR, TokenType.IDENTIFIER)\n                ):\n                    self._advance()\n                    if self._match(TokenType.L_PAREN):\n                        excluded = self._parse_csv(self._parse_expression)\n                        self._match_r_paren()\n                    else:\n                        excluded = self._parse_csv(self._parse_expression)\n\n                    marker = exp.Star(except_=excluded)\n                    marker.meta[\"redshift_projection_exclude\"] = True\n                    projections.append(marker)\n\n            return projections\n\n        def _parse_select_query(\n            self,\n            nested: bool = False,\n            table: bool = False,\n            parse_subquery_alias: bool = True,\n            parse_set_operation: bool = True,\n        ) -> t.Optional[exp.Expression]:\n            query = super()._parse_select_query(\n                nested=nested,\n                table=table,\n                parse_subquery_alias=parse_subquery_alias,\n                parse_set_operation=parse_set_operation,\n            )\n\n            if isinstance(query, exp.Select):\n                for marker in query.expressions:\n                    if isinstance(marker, exp.Star) and marker.meta.pop(\n                        \"redshift_projection_exclude\", False\n                    ):\n                        projections = [e for e in query.expressions if e is not marker]\n                        inner = query.copy()\n                        inner.set(\"expressions\", projections)\n                        outer = exp.Select(\n                            expressions=[exp.Star(except_=marker.args.get(\"except_\"))],\n                            from_=exp.From(this=inner.subquery(copy=False)),\n                        )\n                        outer.meta[\"redshift_projection_exclude\"] = True\n                        return outer\n\n            return query\n\n        def _parse_table(\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 185,
+    "end_line": 225
+   },
+   "output_chars": 83,
+   "output_tokens": 19
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 185,
+    "end_line": 240
+   },
+   "output_chars": 2360,
+   "output_tokens": 560
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 236,
+    "end_line": 300
+   },
+   "output_chars": 3298,
+   "output_tokens": 763
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        WITH_PROPERTIES_PREFIX = \" \"\n\n        TYPE_MAPPING = {\n",
+    "new": "        WITH_PROPERTIES_PREFIX = \" \"\n\n        def select_sql(self, expression: exp.Select) -> str:\n            if not expression.meta.get(\"redshift_projection_exclude\"):\n                return super().select_sql(expression)\n\n            from_ = expression.args.get(\"from_\")\n            subquery = from_.this if from_ else None\n            inner = subquery.this if isinstance(subquery, exp.Subquery) else None\n            if not isinstance(inner, exp.Select):\n                return super().select_sql(expression)\n\n            full_sql = super().select_sql(inner.copy())\n            projection = inner.copy()\n            for key in (\n                \"from_\",\n                \"joins\",\n                \"match\",\n                \"laterals\",\n                \"prewhere\",\n                \"where\",\n                \"connect\",\n                \"group\",\n                \"having\",\n                \"qualify\",\n                \"order\",\n                \"limit\",\n                \"offset\",\n                \"locks\",\n                \"sample\",\n                \"options\",\n                \"for_\",\n            ):\n                projection.set(key, None)\n            projection_sql = super().select_sql(projection)\n\n            if not full_sql.startswith(projection_sql):\n                return full_sql\n\n            star = expression.expressions[0]\n            excluded = self.expressions(star, key=\"except_\", flat=True)\n            return (\n                f\"{projection_sql} EXCLUDE ({excluded})\"\n                f\"{full_sql[len(projection_sql):]}\"\n            )\n\n        TYPE_MAPPING = {\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 108,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py -q"
+   },
+   "output_chars": 90,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py tests/dialects/test_snowflake.py -q"
+   },
+   "output_chars": 203,
+   "output_tokens": 38
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "redshift_projection_exclude|_redshift_projection_depth",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 553,
+   "output_tokens": 117
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 85,
+    "end_line": 205
+   },
+   "output_chars": 5498,
+   "output_tokens": 1132
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 250,
+    "end_line": 325
+   },
+   "output_chars": 3112,
+   "output_tokens": 676
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "self\\._.*depth =|getattr\\(self, \"_",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 378,
+   "output_tokens": 100
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_alias(\n",
+    "new": "        SUPPORTS_IMPLICIT_UNNEST = True\n        _redshift_projection_depth = 0\n\n        def _parse_alias(\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "            if isinstance(query, exp.Select):\n                for marker in query.expressions:\n                    if isinstance(marker, exp.Star) and marker.meta.pop(\n                        \"redshift_projection_exclude\", False\n                    ):\n                        projections = [e for e in query.expressions if e is not marker]\n                        inner = query.copy()\n                        inner.set(\"expressions\", projections)\n                        outer = exp.Select(\n                            expressions=[exp.Star(except_=marker.args.get(\"except_\"))],\n                            from_=exp.From(this=inner.subquery(copy=False)),\n                        )\n                        outer.meta[\"redshift_projection_exclude\"] = True\n                        return outer\n\n            return query\n",
+    "new": "            if isinstance(query, exp.Expression):\n                selects = [query] if isinstance(query, exp.Select) else query.find_all(exp.Select)\n                for select in selects:\n                    for marker in select.expressions:\n                        if isinstance(marker, exp.Star) and marker.meta.pop(\n                            \"redshift_projection_exclude\", False\n                        ):\n                            projections = [e for e in select.expressions if e is not marker]\n                            inner = select.copy()\n                            inner.set(\"expressions\", projections)\n                            outer = exp.Select(\n                                expressions=[exp.Star(except_=marker.args.get(\"except_\"))],\n                                from_=exp.From(this=inner.subquery(copy=False)),\n                            )\n                            outer.meta[\"redshift_projection_exclude\"] = True\n                            if select is query:\n                                return outer\n                            select.replace(outer)\n                            break\n\n            return query\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py -q"
+   },
+   "output_chars": 90,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py -q"
+   },
+   "output_chars": 134,
+   "output_tokens": 21
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "                and getattr(self, \"_redshift_projection_depth\", 0)\n",
+    "new": "                and self._redshift_projection_depth\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "            depth = getattr(self, \"_redshift_projection_depth\", 0)\n",
+    "new": "            depth = self._redshift_projection_depth\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -q"
+   },
+   "output_chars": 861,
+   "output_tokens": 93
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "mypy|ruff|black",
+    "path": "pyproject.toml"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Implemented Redshift-wide trailing STAR EXCLUDE parsing and normalization, with Redshift SQL generation preserving the original syntax. Verified all dialect tests pass: 668 tests and 10,350 subtests."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 395,
+   "cached_tokens": 0,
+   "output_tokens": 105,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1290,
+   "cached_tokens": 0,
+   "output_tokens": 114,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5180,
+   "cached_tokens": 1287,
+   "output_tokens": 53,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7322,
+   "cached_tokens": 5177,
+   "output_tokens": 178,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9739,
+   "cached_tokens": 7319,
+   "output_tokens": 84,
+   "reasoning_tokens": 47,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11055,
+   "cached_tokens": 9736,
+   "output_tokens": 231,
+   "reasoning_tokens": 186,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11636,
+   "cached_tokens": 11052,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13407,
+   "cached_tokens": 11633,
+   "output_tokens": 60,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14131,
+   "cached_tokens": 13404,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14213,
+   "cached_tokens": 14128,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14925,
+   "cached_tokens": 14210,
+   "output_tokens": 476,
+   "reasoning_tokens": 436,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15447,
+   "cached_tokens": 14922,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15838,
+   "cached_tokens": 15444,
+   "output_tokens": 152,
+   "reasoning_tokens": 111,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16132,
+   "cached_tokens": 15835,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16840,
+   "cached_tokens": 16129,
+   "output_tokens": 70,
+   "reasoning_tokens": 33,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17370,
+   "cached_tokens": 16837,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17628,
+   "cached_tokens": 17367,
+   "output_tokens": 145,
+   "reasoning_tokens": 86,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17958,
+   "cached_tokens": 17625,
+   "output_tokens": 127,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19034,
+   "cached_tokens": 17955,
+   "output_tokens": 636,
+   "reasoning_tokens": 592,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19762,
+   "cached_tokens": 19031,
+   "output_tokens": 2187,
+   "reasoning_tokens": 2150,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22694,
+   "cached_tokens": 19759,
+   "output_tokens": 192,
+   "reasoning_tokens": 157,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22940,
+   "cached_tokens": 0,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23471,
+   "cached_tokens": 22937,
+   "output_tokens": 732,
+   "reasoning_tokens": 696,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 24985,
+   "cached_tokens": 23468,
+   "output_tokens": 525,
+   "reasoning_tokens": 483,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 25549,
+   "cached_tokens": 24982,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26283,
+   "cached_tokens": 25546,
+   "output_tokens": 1867,
+   "reasoning_tokens": 1835,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28185,
+   "cached_tokens": 26280,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28910,
+   "cached_tokens": 28182,
+   "output_tokens": 1758,
+   "reasoning_tokens": 1718,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30716,
+   "cached_tokens": 28907,
+   "output_tokens": 2224,
+   "reasoning_tokens": 1461,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32952,
+   "cached_tokens": 30713,
+   "output_tokens": 64,
+   "reasoning_tokens": 26,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 33046,
+   "cached_tokens": 32949,
+   "output_tokens": 50,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 33667,
+   "cached_tokens": 33043,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34477,
+   "cached_tokens": 33664,
+   "output_tokens": 446,
+   "reasoning_tokens": 51,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34935,
+   "cached_tokens": 34474,
+   "output_tokens": 44,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 35011,
+   "cached_tokens": 34932,
+   "output_tokens": 115,
+   "reasoning_tokens": 37,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 35205,
+   "cached_tokens": 35008,
+   "output_tokens": 215,
+   "reasoning_tokens": 93,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 37374,
+   "cached_tokens": 35202,
+   "output_tokens": 968,
+   "reasoning_tokens": 925,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 38453,
+   "cached_tokens": 37371,
+   "output_tokens": 323,
+   "reasoning_tokens": 241,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 38788,
+   "cached_tokens": 38450,
+   "output_tokens": 792,
+   "reasoning_tokens": 409,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 39592,
+   "cached_tokens": 38785,
+   "output_tokens": 418,
+   "reasoning_tokens": 350,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 40072,
+   "cached_tokens": 39589,
+   "output_tokens": 2705,
+   "reasoning_tokens": 2646,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 42789,
+   "cached_tokens": 40069,
+   "output_tokens": 59,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 42860,
+   "cached_tokens": 42786,
+   "output_tokens": 129,
+   "reasoning_tokens": 104,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 43093,
+   "cached_tokens": 42857,
+   "output_tokens": 669,
+   "reasoning_tokens": 637,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 43776,
+   "cached_tokens": 43090,
+   "output_tokens": 86,
+   "reasoning_tokens": 29,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 330.5,
+ "usage": {
+  "input_tokens": 1099125,
+  "cached_tokens": 1032134,
+  "output_tokens": 19348,
+  "reasoning_tokens": 15648
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex b988957..6d1b6b3 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -93,6 +93,90 @@ class Redshift(Postgres):\n         }\n \n         SUPPORTS_IMPLICIT_UNNEST = True\n+        _redshift_projection_depth = 0\n+\n+        def _parse_alias(\n+            self, this: t.Optional[exp.Expression], explicit: bool = False\n+        ) -> t.Optional[exp.Expression]:\n+            # EXCLUDE can be a trailing modifier for the whole projection list. Don't\n+            # consume it as an implicit alias when it is followed by an exclusion list.\n+            if (\n+                not explicit\n+                and self._redshift_projection_depth\n+                and self._curr\n+                and self._curr.text.upper() == \"EXCLUDE\"\n+                and self._next\n+                and (\n+                    self._next.token_type == TokenType.L_PAREN\n+                    or self._next.token_type in (TokenType.VAR, TokenType.IDENTIFIER)\n+                )\n+            ):\n+                return this\n+\n+            return super()._parse_alias(this, explicit=explicit)\n+\n+        def _parse_projections(self) -> t.List[exp.Expression]:\n+            depth = self._redshift_projection_depth\n+            self._redshift_projection_depth = depth + 1\n+            try:\n+                projections = super()._parse_projections()\n+            finally:\n+                self._redshift_projection_depth = depth\n+\n+            if self._curr and self._curr.text.upper() == \"EXCLUDE\":\n+                next_token = self._next\n+                if next_token and (\n+                    next_token.token_type == TokenType.L_PAREN\n+                    or next_token.token_type in (TokenType.VAR, TokenType.IDENTIFIER)\n+                ):\n+                    self._advance()\n+                    if self._match(TokenType.L_PAREN):\n+                        excluded = self._parse_csv(self._parse_expression)\n+                        self._match_r_paren()\n+                    else:\n+                        excluded = self._parse_csv(self._parse_expression)\n+\n+                    marker = exp.Star(except_=excluded)\n+                    marker.meta[\"redshift_projection_exclude\"] = True\n+                    projections.append(marker)\n+\n+            return projections\n+\n+        def _parse_select_query(\n+            self,\n+            nested: bool = False,\n+            table: bool = False,\n+            parse_subquery_alias: bool = True,\n+            parse_set_operation: bool = True,\n+        ) -> t.Optional[exp.Expression]:\n+            query = super()._parse_select_query(\n+                nested=nested,\n+                table=table,\n+                parse_subquery_alias=parse_subquery_alias,\n+                parse_set_operation=parse_set_operation,\n+            )\n+\n+            if isinstance(query, exp.Expression):\n+                selects = [query] if isinstance(query, exp.Select) else query.find_all(exp.Select)\n+                for select in selects:\n+                    for marker in select.expressions:\n+                        if isinstance(marker, exp.Star) and marker.meta.pop(\n+                            \"redshift_projection_exclude\", False\n+                        ):\n+                            projections = [e for e in select.expressions if e is not marker]\n+                            inner = select.copy()\n+                            inner.set(\"expressions\", projections)\n+                            outer = exp.Select(\n+                                expressions=[exp.Star(except_=marker.args.get(\"except_\"))],\n+                                from_=exp.From(this=inner.subquery(copy=False)),\n+                            )\n+                            outer.meta[\"redshift_projection_exclude\"] = True\n+                            if select is query:\n+                                return outer\n+                            select.replace(outer)\n+                            break\n+\n+            return query\n \n         def _parse_table(\n             self,\n@@ -179,6 +263,50 @@ class Redshift(Postgres):\n         # Redshift doesn't have `WITH` as part of their with_properties so we remove it\n         WITH_PROPERTIES_PREFIX = \" \"\n \n+        def select_sql(self, expression: exp.Select) -> str:\n+            if not expression.meta.get(\"redshift_projection_exclude\"):\n+                return super().select_sql(expression)\n+\n+            from_ = expression.args.get(\"from_\")\n+            subquery = from_.this if from_ else None\n+            inner = subquery.this if isinstance(subquery, exp.Subquery) else None\n+            if not isinstance(inner, exp.Select):\n+                return super().select_sql(expression)\n+\n+            full_sql = super().select_sql(inner.copy())\n+            projection = inner.copy()\n+            for key in (\n+                \"from_\",\n+                \"joins\",\n+                \"match\",\n+                \"laterals\",\n+                \"prewhere\",\n+                \"where\",\n+                \"connect\",\n+                \"group\",\n+                \"having\",\n+                \"qualify\",\n+                \"order\",\n+                \"limit\",\n+                \"offset\",\n+                \"locks\",\n+                \"sample\",\n+                \"options\",\n+                \"for_\",\n+            ):\n+                projection.set(key, None)\n+            projection_sql = super().select_sql(projection)\n+\n+            if not full_sql.startswith(projection_sql):\n+                return full_sql\n+\n+            star = expression.expressions[0]\n+            excluded = self.expressions(star, key=\"except_\", flat=True)\n+            return (\n+                f\"{projection_sql} EXCLUDE ({excluded})\"\n+                f\"{full_sql[len(projection_sql):]}\"\n+            )\n+\n         TYPE_MAPPING = {\n             **Postgres.Generator.TYPE_MAPPING,\n             exp.DataType.Type.BINARY: \"VARBYTE\",\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

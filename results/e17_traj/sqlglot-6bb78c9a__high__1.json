@@ -1,0 +1,305 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "Feat(snowflake): add support for input => select ... kwarg syntax\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_flatten",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLATTEN|flatten",
+    "path": "sqlglot"
+   },
+   "output_chars": 7189,
+   "output_tokens": 1931
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_flatten",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1030,
+    "end_line": 1110
+   },
+   "output_chars": 3843,
+   "output_tokens": 906
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/snowflake.py",
+    "start_line": 780,
+    "end_line": 865
+   },
+   "output_chars": 3621,
+   "output_tokens": 857
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "input =>|=>",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2664
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4510,
+    "end_line": 4570
+   },
+   "output_chars": 2693,
+   "output_tokens": 759
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4560,
+    "end_line": 4615
+   },
+   "output_chars": 2150,
+   "output_tokens": 555
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1975
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4600,
+    "end_line": 4670
+   },
+   "output_chars": 2674,
+   "output_tokens": 829
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7270,
+    "end_line": 7330
+   },
+   "output_chars": 2632,
+   "output_tokens": 662
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 995,
+    "end_line": 1035
+   },
+   "output_chars": 1639,
+   "output_tokens": 426
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 830,
+    "end_line": 905
+   },
+   "output_chars": 2993,
+   "output_tokens": 799
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 900,
+    "end_line": 925
+   },
+   "output_chars": 925,
+   "output_tokens": 197
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "old": "    LAMBDAS = {\n        **parser.Parser.LAMBDAS,\n        TokenType.ARROW: lambda self, expressions: self.expression(\n",
+    "new": "    LAMBDAS = {\n        **parser.Parser.LAMBDAS,\n        TokenType.FARROW: lambda self, expressions: self.expression(\n            exp.Kwarg(\n                this=exp.var(expressions[0].name),\n                expression=self._parse_select_or_expression(),\n            )\n        ),\n        TokenType.ARROW: lambda self, expressions: self.expression(\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 106,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py -q"
+   },
+   "output_chars": 216,
+   "output_tokens": 36
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 900,
+    "end_line": 925
+   },
+   "output_chars": 973,
+   "output_tokens": 203
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added Snowflake-specific parsing for `=>` keyword arguments whose value is a SELECT expression. The targeted flatten test and full Snowflake dialect test module both pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 69,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2423,
+   "cached_tokens": 0,
+   "output_tokens": 156,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7054,
+   "cached_tokens": 2420,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7862,
+   "cached_tokens": 7051,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8466,
+   "cached_tokens": 7859,
+   "output_tokens": 102,
+   "reasoning_tokens": 64,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10554,
+   "cached_tokens": 8463,
+   "output_tokens": 60,
+   "reasoning_tokens": 20,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11454,
+   "cached_tokens": 10551,
+   "output_tokens": 72,
+   "reasoning_tokens": 36,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12199,
+   "cached_tokens": 11451,
+   "output_tokens": 53,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12689,
+   "cached_tokens": 12196,
+   "output_tokens": 164,
+   "reasoning_tokens": 126,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13663,
+   "cached_tokens": 12686,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13907,
+   "cached_tokens": 13660,
+   "output_tokens": 437,
+   "reasoning_tokens": 281,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14356,
+   "cached_tokens": 13904,
+   "output_tokens": 45,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14433,
+   "cached_tokens": 14353,
+   "output_tokens": 55,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14535,
+   "cached_tokens": 14430,
+   "output_tokens": 85,
+   "reasoning_tokens": 47,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14834,
+   "cached_tokens": 14532,
+   "output_tokens": 117,
+   "reasoning_tokens": 67,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 57.1,
+ "usage": {
+  "input_tokens": 158741,
+  "cached_tokens": 143556,
+  "output_tokens": 1527,
+  "reasoning_tokens": 709
+ },
+ "diff": "diff --git a/sqlglot/parsers/snowflake.py b/sqlglot/parsers/snowflake.py\nindex 6db19e8..5c7934f 100644\n--- a/sqlglot/parsers/snowflake.py\n+++ b/sqlglot/parsers/snowflake.py\n@@ -902,6 +902,12 @@ class SnowflakeParser(parser.Parser):\n \n     LAMBDAS = {\n         **parser.Parser.LAMBDAS,\n+        TokenType.FARROW: lambda self, expressions: self.expression(\n+            exp.Kwarg(\n+                this=exp.var(expressions[0].name),\n+                expression=self._parse_select_or_expression(),\n+            )\n+        ),\n         TokenType.ARROW: lambda self, expressions: self.expression(\n             exp.Lambda(\n                 this=self._replace_lambda(\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

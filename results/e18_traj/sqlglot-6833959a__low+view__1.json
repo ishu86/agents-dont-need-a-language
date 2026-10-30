@@ -1,0 +1,339 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(postgres): generate float if the type has precision\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT",
+    "path": "sqlglot/generators.py"
+   },
+   "output_chars": 315,
+   "output_tokens": 140
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 233,
+   "output_tokens": 74
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT",
+    "path": "sqlglot"
+   },
+   "output_chars": 2405,
+   "output_tokens": 734
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "datatype_sql"
+   },
+   "output_chars": 680,
+   "output_tokens": 207
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Postgres"
+   },
+   "output_chars": 1077,
+   "output_tokens": 307
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "datatype_sql"
+   },
+   "output_chars": 312,
+   "output_tokens": 125
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 500,
+    "end_line": 535
+   },
+   "output_chars": 1472,
+   "output_tokens": 351
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 400,
+    "end_line": 435
+   },
+   "output_chars": 1946,
+   "output_tokens": 416
+  },
+  {
+   "tool": "tests_for",
+   "args": {
+    "name": "identity"
+   },
+   "output_chars": 767,
+   "output_tokens": 249
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1310,
+    "end_line": 1345
+   },
+   "output_chars": 1812,
+   "output_tokens": 430
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 330,
+    "end_line": 385
+   },
+   "output_chars": 2878,
+   "output_tokens": 777
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 670,
+    "end_line": 700
+   },
+   "output_chars": 1632,
+   "output_tokens": 356
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "        def datatype_sql(self, expression: exp.DataType) -> str:\n            if expression.is_type(exp.DataType.Type.ARRAY):\n                if expression.expressions:\n                    values = self.expressions(expression, key=\"values\", flat=True)\n                    return f\"{self.expressions(expression, flat=True)}[{values}]\"\n                return \"ARRAY\"\n            return super().datatype_sql(expression)\n",
+    "new": "        def datatype_sql(self, expression: exp.DataType) -> str:\n            if expression.is_type(exp.DataType.Type.ARRAY):\n                if expression.expressions:\n                    values = self.expressions(expression, key=\"values\", flat=True)\n                    return f\"{self.expressions(expression, flat=True)}[{values}]\"\n                return \"ARRAY\"\n            if expression.is_type(exp.DataType.Type.DOUBLE) and expression.expressions:\n                # FLOAT with a precision is parsed as DOUBLE, but PostgreSQL-style dialects\n                # use FLOAT(precision) to represent that declaration.\n                expression.set(\"this\", exp.DataType.Type.FLOAT)\n            return super().datatype_sql(expression)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1017,
+   "output_tokens": 234
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            if expression.is_type(exp.DataType.Type.DOUBLE) and expression.expressions:\n                # FLOAT with a precision is parsed as DOUBLE, but PostgreSQL-style dialects\n                # use FLOAT(precision) to represent that declaration.\n                expression.set(\"this\", exp.DataType.Type.FLOAT)\n            return super().datatype_sql(expression)\n",
+    "new": "            if expression.is_type(exp.DataType.Type.DOUBLE) and expression.expressions:\n                # FLOAT with a precision is parsed as DOUBLE, but PostgreSQL-style dialects\n                # use FLOAT(precision) to represent that declaration.\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n            return super().datatype_sql(expression)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py -q"
+   },
+   "output_chars": 117,
+   "output_tokens": 22
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated PostgreSQL-family datatype generation so DOUBLE (the parser representation for FLOAT with precision) emits FLOAT(precision). Redshift identity test and PostgreSQL dialect tests pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 503,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 595,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 774,
+   "cached_tokens": 0,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 879,
+   "cached_tokens": 0,
+   "output_tokens": 24,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1648,
+   "cached_tokens": 0,
+   "output_tokens": 19,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1885,
+   "cached_tokens": 1645,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2223,
+   "cached_tokens": 1882,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2376,
+   "cached_tokens": 2220,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2774,
+   "cached_tokens": 2373,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3237,
+   "cached_tokens": 2771,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3515,
+   "cached_tokens": 3234,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3991,
+   "cached_tokens": 3512,
+   "output_tokens": 87,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4866,
+   "cached_tokens": 3988,
+   "output_tokens": 66,
+   "reasoning_tokens": 30,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5186,
+   "cached_tokens": 4863,
+   "output_tokens": 65,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5618,
+   "cached_tokens": 5183,
+   "output_tokens": 340,
+   "reasoning_tokens": 72,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5970,
+   "cached_tokens": 5615,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6249,
+   "cached_tokens": 5967,
+   "output_tokens": 228,
+   "reasoning_tokens": 48,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6489,
+   "cached_tokens": 6246,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6549,
+   "cached_tokens": 6486,
+   "output_tokens": 27,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6609,
+   "cached_tokens": 6546,
+   "output_tokens": 49,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 59.5,
+ "usage": {
+  "input_tokens": 71936,
+  "cached_tokens": 62531,
+  "output_tokens": 1202,
+  "reasoning_tokens": 227
+ },
+ "diff": "diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py\nindex e0f3c1b..c208196 100644\n--- a/sqlglot/dialects/postgres.py\n+++ b/sqlglot/dialects/postgres.py\n@@ -687,6 +687,10 @@ class Postgres(Dialect):\n                     values = self.expressions(expression, key=\"values\", flat=True)\n                     return f\"{self.expressions(expression, flat=True)}[{values}]\"\n                 return \"ARRAY\"\n+            if expression.is_type(exp.DataType.Type.DOUBLE) and expression.expressions:\n+                # FLOAT with a precision is parsed as DOUBLE, but PostgreSQL-style dialects\n+                # use FLOAT(precision) to represent that declaration.\n+                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n             return super().datatype_sql(expression)\n \n         def cast_sql(self, expression: exp.Cast, safe_prefix: t.Optional[str] = None) -> str:\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

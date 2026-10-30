@@ -1,0 +1,660 @@
+{
+ "per_effort": {
+  "low": {
+   "n": 48,
+   "pass_rate": 0.667,
+   "regressions": 0,
+   "mean_steps": 17.9,
+   "mean_files_read": 3.5,
+   "mean_input_tokens": 88928.8,
+   "mean_cached_tokens": 79184.9,
+   "mean_output_tokens": 1126.1,
+   "mean_reasoning_tokens": 272.1,
+   "mean_wall_s": 50.8,
+   "mean_view_calls": 0.0,
+   "max_steps_hit": 0,
+   "errors": 0
+  },
+  "low+view": {
+   "n": 48,
+   "pass_rate": 0.708,
+   "regressions": 0,
+   "mean_steps": 23.1,
+   "mean_files_read": 3.9,
+   "mean_input_tokens": 119564.8,
+   "mean_cached_tokens": 107340.4,
+   "mean_output_tokens": 1256.4,
+   "mean_reasoning_tokens": 290.4,
+   "mean_wall_s": 57.9,
+   "mean_view_calls": 5.9,
+   "max_steps_hit": 0,
+   "errors": 0
+  }
+ },
+ "per_task": {
+  "sqlglot-6833959a": {
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 17,
+    "stop": "no_tool_call"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 18,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 20,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-1b8307c7": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 22,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 21,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-48eec08b": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 21,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 19,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 30,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-fa046db5": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 10,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 10,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 13,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-abd8d1bc": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 19,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-4087a152": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 9,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 13,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 16,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-03c96cbb": {
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 7,
+    "stop": "no_tool_call"
+   },
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 19,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 16,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-4a3254fb": {
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 11,
+    "stop": "finish"
+   },
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 22,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 22,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-0f79f975": {
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 15,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 22,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 34,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 24,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-92a0e235": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 21,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 29,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 22,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-4bc9c44e": {
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 20,
+    "stop": "no_tool_call"
+   },
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 37,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 34,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-994d3a37": {
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 31,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 27,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 30,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 29,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-cbd3576a": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 18,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 21,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 19,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 23,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-f337c70e": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 37,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 31,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 42,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 40,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-a570cf8a": {
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 20,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 23,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 29,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 32,
+    "stop": "no_tool_call"
+   }
+  },
+  "sqlglot-e3ed7486": {
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 29,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 24,
+    "stop": "no_tool_call"
+   },
+   "low+view#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 31,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 24,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-0481de14": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 9,
+    "stop": "no_tool_call"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 10,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 13,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-d8ead594": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 9,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 12,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 15,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-0527315a": {
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 12,
+    "stop": "finish"
+   },
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 18,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 15,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-e2f4ad7d": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 19,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 24,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 39,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 23,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-d138cae0": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 10,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 8,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 9,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 13,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-1587b7ea": {
+   "low#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 16,
+    "stop": "finish"
+   },
+   "low#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 25,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": false,
+    "regression": false,
+    "steps": 21,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 27,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-a88dfce0": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 11,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 15,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 14,
+    "stop": "finish"
+   }
+  },
+  "sqlglot-6bb78c9a": {
+   "low#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   },
+   "low#1": {
+    "passed": true,
+    "regression": false,
+    "steps": 17,
+    "stop": "finish"
+   },
+   "low+view#1": {
+    "passed": false,
+    "regression": false,
+    "steps": 26,
+    "stop": "finish"
+   },
+   "low+view#0": {
+    "passed": true,
+    "regression": false,
+    "steps": 28,
+    "stop": "finish"
+   }
+  }
+ }
+}

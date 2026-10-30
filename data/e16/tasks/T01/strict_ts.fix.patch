@@ -1,0 +1,13 @@
+diff -ruN a/src/pricing.ts b/src/pricing.ts
+--- a/src/pricing.ts	2026-10-30 13:46:37
++++ b/src/pricing.ts	2026-10-30 13:39:56
+@@ -61,7 +61,8 @@
+ 
+ export const vipRule: DiscountRule = {
+   name: "vip",
+-  apply({ tier, remainingCents }) {
++  apply({ tier, coupon, remainingCents }) {
++    if (coupon && !coupon.stackable) return 0;
+     return percentOf(remainingCents, tier.discountBps);
+   },
+ };

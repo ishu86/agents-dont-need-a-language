@@ -1,0 +1,335 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "feat(snowflake)!: Transpilation of SHA1 from Snowflake to DuckDB\n\n* updated transpilation to handle other parameter types\n\n* fix: is_binary\n\n* Update sqlglot/dialects/duckdb.py\n\n* Update tests/dialects/test_snowflake.py\n\n* tweaks and testing updates\n\n* testing\n\n* fix for DuckDB round trip\n\n---------\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_sha1",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 231,
+   "output_tokens": 77
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "sha1",
+    "path": "sqlglot"
+   },
+   "output_chars": 57,
+   "output_tokens": 20
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_sha1",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 30,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 8062,
+   "output_tokens": 2117
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 8062,
+   "output_tokens": 2044
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 5130,
+    "end_line": 5195
+   },
+   "output_chars": 3248,
+   "output_tokens": 909
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_sha1 -q"
+   },
+   "output_chars": 1721,
+   "output_tokens": 399
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SHA1|Sha1|sha1_sql|is_binary",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 413,
+   "output_tokens": 116
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Sha1|SHA1|is_binary",
+    "path": "sqlglot"
+   },
+   "output_chars": 2334,
+   "output_tokens": 756
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "is_binary",
+    "path": "sqlglot"
+   },
+   "output_chars": 459,
+   "output_tokens": 149
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 770,
+    "end_line": 840
+   },
+   "output_chars": 2748,
+   "output_tokens": 701
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 1795,
+    "end_line": 1865
+   },
+   "output_chars": 4290,
+   "output_tokens": 1119
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_cast_to_varchar\\(",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 822,
+   "output_tokens": 178
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/typing/snowflake.py",
+    "start_line": 295,
+    "end_line": 320
+   },
+   "output_chars": 796,
+   "output_tokens": 177
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 3525,
+    "end_line": 3595
+   },
+   "output_chars": 3357,
+   "output_tokens": 759
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def rename_func",
+    "path": "sqlglot/dialects/dialect.py"
+   },
+   "output_chars": 81,
+   "output_tokens": 21
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.SHA:",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 47,
+   "output_tokens": 14
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "            exp.SHA: rename_func(\"SHA1\"),",
+    "new": "            exp.SHA: lambda self, e: self.func(\n                \"SHA1\", e.this if _is_binary(e.this) else _cast_to_varchar(e.this)\n            ),"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_sha1 -q"
+   },
+   "output_chars": 113,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py tests/dialects/test_duckdb.py -q"
+   },
+   "output_chars": 196,
+   "output_tokens": 38
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SHA1",
+    "path": "tests/dialects/test_duckdb.py"
+   },
+   "output_chars": 240,
+   "output_tokens": 65
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 1575,
+    "end_line": 1610
+   },
+   "output_chars": 1518,
+   "output_tokens": 453
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated DuckDB SHA1 generation to cast typed non-binary inputs to VARCHAR while preserving binary inputs. The Snowflake SHA1 test and both Snowflake and DuckDB dialect test files pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 374,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 490,
+   "cached_tokens": 0,
+   "output_tokens": 115,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4834,
+   "cached_tokens": 0,
+   "output_tokens": 48,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5802,
+   "cached_tokens": 4831,
+   "output_tokens": 55,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6267,
+   "cached_tokens": 5799,
+   "output_tokens": 125,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7442,
+   "cached_tokens": 6264,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8191,
+   "cached_tokens": 7439,
+   "output_tokens": 69,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9390,
+   "cached_tokens": 8188,
+   "output_tokens": 396,
+   "reasoning_tokens": 247,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10959,
+   "cached_tokens": 9387,
+   "output_tokens": 422,
+   "reasoning_tokens": 386,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11406,
+   "cached_tokens": 10956,
+   "output_tokens": 85,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11503,
+   "cached_tokens": 11403,
+   "output_tokens": 45,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11580,
+   "cached_tokens": 11500,
+   "output_tokens": 60,
+   "reasoning_tokens": 21,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11689,
+   "cached_tokens": 11577,
+   "output_tokens": 210,
+   "reasoning_tokens": 177,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11975,
+   "cached_tokens": 11686,
+   "output_tokens": 62,
+   "reasoning_tokens": 22,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12501,
+   "cached_tokens": 11972,
+   "output_tokens": 351,
+   "reasoning_tokens": 295,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 59.5,
+ "usage": {
+  "input_tokens": 124403,
+  "cached_tokens": 111002,
+  "output_tokens": 2108,
+  "reasoning_tokens": 1233
+ },
+ "diff": "diff --git a/sqlglot/dialects/duckdb.py b/sqlglot/dialects/duckdb.py\nindex d381fee..c017a72 100644\n--- a/sqlglot/dialects/duckdb.py\n+++ b/sqlglot/dialects/duckdb.py\n@@ -1849,7 +1849,9 @@ class DuckDB(Dialect):\n             exp.Return: lambda self, e: self.sql(e, \"this\"),\n             exp.ReturnsProperty: lambda self, e: \"TABLE\" if isinstance(e.this, exp.Schema) else \"\",\n             exp.Rand: rename_func(\"RANDOM\"),\n-            exp.SHA: rename_func(\"SHA1\"),\n+            exp.SHA: lambda self, e: self.func(\n+                \"SHA1\", e.this if _is_binary(e.this) else _cast_to_varchar(e.this)\n+            ),\n             exp.SHA2: sha256_sql,\n             exp.Split: rename_func(\"STR_SPLIT\"),\n             exp.SortArray: _sort_array_sql,\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

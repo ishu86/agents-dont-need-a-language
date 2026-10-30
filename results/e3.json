@@ -1,0 +1,29 @@
+{
+ "python": {
+  "files": 262,
+  "full_tokens": 935492,
+  "outline_tokens": 191284,
+  "outline_pct_of_full": 20.4,
+  "mean_file_tokens": 3571,
+  "median_function_tokens": 143,
+  "p90_function_tokens": 504
+ },
+ "typescript": {
+  "files": 86,
+  "full_tokens": 236041,
+  "outline_tokens": 72178,
+  "outline_pct_of_full": 30.6,
+  "mean_file_tokens": 2745,
+  "median_function_tokens": 98,
+  "p90_function_tokens": 432
+ },
+ "rust": {
+  "files": 48,
+  "full_tokens": 268890,
+  "outline_tokens": 99915,
+  "outline_pct_of_full": 37.2,
+  "mean_file_tokens": 5602,
+  "median_function_tokens": 120,
+  "p90_function_tokens": 583
+ }
+}

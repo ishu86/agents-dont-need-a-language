@@ -1,0 +1,15 @@
+diff --git a/sqlglot/dialects/clickhouse.py b/sqlglot/dialects/clickhouse.py
+index fa86e3ac6..25cc399d8 100644
+--- a/sqlglot/dialects/clickhouse.py
++++ b/sqlglot/dialects/clickhouse.py
+@@ -1223,8 +1223,8 @@ class ClickHouse(Dialect):
+         def is_sql(self, expression: exp.Is) -> str:
+             is_sql = super().is_sql(expression)
+ 
+-            if isinstance(expression.parent, exp.Not) and isinstance(expression.this, exp.Subquery):
+-                # WHERE (SELECT ...) IS NOT NULL -> NOT ((SELECT ...) IS NULL)
++            if isinstance(expression.parent, exp.Not):
++                # value IS NOT NULL -> NOT (value IS NULL)
+                 is_sql = self.wrap(is_sql)
+ 
+             return is_sql

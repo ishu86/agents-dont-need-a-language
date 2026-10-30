@@ -1,0 +1,388 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(bigquery): parse FULL/LEFT before set ops as modifiers, not aliases\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_bigquery.py::TestBigQuery::test_set_operations",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 8062,
+   "output_tokens": 2070
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "set_operations",
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 140,
+   "output_tokens": 35
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FULL|LEFT",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py",
+    "start_line": 3320,
+    "end_line": 3395
+   },
+   "output_chars": 3714,
+   "output_tokens": 991
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "set_operations|_parse_set_operations|SET_OPERATIONS",
+    "path": "sqlglot"
+   },
+   "output_chars": 1588,
+   "output_tokens": 412
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 370,
+   "output_tokens": 138
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5900,
+    "end_line": 6045
+   },
+   "output_chars": 5790,
+   "output_tokens": 1344
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5860,
+    "end_line": 5905
+   },
+   "output_chars": 1868,
+   "output_tokens": 460
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Parser|TABLE_ALIAS_TOKENS|ALIAS_TOKENS",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/bigquery.py",
+    "start_line": 1,
+    "end_line": 140
+   },
+   "output_chars": 5197,
+   "output_tokens": 1472
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class BigQueryParser",
+    "path": "sqlglot/parsers/bigquery.py"
+   },
+   "output_chars": 41,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 180,
+    "end_line": 250
+   },
+   "output_chars": 3060,
+   "output_tokens": 822
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALIAS_TOKENS:|TABLE_ALIAS_TOKENS:",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 538,
+   "output_tokens": 178
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_alias",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 926,
+   "output_tokens": 218
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8740,
+    "end_line": 8795
+   },
+   "output_chars": 2489,
+   "output_tokens": 603
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 790,
+    "end_line": 845
+   },
+   "output_chars": 1711,
+   "output_tokens": 436
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    ALIAS_TOKENS: t.ClassVar = {\n        *parser.Parser.ALIAS_TOKENS,\n        TokenType.GRANT,\n    } - {TokenType.ASC, TokenType.DESC}\n",
+    "new": "    ALIAS_TOKENS: t.ClassVar = {\n        *parser.Parser.ALIAS_TOKENS,\n        TokenType.GRANT,\n    } - {TokenType.ASC, TokenType.DESC, TokenType.LEFT, TokenType.FULL}\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 2052,
+   "output_tokens": 438
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    } - {TokenType.ASC, TokenType.DESC, TokenType.LEFT, TokenType.FULL}\n",
+    "new": "    } - {TokenType.ASC, TokenType.DESC}\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 430,
+    "end_line": 480
+   },
+   "output_chars": 2550,
+   "output_tokens": 647
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    ADJACENT_STRINGS_CANNOT_BE_CONNECTED: t.ClassVar = True\n\n",
+    "new": "    ADJACENT_STRINGS_CANNOT_BE_CONNECTED: t.ClassVar = True\n\n    def parse_set_operation(self, this: exp.Expr | None, consume_pipe: bool = False) -> exp.Expr | None:\n        if isinstance(this, exp.Alias) and this.alias.upper() in (\"LEFT\", \"FULL\"):\n            this = this.this\n        return super().parse_set_operation(this, consume_pipe=consume_pipe)\n\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1947,
+   "output_tokens": 471
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    def parse_set_operation(self, this: exp.Expr | None, consume_pipe: bool = False) -> exp.Expr | None:\n        if isinstance(this, exp.Alias) and this.alias.upper() in (\"LEFT\", \"FULL\"):\n            this = this.this\n        return super().parse_set_operation(this, consume_pipe=consume_pipe)\n\n",
+    "new": ""
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 432,
+   "cached_tokens": 0,
+   "output_tokens": 96,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2665,
+   "cached_tokens": 0,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3704,
+   "cached_tokens": 2662,
+   "output_tokens": 69,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4343,
+   "cached_tokens": 3701,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5732,
+   "cached_tokens": 4340,
+   "output_tokens": 163,
+   "reasoning_tokens": 38,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7859,
+   "cached_tokens": 5729,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7912,
+   "cached_tokens": 7856,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8781,
+   "cached_tokens": 7909,
+   "output_tokens": 113,
+   "reasoning_tokens": 73,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9083,
+   "cached_tokens": 8778,
+   "output_tokens": 28,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9340,
+   "cached_tokens": 9080,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9988,
+   "cached_tokens": 9337,
+   "output_tokens": 203,
+   "reasoning_tokens": 169,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10638,
+   "cached_tokens": 9985,
+   "output_tokens": 185,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10835,
+   "cached_tokens": 10635,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11319,
+   "cached_tokens": 10832,
+   "output_tokens": 127,
+   "reasoning_tokens": 56,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11458,
+   "cached_tokens": 11316,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12148,
+   "cached_tokens": 11455,
+   "output_tokens": 310,
+   "reasoning_tokens": 163,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12470,
+   "cached_tokens": 12145,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12987,
+   "cached_tokens": 12467,
+   "output_tokens": 246,
+   "reasoning_tokens": 136,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13245,
+   "cached_tokens": 12984,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 70.1,
+ "usage": {
+  "input_tokens": 165251,
+  "cached_tokens": 151211,
+  "output_tokens": 1870,
+  "reasoning_tokens": 685
+ },
+ "diff": "",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations"
+  ]
+ }
+}

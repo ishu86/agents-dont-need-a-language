@@ -1,0 +1,37 @@
+diff --git a/tests/dialects/test_clickhouse.py b/tests/dialects/test_clickhouse.py
+index b3a2ddcf5..a0efb54eb 100644
+--- a/tests/dialects/test_clickhouse.py
++++ b/tests/dialects/test_clickhouse.py
+@@ -153,6 +153,10 @@ class TestClickhouse(Validator):
+         self.validate_identity(
+             "CREATE TABLE t (foo String CODEC(LZ4HC(9), ZSTD, DELTA), size String ALIAS formatReadableSize(size_bytes), INDEX idx1 a TYPE bloom_filter(0.001) GRANULARITY 1, INDEX idx2 a TYPE set(100) GRANULARITY 2, INDEX idx3 a TYPE minmax GRANULARITY 3)"
+         )
++        self.validate_identity(
++            "SELECT (toUInt8('1') + toUInt8('2')) IS NOT NULL",
++            "SELECT NOT ((toUInt8('1') + toUInt8('2')) IS NULL)",
++        )
+         self.validate_identity(
+             "SELECT $1$foo$1$",
+             "SELECT 'foo'",
+diff --git a/tests/dialects/test_dialect.py b/tests/dialects/test_dialect.py
+index 43644a0e4..85402e2cd 100644
+--- a/tests/dialects/test_dialect.py
++++ b/tests/dialects/test_dialect.py
+@@ -526,7 +526,7 @@ class TestDialect(Validator):
+             write={
+                 "": "SELECT NVL2(a, b, c)",
+                 "bigquery": "SELECT CASE WHEN NOT a IS NULL THEN b ELSE c END",
+-                "clickhouse": "SELECT CASE WHEN NOT a IS NULL THEN b ELSE c END",
++                "clickhouse": "SELECT CASE WHEN NOT (a IS NULL) THEN b ELSE c END",
+                 "databricks": "SELECT NVL2(a, b, c)",
+                 "doris": "SELECT CASE WHEN NOT a IS NULL THEN b ELSE c END",
+                 "drill": "SELECT CASE WHEN NOT a IS NULL THEN b ELSE c END",
+@@ -552,7 +552,7 @@ class TestDialect(Validator):
+             write={
+                 "": "SELECT NVL2(a, b)",
+                 "bigquery": "SELECT CASE WHEN NOT a IS NULL THEN b END",
+-                "clickhouse": "SELECT CASE WHEN NOT a IS NULL THEN b END",
++                "clickhouse": "SELECT CASE WHEN NOT (a IS NULL) THEN b END",
+                 "databricks": "SELECT NVL2(a, b)",
+                 "doris": "SELECT CASE WHEN NOT a IS NULL THEN b END",
+                 "drill": "SELECT CASE WHEN NOT a IS NULL THEN b END",

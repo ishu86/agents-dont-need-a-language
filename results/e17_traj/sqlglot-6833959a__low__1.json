@@ -1,0 +1,442 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(postgres): generate float if the type has precision\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT|float",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 233,
+   "output_tokens": 74
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DataType.Type.FLOAT|Type.FLOAT|FLOAT",
+    "path": "sqlglot"
+   },
+   "output_chars": 2405,
+   "output_tokens": 734
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Redshift|test_identity|IDENTITY",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 29,
+   "output_tokens": 8
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def datatype_sql|DataType",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 3803,
+   "output_tokens": 1011
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1305,
+    "end_line": 1360
+   },
+   "output_chars": 2753,
+   "output_tokens": 675
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 330,
+    "end_line": 365
+   },
+   "output_chars": 1532,
+   "output_tokens": 360
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 500,
+    "end_line": 535
+   },
+   "output_chars": 1472,
+   "output_tokens": 351
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT|DOUBLE",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 59,
+   "output_tokens": 15
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TYPE_TOKENS|DataType.Type.DOUBLE|TokenType.DOUBLE",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 936,
+   "output_tokens": 285
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4835,
+    "end_line": 4890
+   },
+   "output_chars": 2713,
+   "output_tokens": 608
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4910,
+    "end_line": 4950
+   },
+   "output_chars": 1983,
+   "output_tokens": 455
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4950,
+    "end_line": 4990
+   },
+   "output_chars": 1671,
+   "output_tokens": 373
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 515,
+    "end_line": 545
+   },
+   "output_chars": 1492,
+   "output_tokens": 345
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "        TYPE_MAPPING = {\n            **generator.Generator.TYPE_MAPPING,",
+    "new": "        def datatype_sql(self, expression):\n            if expression.this == exp.DataType.Type.DOUBLE and expression.expressions:\n                expression = expression.copy()\n                expression.set(\"this\", exp.DataType.Type.FLOAT)\n                return f\"FLOAT{self.sql(expression, 'expressions') and f'({self.sql(expression, \\\"expressions\\\")})' or ''}\"\n            return super().datatype_sql(expression)\n\n        TYPE_MAPPING = {\n            **generator.Generator.TYPE_MAPPING,"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 515,
+    "end_line": 535
+   },
+   "output_chars": 1020,
+   "output_tokens": 222
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "                expression = expression.copy()\n                expression.set(\"this\", exp.DataType.Type.FLOAT)\n                return f\"FLOAT{self.sql(expression, 'expressions') and f'({self.sql(expression, \\\"expressions\\\")})' or ''}\"",
+    "new": "                return f\"FLOAT({self.expressions(expression, flat=True)})\""
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 470,
+    "end_line": 490
+   },
+   "output_chars": 818,
+   "output_tokens": 165
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 490,
+    "end_line": 515
+   },
+   "output_chars": 948,
+   "output_tokens": 226
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 35,
+    "end_line": 65
+   },
+   "output_chars": 1158,
+   "output_tokens": 307
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TYPE_MAPPING|class Generator",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 125,
+   "output_tokens": 28
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 140,
+    "end_line": 175
+   },
+   "output_chars": 1438,
+   "output_tokens": 350
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 306,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 398,
+   "cached_tokens": 0,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 441,
+   "cached_tokens": 0,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 546,
+   "cached_tokens": 0,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1323,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1380,
+   "cached_tokens": 1320,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2434,
+   "cached_tokens": 1377,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3155,
+   "cached_tokens": 2431,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3443,
+   "cached_tokens": 3152,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3850,
+   "cached_tokens": 3440,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4248,
+   "cached_tokens": 3847,
+   "output_tokens": 92,
+   "reasoning_tokens": 62,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4366,
+   "cached_tokens": 4245,
+   "output_tokens": 40,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4702,
+   "cached_tokens": 4363,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5355,
+   "cached_tokens": 4699,
+   "output_tokens": 76,
+   "reasoning_tokens": 40,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5897,
+   "cached_tokens": 5352,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6315,
+   "cached_tokens": 5894,
+   "output_tokens": 151,
+   "reasoning_tokens": 113,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6822,
+   "cached_tokens": 6312,
+   "output_tokens": 257,
+   "reasoning_tokens": 103,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7091,
+   "cached_tokens": 6819,
+   "output_tokens": 51,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7375,
+   "cached_tokens": 7088,
+   "output_tokens": 141,
+   "reasoning_tokens": 38,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7528,
+   "cached_tokens": 7372,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7816,
+   "cached_tokens": 7525,
+   "output_tokens": 53,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8045,
+   "cached_tokens": 7813,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8318,
+   "cached_tokens": 8042,
+   "output_tokens": 53,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8689,
+   "cached_tokens": 8315,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8762,
+   "cached_tokens": 8686,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9159,
+   "cached_tokens": 8759,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 73.2,
+ "usage": {
+  "input_tokens": 127764,
+  "cached_tokens": 116851,
+  "output_tokens": 1467,
+  "reasoning_tokens": 399
+ },
+ "diff": "diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py\nindex e0f3c1b..ed35cd5 100644\n--- a/sqlglot/dialects/postgres.py\n+++ b/sqlglot/dialects/postgres.py\n@@ -518,6 +518,11 @@ class Postgres(Dialect):\n             exp.JSONPathSubscript,\n         }\n \n+        def datatype_sql(self, expression):\n+            if expression.this == exp.DataType.Type.DOUBLE and expression.expressions:\n+                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n+            return super().datatype_sql(expression)\n+\n         TYPE_MAPPING = {\n             **generator.Generator.TYPE_MAPPING,\n             exp.DataType.Type.TINYINT: \"SMALLINT\",\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_redshift.py::TestRedshift::test_identity"
+  ]
+ }
+}

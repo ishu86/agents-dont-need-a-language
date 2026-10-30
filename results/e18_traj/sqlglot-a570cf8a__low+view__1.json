@@ -1,0 +1,524 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(bigquery): parse FULL/LEFT before set ops as modifiers, not aliases\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_bigquery.py::TestBigQuery::test_set_operations",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FULL|set_operations",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 370,
+   "output_tokens": 138
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_set_operations"
+   },
+   "output_chars": 57,
+   "output_tokens": 16
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "BigQuery"
+   },
+   "output_chars": 713,
+   "output_tokens": 198
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "_parse_set_operations"
+   },
+   "output_chars": 67,
+   "output_tokens": 36
+  },
+  {
+   "tool": "tests_for",
+   "args": {
+    "name": "set_operations"
+   },
+   "output_chars": 35,
+   "output_tokens": 6
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_query_modifiers"
+   },
+   "output_chars": 176,
+   "output_tokens": 51
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5940,
+    "end_line": 6035
+   },
+   "output_chars": 3902,
+   "output_tokens": 885
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SET_OP_MODIFIERS|MODIFIERS_ATTACHED_TO_SET_OP|parse_set_operation",
+    "path": "sqlglot"
+   },
+   "output_chars": 2290,
+   "output_tokens": 614
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py",
+    "start_line": 1,
+    "end_line": 20
+   },
+   "output_chars": 508,
+   "output_tokens": 127
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_set_operations",
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 40,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py",
+    "start_line": 3320,
+    "end_line": 3375
+   },
+   "output_chars": 2533,
+   "output_tokens": 676
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4100,
+    "end_line": 4160
+   },
+   "output_chars": 2654,
+   "output_tokens": 607
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SET_OPERATIONS|UNION|parse_set_operation",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5880,
+    "end_line": 5945
+   },
+   "output_chars": 2495,
+   "output_tokens": 615
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/bigquery.py",
+    "start_line": 1,
+    "end_line": 70
+   },
+   "output_chars": 2465,
+   "output_tokens": 713
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 367,
+   "output_tokens": 137
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "BigQueryParser"
+   },
+   "output_chars": 667,
+   "output_tokens": 205
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 180,
+    "end_line": 230
+   },
+   "output_chars": 2008,
+   "output_tokens": 570
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_alias"
+   },
+   "output_chars": 118,
+   "output_tokens": 35
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8740,
+    "end_line": 8795
+   },
+   "output_chars": 2489,
+   "output_tokens": 603
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1200,
+    "end_line": 1218
+   },
+   "output_chars": 804,
+   "output_tokens": 191
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "self\\._next\\.token_type|self\\._curr",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 6279,
+   "output_tokens": 1670
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 189,
+    "end_line": 190
+   },
+   "output_chars": 83,
+   "output_tokens": 19
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "class BigQueryParser(parser.Parser):\n    PREFIXED_PIVOT_COLUMNS: t.ClassVar = True",
+    "new": "class BigQueryParser(parser.Parser):\n    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n        # LEFT/FULL preceding a set operation specify its join side, not a SELECT alias.\n        if (\n            not explicit\n            and self._curr\n            and self._curr.token_type in (TokenType.LEFT, TokenType.FULL)\n            and self._next.token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT)\n        ):\n            return this\n        return super()._parse_alias(this, explicit=explicit)\n\n    PREFIXED_PIVOT_COLUMNS: t.ClassVar = True"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "            and self._curr.token_type in (TokenType.LEFT, TokenType.FULL)\n            and self._next.token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT)\n",
+    "new": "            and self._curr.token_type in (TokenType.LEFT, TokenType.FULL)\n            and (\n                self._next.token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT)\n                or (self._next.token_type == TokenType.OUTER and self._next_next.token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT))\n            )\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 3940,
+   "output_tokens": 918
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1955,
+    "end_line": 1968
+   },
+   "output_chars": 654,
+   "output_tokens": 186
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "self._next.token_type == TokenType.OUTER and self._next_next.token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT)",
+    "new": "self._next.token_type == TokenType.OUTER and self._index + 2 < self._tokens_size and self._tokens[self._index + 2].token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT)"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 2052,
+   "output_tokens": 438
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 509,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 629,
+   "cached_tokens": 0,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 677,
+   "cached_tokens": 0,
+   "output_tokens": 23,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 849,
+   "cached_tokens": 0,
+   "output_tokens": 84,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1226,
+   "cached_tokens": 0,
+   "output_tokens": 22,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1310,
+   "cached_tokens": 1223,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2240,
+   "cached_tokens": 1307,
+   "output_tokens": 41,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2906,
+   "cached_tokens": 2237,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3079,
+   "cached_tokens": 2903,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3132,
+   "cached_tokens": 3076,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3856,
+   "cached_tokens": 3129,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4508,
+   "cached_tokens": 3853,
+   "output_tokens": 40,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4562,
+   "cached_tokens": 4505,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5222,
+   "cached_tokens": 4559,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5983,
+   "cached_tokens": 5219,
+   "output_tokens": 22,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6153,
+   "cached_tokens": 5980,
+   "output_tokens": 21,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6390,
+   "cached_tokens": 6150,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7007,
+   "cached_tokens": 6387,
+   "output_tokens": 57,
+   "reasoning_tokens": 35,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7110,
+   "cached_tokens": 7004,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7758,
+   "cached_tokens": 7107,
+   "output_tokens": 108,
+   "reasoning_tokens": 72,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8068,
+   "cached_tokens": 7755,
+   "output_tokens": 115,
+   "reasoning_tokens": 76,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9864,
+   "cached_tokens": 8065,
+   "output_tokens": 87,
+   "reasoning_tokens": 49,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9981,
+   "cached_tokens": 9861,
+   "output_tokens": 219,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10212,
+   "cached_tokens": 9978,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10735,
+   "cached_tokens": 10209,
+   "output_tokens": 253,
+   "reasoning_tokens": 82,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11000,
+   "cached_tokens": 10732,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11964,
+   "cached_tokens": 10997,
+   "output_tokens": 49,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12210,
+   "cached_tokens": 11961,
+   "output_tokens": 120,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12342,
+   "cached_tokens": 12207,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12826,
+   "cached_tokens": 12339,
+   "output_tokens": 76,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 93.1,
+ "usage": {
+  "input_tokens": 184308,
+  "cached_tokens": 168743,
+  "output_tokens": 1807,
+  "reasoning_tokens": 339
+ },
+ "diff": "diff --git a/sqlglot/parsers/bigquery.py b/sqlglot/parsers/bigquery.py\nindex 72f1c4a..f08b99f 100644\n--- a/sqlglot/parsers/bigquery.py\n+++ b/sqlglot/parsers/bigquery.py\n@@ -187,6 +187,20 @@ MAKE_INTERVAL_KWARGS = [\"year\", \"month\", \"day\", \"hour\", \"minute\", \"second\"]\n \n \n class BigQueryParser(parser.Parser):\n+    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n+        # LEFT/FULL preceding a set operation specify its join side, not a SELECT alias.\n+        if (\n+            not explicit\n+            and self._curr\n+            and self._curr.token_type in (TokenType.LEFT, TokenType.FULL)\n+            and (\n+                self._next.token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT)\n+                or (self._next.token_type == TokenType.OUTER and self._index + 2 < self._tokens_size and self._tokens[self._index + 2].token_type in (TokenType.UNION, TokenType.EXCEPT, TokenType.INTERSECT))\n+            )\n+        ):\n+            return this\n+        return super()._parse_alias(this, explicit=explicit)\n+\n     PREFIXED_PIVOT_COLUMNS: t.ClassVar = True\n     LOG_DEFAULTS_TO_LN: t.ClassVar = True\n     SUPPORTS_IMPLICIT_UNNEST: t.ClassVar = True\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations"
+  ]
+ }
+}

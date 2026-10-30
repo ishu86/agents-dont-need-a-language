@@ -1,0 +1,82 @@
+diff -ruN a/src/index.ts b/src/index.ts
+--- a/src/index.ts	2026-10-30 13:39:56
++++ b/src/index.ts	2026-10-30 13:46:37
+@@ -9,7 +9,7 @@
+ import { addCustomer, getCustomer, tierOf, type CustomerInput } from "./customers.ts";
+ import { addCoupon, defaultRules, type CouponInput, type RuleRegistry } from "./pricing.ts";
+ import { addItem, applyCoupon, checkout, createOrder, getOrder, type CreateOrderInput } from "./orders.ts";
+-import { refund, type RefundResult } from "./refunds.ts";
++import { cancelOrder, refund, type RefundResult } from "./refunds.ts";
+ import { listOutbox } from "./notifications.ts";
+ import { entries } from "./audit.ts";
+ import type { StockLine } from "./inventory.ts";
+@@ -40,6 +40,7 @@
+     applyCoupon: (orderId: string, code: string): Result<Order> => applyCoupon(ctx, rules, orderId, code),
+     checkout: (orderId: string): Result<Order> => checkout(ctx, rules, orderId),
+     refund: (orderId: string, lines?: StockLine[]): Result<RefundResult> => refund(ctx, orderId, lines),
++    cancelOrder: (orderId: string): Result<Order> => cancelOrder(ctx, orderId),
+     getOrder: (orderId: string): Order | undefined => getOrder(ctx.db, orderId),
+     getProduct: (sku: string): Product | undefined => getProduct(ctx.db, sku),
+     listProducts: (): Product[] => listProducts(ctx.db),
+diff -ruN a/src/notifications.ts b/src/notifications.ts
+--- a/src/notifications.ts	2026-10-30 13:39:08
++++ b/src/notifications.ts	2026-10-30 13:46:37
+@@ -6,6 +6,8 @@
+       return `Your order ${orderId} is confirmed`;
+     case "refund_issued":
+       return `A refund for order ${orderId} was issued`;
++    case "order_cancelled":
++      return `Your order ${orderId} was cancelled`;
+   }
+ }
+ 
+diff -ruN a/src/refunds.ts b/src/refunds.ts
+--- a/src/refunds.ts	2026-10-30 13:39:56
++++ b/src/refunds.ts	2026-10-30 13:46:37
+@@ -68,3 +68,25 @@
+   if (customer) queueEmail(ctx, customer, "refund_issued", orderId);
+   return ok({ orderId, amountCents: amount, status });
+ }
++
++/**
++ * Cancels an order. Open orders just close (nothing was reserved). Paid or partly refunded
++ * orders first get a refund of everything left. Audits and emails the customer.
++ */
++export function cancelOrder(ctx: Ctx, orderId: string): Result<Order> {
++  const order = getOrder(ctx.db, orderId);
++  if (!order) return err("not_found", `unknown order ${orderId}`);
++  if (order.status === "paid" || order.status === "partially_refunded") {
++    const refunded = refund(ctx, orderId);
++    if (!refunded.ok) return refunded;
++  } else if (order.status !== "open") {
++    return err("bad_state", `order ${orderId} is ${order.status}`);
++  }
++  const current = getOrder(ctx.db, orderId) ?? order;
++  const cancelled: Order = { ...current, status: "cancelled" };
++  ctx.db.orders.set(orderId, cancelled);
++  record(ctx.log, ctx.clock, "order_cancelled", orderId, current.status);
++  const customer = getCustomer(ctx.db, order.customerId);
++  if (customer) queueEmail(ctx, customer, "order_cancelled", orderId);
++  return ok(cancelled);
++}
+diff -ruN a/src/types.ts b/src/types.ts
+--- a/src/types.ts	2026-10-30 13:39:08
++++ b/src/types.ts	2026-10-30 13:46:37
+@@ -73,7 +73,7 @@
+   unitPriceCents: Cents;
+ }
+ 
+-export type OrderStatus = "open" | "paid" | "partially_refunded" | "refunded";
++export type OrderStatus = "open" | "paid" | "partially_refunded" | "refunded" | "cancelled";
+ 
+ export interface DiscountLine {
+   rule: string;
+@@ -106,7 +106,7 @@
+   paidAt: number | null;
+ }
+ 
+-export type EmailTemplate = "order_confirmation" | "refund_issued";
++export type EmailTemplate = "order_confirmation" | "refund_issued" | "order_cancelled";
+ 
+ export interface EmailMessage {
+   to: string;

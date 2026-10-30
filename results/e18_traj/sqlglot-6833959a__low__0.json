@@ -1,0 +1,287 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(postgres): generate float if the type has precision\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Redshift|Redshift",
+    "path": "sqlglot"
+   },
+   "output_chars": 1991,
+   "output_tokens": 567
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT|Float",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_identity",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 8
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 300,
+    "end_line": 340
+   },
+   "output_chars": 2544,
+   "output_tokens": 686
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DataType.Type.FLOAT|exp.DataType.Type.FLOAT|\"FLOAT\"",
+    "path": "sqlglot"
+   },
+   "output_chars": 1057,
+   "output_tokens": 315
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def datatype_sql|TYPE_MAPPING|datatype",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 324,
+   "output_tokens": 77
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1310,
+    "end_line": 1345
+   },
+   "output_chars": 1812,
+   "output_tokens": 430
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 500,
+    "end_line": 540
+   },
+   "output_chars": 1836,
+   "output_tokens": 430
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Generator",
+    "path": "sqlglot/dialects/postgres.py"
+   },
+   "output_chars": 46,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 490,
+    "end_line": 505
+   },
+   "output_chars": 563,
+   "output_tokens": 132
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "    class Generator(generator.Generator):\n        SINGLE_STRING_INTERVAL = True\n",
+    "new": "    class Generator(generator.Generator):\n        SINGLE_STRING_INTERVAL = True\n\n        def datatype_sql(self, expression: exp.DataType) -> str:\n            # PostgreSQL's FLOAT is equivalent to REAL when no precision is\n            # specified, but FLOAT(p) must retain the FLOAT name.\n            if expression.this == exp.DataType.Type.FLOAT and expression.expressions:\n                expression = expression.copy()\n                expression.set(\"this\", \"FLOAT\")\n            return super().datatype_sql(expression)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            if expression.this == exp.DataType.Type.FLOAT and expression.expressions:\n                expression = expression.copy()\n                expression.set(\"this\", \"FLOAT\")\n",
+    "new": "            if expression.this in (exp.DataType.Type.FLOAT, exp.DataType.Type.DOUBLE) and expression.expressions:\n                expression = expression.copy()\n                expression.set(\"this\", \"FLOAT\")\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Generator|TYPE_MAPPING",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 125,
+   "output_tokens": 28
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 145,
+    "end_line": 177
+   },
+   "output_chars": 1398,
+   "output_tokens": 339
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 306,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 398,
+   "cached_tokens": 0,
+   "output_tokens": 96,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1101,
+   "cached_tokens": 0,
+   "output_tokens": 84,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2206,
+   "cached_tokens": 1098,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2328,
+   "cached_tokens": 2203,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2804,
+   "cached_tokens": 2325,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3281,
+   "cached_tokens": 2801,
+   "output_tokens": 124,
+   "reasoning_tokens": 91,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3425,
+   "cached_tokens": 3278,
+   "output_tokens": 205,
+   "reasoning_tokens": 167,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3773,
+   "cached_tokens": 3422,
+   "output_tokens": 206,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3991,
+   "cached_tokens": 3770,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4279,
+   "cached_tokens": 3988,
+   "output_tokens": 208,
+   "reasoning_tokens": 97,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4499,
+   "cached_tokens": 4276,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4787,
+   "cached_tokens": 4496,
+   "output_tokens": 53,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4879,
+   "cached_tokens": 4784,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5265,
+   "cached_tokens": 4876,
+   "output_tokens": 297,
+   "reasoning_tokens": 262,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 49.9,
+ "usage": {
+  "input_tokens": 47322,
+  "cached_tokens": 41317,
+  "output_tokens": 1500,
+  "reasoning_tokens": 684
+ },
+ "diff": "diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py\nindex e0f3c1b..e87dc67 100644\n--- a/sqlglot/dialects/postgres.py\n+++ b/sqlglot/dialects/postgres.py\n@@ -492,6 +492,14 @@ class Postgres(Dialect):\n \n     class Generator(generator.Generator):\n         SINGLE_STRING_INTERVAL = True\n+\n+        def datatype_sql(self, expression: exp.DataType) -> str:\n+            # PostgreSQL's FLOAT is equivalent to REAL when no precision is\n+            # specified, but FLOAT(p) must retain the FLOAT name.\n+            if expression.this in (exp.DataType.Type.FLOAT, exp.DataType.Type.DOUBLE) and expression.expressions:\n+                expression = expression.copy()\n+                expression.set(\"this\", \"FLOAT\")\n+            return super().datatype_sql(expression)\n         RENAME_TABLE_WITH_DB = False\n         LOCKING_READS_SUPPORTED = True\n         JOIN_HINTS = False\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_redshift.py::TestRedshift::test_identity"
+  ]
+ }
+}

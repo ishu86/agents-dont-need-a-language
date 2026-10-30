@@ -1,0 +1,51 @@
+{
+ "cost_share_pct": {
+  "input_tokens": 0.0,
+  "cache_read_input_tokens": 72.5,
+  "cache_creation_input_tokens": 16.0,
+  "output_tokens": 11.4
+ },
+ "image_chars_excluded": 234064662,
+ "sessions": 92,
+ "content_share_pct": {
+  "user_text": 30.2,
+  "result:Bash": 25.7,
+  "tool_call_args(other)": 16.9,
+  "assistant_text": 13.3,
+  "result:Read": 5.7,
+  "written_code(Write/Edit input)": 4.2,
+  "result:mcp": 2.0,
+  "result:other": 0.7,
+  "result:WebSearch": 0.3,
+  "result:Agent": 0.3,
+  "result:WebFetch": 0.2,
+  "assistant_thinking": 0.2,
+  "result:Edit": 0.1,
+  "result:Write": 0.1
+ },
+ "tool_calls": {
+  "Bash": 9439,
+  "Read": 1129,
+  "Monitor": 386,
+  "Edit": 384,
+  "Write": 231,
+  "SendMessage": 160,
+  "Agent": 148,
+  "ToolSearch": 141,
+  "Skill": 104,
+  "TaskStop": 73,
+  "WebFetch": 65,
+  "mcp__firecrawl__firecrawl_search": 46,
+  "WebSearch": 43,
+  "AskUserQuestion": 42,
+  "mcp__firecrawl__firecrawl_scrape": 35
+ },
+ "usage": {
+  "input_tokens": 43740,
+  "output_tokens": 8307191,
+  "cache_read_input_tokens": 2632255735,
+  "cache_creation_input_tokens": 46500647
+ },
+ "input_to_output_ratio": 322.5,
+ "cache_read_share_of_input_pct": 98.3
+}

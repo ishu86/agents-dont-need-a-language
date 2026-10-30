@@ -1,0 +1,217 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(redshift): do not inherit postgres `ROUND` generator\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_redshift",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ROUND|class Redshift",
+    "path": "sqlglot"
+   },
+   "output_chars": 605,
+   "output_tokens": 165
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 1,
+    "end_line": 130
+   },
+   "output_chars": 5087,
+   "output_tokens": 1273
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Generator|TRANSFORMS|ROUND",
+    "path": "sqlglot/dialects/postgres.py"
+   },
+   "output_chars": 369,
+   "output_tokens": 82
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 690,
+    "end_line": 742
+   },
+   "output_chars": 2509,
+   "output_tokens": 519
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_redshift",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 31,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 1,
+    "end_line": 70
+   },
+   "output_chars": 3549,
+   "output_tokens": 945
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Generator",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 45,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 140,
+    "end_line": 215
+   },
+   "output_chars": 3798,
+   "output_tokens": 889
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        LIMIT_FETCH = \"LIMIT\"\n\n        # Redshift doesn't have `WITH`",
+    "new": "        LIMIT_FETCH = \"LIMIT\"\n\n        def round_sql(self, expression: exp.Round) -> str:\n            return self.func(\"ROUND\", self.sql(expression, \"this\"), self.sql(expression, \"decimals\"))\n\n        # Redshift doesn't have `WITH`"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_redshift -q"
+   },
+   "output_chars": 48,
+   "output_tokens": 20
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added a Redshift-specific ROUND generator that emits ROUND directly without PostgreSQL's DOUBLE PRECISION cast workaround. The targeted Redshift test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 308,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 409,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 613,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1933,
+   "cached_tokens": 0,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2063,
+   "cached_tokens": 1930,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2629,
+   "cached_tokens": 2060,
+   "output_tokens": 57,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2706,
+   "cached_tokens": 2626,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3697,
+   "cached_tokens": 2703,
+   "output_tokens": 89,
+   "reasoning_tokens": 56,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3807,
+   "cached_tokens": 3694,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4743,
+   "cached_tokens": 3804,
+   "output_tokens": 122,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4877,
+   "cached_tokens": 4740,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4943,
+   "cached_tokens": 4874,
+   "output_tokens": 44,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 38.2,
+ "usage": {
+  "input_tokens": 32728,
+  "cached_tokens": 26431,
+  "output_tokens": 573,
+  "reasoning_tokens": 90
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex 538ec7d..20b42bc 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -164,6 +164,9 @@ class Redshift(Postgres):\n         SUPPORTS_BETWEEN_FLAGS = False\n         LIMIT_FETCH = \"LIMIT\"\n \n+        def round_sql(self, expression: exp.Round) -> str:\n+            return self.func(\"ROUND\", self.sql(expression, \"this\"), self.sql(expression, \"decimals\"))\n+\n         # Redshift doesn't have `WITH` as part of their with_properties so we remove it\n         WITH_PROPERTIES_PREFIX = \" \"\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

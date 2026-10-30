@@ -1,0 +1,466 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "feat(postgres): Support ?& JSONB operator\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_postgres.py::TestPostgres::test_postgres",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "jsonb|JSONB|\\?\\&",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 2670,
+   "output_tokens": 779
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_postgres",
+    "path": "tests/dialects/test_postgres.py"
+   },
+   "output_chars": 32,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_postgres.py",
+    "start_line": 1,
+    "end_line": 220
+   },
+   "output_chars": 8061,
+   "output_tokens": 2005
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "JSONBContains|JSONBExists|JSONB",
+    "path": "sqlglot/expressions.py"
+   },
+   "output_chars": 462,
+   "output_tokens": 144
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "?\\||\\?&|@>|#>|#>>",
+    "path": "tests"
+   },
+   "output_chars": 104,
+   "output_tokens": 31
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 360,
+    "end_line": 535
+   },
+   "output_chars": 7528,
+   "output_tokens": 1677
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 580,
+    "end_line": 630
+   },
+   "output_chars": 2998,
+   "output_tokens": 701
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 6680,
+    "end_line": 6725
+   },
+   "output_chars": 1395,
+   "output_tokens": 402
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ContainsAnyTopKeys|JSONBContains",
+    "path": "sqlglot"
+   },
+   "output_chars": 629,
+   "output_tokens": 176
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "QUESTION|PLACEHOLDER|TokenType.OPERATOR|DAMP",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 124,
+   "output_tokens": 40
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 250,
+    "end_line": 365
+   },
+   "output_chars": 4768,
+   "output_tokens": 1358
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 770,
+    "end_line": 810
+   },
+   "output_chars": 1717,
+   "output_tokens": 374
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 925,
+    "end_line": 955
+   },
+   "output_chars": 1707,
+   "output_tokens": 421
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 55,
+    "end_line": 100
+   },
+   "output_chars": 1017,
+   "output_tokens": 303
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 680,
+    "end_line": 725
+   },
+   "output_chars": 1903,
+   "output_tokens": 561
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 105,
+    "end_line": 130
+   },
+   "output_chars": 1685,
+   "output_tokens": 428
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "QMARK_PIPE",
+    "path": "."
+   },
+   "output_chars": 220,
+   "output_tokens": 64
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SINGLE_TOKENS|_KEYWORD_TRIE|KEYWORDS",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 1414,
+   "output_tokens": 391
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 1190,
+    "end_line": 1265
+   },
+   "output_chars": 2737,
+   "output_tokens": 658
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 605,
+    "end_line": 650
+   },
+   "output_chars": 1613,
+   "output_tokens": 441
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 6698,
+    "end_line": 6718
+   },
+   "output_chars": 524,
+   "output_tokens": 165
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 586,
+    "end_line": 620
+   },
+   "output_chars": 2195,
+   "output_tokens": 517
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 80,
+    "end_line": 93
+   },
+   "output_chars": 306,
+   "output_tokens": 88
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 938,
+    "end_line": 948
+   },
+   "output_chars": 639,
+   "output_tokens": 159
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 113,
+    "end_line": 123
+   },
+   "output_chars": 789,
+   "output_tokens": 216
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "old": "    QMARK_PIPE = auto()\n",
+    "new": "    QMARK_PIPE = auto()\n    QMARK_AMP = auto()\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            \"?|\": TokenType.QMARK_PIPE,\n",
+    "new": "            \"?|\": TokenType.QMARK_PIPE,\n            \"?&\": TokenType.QMARK_AMP,\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "old": "class JSONBContainsAnyTopKeys(Binary, Func):\n    pass\n\n\nclass JSONBExists(Func):\n",
+    "new": "class JSONBContainsAnyTopKeys(Binary, Func):\n    pass\n\n\nclass JSONBContainsAllTopKeys(Binary, Func):\n    pass\n\n\nclass JSONBExists(Func):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "        TokenType.QMARK_PIPE: binary_range_parser(exp.JSONBContainsAnyTopKeys),\n",
+    "new": "        TokenType.QMARK_PIPE: binary_range_parser(exp.JSONBContainsAnyTopKeys),\n        TokenType.QMARK_AMP: binary_range_parser(exp.JSONBContainsAllTopKeys),\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "        exp.JSONBContainsAnyTopKeys: lambda self, e: self.binary(e, \"?|\"),\n",
+    "new": "        exp.JSONBContainsAnyTopKeys: lambda self, e: self.binary(e, \"?|\"),\n        exp.JSONBContainsAllTopKeys: lambda self, e: self.binary(e, \"?&\"),\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py::TestPostgres::test_postgres -q"
+   },
+   "output_chars": 48,
+   "output_tokens": 20
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py -q"
+   },
+   "output_chars": 104,
+   "output_tokens": 22
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added PostgreSQL JSONB `?&` support by tokenizing the operator, parsing it into a dedicated all-top-level-keys expression, and generating it back as `?&`. Verified the targeted PostgreSQL test and the full PostgreSQL dialect test file pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 306,
+   "cached_tokens": 0,
+   "output_tokens": 29,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 418,
+   "cached_tokens": 0,
+   "output_tokens": 110,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3350,
+   "cached_tokens": 0,
+   "output_tokens": 181,
+   "reasoning_tokens": 32,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6122,
+   "cached_tokens": 3347,
+   "output_tokens": 163,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8299,
+   "cached_tokens": 6119,
+   "output_tokens": 229,
+   "reasoning_tokens": 44,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10735,
+   "cached_tokens": 8296,
+   "output_tokens": 363,
+   "reasoning_tokens": 321,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11500,
+   "cached_tokens": 10732,
+   "output_tokens": 50,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12219,
+   "cached_tokens": 11497,
+   "output_tokens": 67,
+   "reasoning_tokens": 32,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12738,
+   "cached_tokens": 12216,
+   "output_tokens": 934,
+   "reasoning_tokens": 762,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14864,
+   "cached_tokens": 12735,
+   "output_tokens": 76,
+   "reasoning_tokens": 20,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14952,
+   "cached_tokens": 14861,
+   "output_tokens": 67,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15031,
+   "cached_tokens": 14949,
+   "output_tokens": 100,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15143,
+   "cached_tokens": 15028,
+   "output_tokens": 89,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15244,
+   "cached_tokens": 15140,
+   "output_tokens": 102,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15358,
+   "cached_tokens": 15241,
+   "output_tokens": 46,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15435,
+   "cached_tokens": 15355,
+   "output_tokens": 223,
+   "reasoning_tokens": 194,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15691,
+   "cached_tokens": 15432,
+   "output_tokens": 486,
+   "reasoning_tokens": 415,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 82.0,
+ "usage": {
+  "input_tokens": 187405,
+  "cached_tokens": 170948,
+  "output_tokens": 3315,
+  "reasoning_tokens": 1866
+ },
+ "diff": "diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py\nindex d9cad1b..6e5904d 100644\n--- a/sqlglot/dialects/postgres.py\n+++ b/sqlglot/dialects/postgres.py\n@@ -326,6 +326,7 @@ class Postgres(Dialect):\n             \"@>\": TokenType.AT_GT,\n             \"<@\": TokenType.LT_AT,\n             \"?|\": TokenType.QMARK_PIPE,\n+            \"?&\": TokenType.QMARK_AMP,\n             \"|/\": TokenType.PIPE_SLASH,\n             \"||/\": TokenType.DPIPE_SLASH,\n             \"BEGIN\": TokenType.BEGIN,\ndiff --git a/sqlglot/expressions.py b/sqlglot/expressions.py\nindex f1f5c1f..22dc8a7 100644\n--- a/sqlglot/expressions.py\n+++ b/sqlglot/expressions.py\n@@ -6710,6 +6710,10 @@ class JSONBContainsAnyTopKeys(Binary, Func):\n     pass\n \n \n+class JSONBContainsAllTopKeys(Binary, Func):\n+    pass\n+\n+\n class JSONBExists(Func):\n     arg_types = {\"this\": True, \"path\": True}\n     _sql_names = [\"JSONB_EXISTS\"]\ndiff --git a/sqlglot/generator.py b/sqlglot/generator.py\nindex 01368e6..1fa540a 100644\n--- a/sqlglot/generator.py\n+++ b/sqlglot/generator.py\n@@ -118,6 +118,7 @@ class Generator(metaclass=_Generator):\n         exp.AnalyzeWith: lambda self, e: self.expressions(e, prefix=\"WITH \", sep=\" \"),\n         exp.ArrayContainsAll: lambda self, e: self.binary(e, \"@>\"),\n         exp.JSONBContainsAnyTopKeys: lambda self, e: self.binary(e, \"?|\"),\n+        exp.JSONBContainsAllTopKeys: lambda self, e: self.binary(e, \"?&\"),\n         exp.ArrayOverlaps: lambda self, e: self.binary(e, \"&&\"),\n         exp.AutoRefreshProperty: lambda self, e: f\"AUTO REFRESH {self.sql(e, 'this')}\",\n         exp.BackupProperty: lambda self, e: f\"BACKUP {self.sql(e, 'this')}\",\ndiff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex f889d40..8015dc1 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -943,6 +943,7 @@ class Parser(metaclass=_Parser):\n         TokenType.SIMILAR_TO: binary_range_parser(exp.SimilarTo),\n         TokenType.FOR: lambda self, this: self._parse_comprehension(this),\n         TokenType.QMARK_PIPE: binary_range_parser(exp.JSONBContainsAnyTopKeys),\n+        TokenType.QMARK_AMP: binary_range_parser(exp.JSONBContainsAllTopKeys),\n     }\n \n     PIPE_SYNTAX_TRANSFORM_PARSERS = {\ndiff --git a/sqlglot/tokens.py b/sqlglot/tokens.py\nindex 82269e8..018a92e 100644\n--- a/sqlglot/tokens.py\n+++ b/sqlglot/tokens.py\n@@ -86,6 +86,7 @@ class TokenType(AutoName):\n     XOR = auto()\n     DSTAR = auto()\n     QMARK_PIPE = auto()\n+    QMARK_AMP = auto()\n \n     URI_START = auto()\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

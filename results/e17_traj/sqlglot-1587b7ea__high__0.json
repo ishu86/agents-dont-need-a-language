@@ -1,0 +1,413 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "fix(snowflake): ALTER TABLE ADD with IF NOT EXISTS\n\n* fix(snowflake): ALTER TABLE ADD with IF NOT EXISTS\n\n* refactor tests\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_snowflake",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "IF NOT EXISTS|AddColumn",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALTER TABLE ADD|IF NOT EXISTS",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 475,
+   "output_tokens": 114
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2076
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 1210,
+    "end_line": 1255
+   },
+   "output_chars": 2603,
+   "output_tokens": 664
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py -k test_snowflake -x"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2091
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_alter|ALTER_TABLE|AlterTable|_parse_add",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 1597,
+   "output_tokens": 447
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "AlterTable|AddColumn|ColumnDef",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 303,
+   "output_tokens": 134
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def alter_table_sql|AlterTable",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7300,
+    "end_line": 7400
+   },
+   "output_chars": 4491,
+   "output_tokens": 1085
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALTER_TABLE_ADD_REQUIRED_FOR_EACH_COLUMN",
+    "path": "sqlglot"
+   },
+   "output_chars": 540,
+   "output_tokens": 150
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class ColumnDef|exists.*ColumnDef|\"exists\"",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 303,
+   "output_tokens": 134
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def addcolumn_sql|AddColumn|ColumnDef",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 461,
+   "output_tokens": 122
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3460,
+    "end_line": 3540
+   },
+   "output_chars": 3914,
+   "output_tokens": 952
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_exists",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 74,
+   "output_tokens": 22
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1940,
+    "end_line": 1970
+   },
+   "output_chars": 1324,
+   "output_tokens": 318
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 995,
+    "end_line": 1035
+   },
+   "output_chars": 2001,
+   "output_tokens": 480
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_schema",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 105,
+   "output_tokens": 28
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5935,
+    "end_line": 5985
+   },
+   "output_chars": 2393,
+   "output_tokens": 580
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            schema = self._parse_schema()\n\n            return ensure_list(schema) if schema else self._parse_csv(self._parse_field_def)\n",
+    "new": "            schema = self._parse_schema()\n\n            if schema:\n                return ensure_list(schema)\n\n            def _parse_column() -> t.Optional[exp.Expression]:\n                exists = self._parse_exists(not_=True)\n                column = self._parse_field_def()\n                if isinstance(column, exp.ColumnDef):\n                    column.set(\"exists\", exists)\n                return column\n\n            return self._parse_csv(_parse_column)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py -k test_snowflake -x"
+   },
+   "output_chars": 558,
+   "output_tokens": 154
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests -x"
+   },
+   "output_chars": 1371,
+   "output_tokens": 355
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests --ignore=tests/test_executor.py -x"
+   },
+   "output_chars": 1374,
+   "output_tokens": 355
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -x"
+   },
+   "output_chars": 3119,
+   "output_tokens": 645
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7370,
+    "end_line": 7400
+   },
+   "output_chars": 1307,
+   "output_tokens": 300
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ADD IF NOT EXISTS",
+    "path": "tests"
+   },
+   "output_chars": 517,
+   "output_tokens": 130
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated ALTER TABLE ADD parsing to recognize IF NOT EXISTS on individual column definitions in flat ADD lists, preserving per-column behavior. The Snowflake test and all dialect tests pass (470 passed). The full test suite could not be collected because duckdb is not installed."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 329,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 440,
+   "cached_tokens": 0,
+   "output_tokens": 107,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2769,
+   "cached_tokens": 0,
+   "output_tokens": 67,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3511,
+   "cached_tokens": 2766,
+   "output_tokens": 55,
+   "reasoning_tokens": 19,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5668,
+   "cached_tokens": 3508,
+   "output_tokens": 139,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6420,
+   "cached_tokens": 5665,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7550,
+   "cached_tokens": 6417,
+   "output_tokens": 174,
+   "reasoning_tokens": 59,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8159,
+   "cached_tokens": 7547,
+   "output_tokens": 341,
+   "reasoning_tokens": 304,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9463,
+   "cached_tokens": 8156,
+   "output_tokens": 683,
+   "reasoning_tokens": 652,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10179,
+   "cached_tokens": 9460,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10542,
+   "cached_tokens": 10176,
+   "output_tokens": 84,
+   "reasoning_tokens": 48,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11117,
+   "cached_tokens": 10539,
+   "output_tokens": 573,
+   "reasoning_tokens": 542,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11729,
+   "cached_tokens": 11114,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12354,
+   "cached_tokens": 11726,
+   "output_tokens": 985,
+   "reasoning_tokens": 829,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13351,
+   "cached_tokens": 12351,
+   "output_tokens": 95,
+   "reasoning_tokens": 59,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13611,
+   "cached_tokens": 13348,
+   "output_tokens": 49,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14026,
+   "cached_tokens": 13608,
+   "output_tokens": 90,
+   "reasoning_tokens": 61,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14482,
+   "cached_tokens": 14023,
+   "output_tokens": 343,
+   "reasoning_tokens": 318,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15481,
+   "cached_tokens": 14479,
+   "output_tokens": 48,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15840,
+   "cached_tokens": 15478,
+   "output_tokens": 527,
+   "reasoning_tokens": 500,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16508,
+   "cached_tokens": 15837,
+   "output_tokens": 161,
+   "reasoning_tokens": 91,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 100.8,
+ "usage": {
+  "input_tokens": 203529,
+  "cached_tokens": 186198,
+  "output_tokens": 4651,
+  "reasoning_tokens": 3579
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 71851e8..49f30dd 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -7383,7 +7383,17 @@ class Parser(metaclass=_Parser):\n \n             schema = self._parse_schema()\n \n-            return ensure_list(schema) if schema else self._parse_csv(self._parse_field_def)\n+            if schema:\n+                return ensure_list(schema)\n+\n+            def _parse_column() -> t.Optional[exp.Expression]:\n+                exists = self._parse_exists(not_=True)\n+                column = self._parse_field_def()\n+                if isinstance(column, exp.ColumnDef):\n+                    column.set(\"exists\", exists)\n+                return column\n+\n+            return self._parse_csv(_parse_column)\n \n         return self._parse_csv(_parse_add_alteration)\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

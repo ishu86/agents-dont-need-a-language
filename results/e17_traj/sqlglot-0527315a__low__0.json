@@ -1,0 +1,184 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix: Drop schema with if exists displacing catalog\n\nThe following tests currently fail and should pass after your change:\ntests/test_parser.py::TestParser::test_parse_drop_schema",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 269,
+   "output_tokens": 87
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DROP SCHEMA|drop_schema",
+    "path": "tests/test_parser.py"
+   },
+   "output_chars": 558,
+   "output_tokens": 124
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/test_parser.py",
+    "start_line": 830,
+    "end_line": 895
+   },
+   "output_chars": 3008,
+   "output_tokens": 576
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_drop|parse_drop",
+    "path": "sqlglot"
+   },
+   "output_chars": 783,
+   "output_tokens": 218
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2140,
+    "end_line": 2230
+   },
+   "output_chars": 3805,
+   "output_tokens": 907
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_table_parts",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4411,
+    "end_line": 4495
+   },
+   "output_chars": 3158,
+   "output_tokens": 769
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "this = self._parse_table_parts(\n                schema=True, is_db_reference=self._prev.token_type == TokenType.SCHEMA\n            )",
+    "new": "this = self._parse_table_parts(schema=True, is_db_reference=kind == \"SCHEMA\")"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/test_parser.py::TestParser::test_parse_drop_schema"
+   },
+   "output_chars": 475,
+   "output_tokens": 141
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Fixed DROP SCHEMA parsing so IF EXISTS no longer prevents schema names from being parsed as database references. The targeted parser test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 302,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 418,
+   "cached_tokens": 0,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 583,
+   "cached_tokens": 0,
+   "output_tokens": 31,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1201,
+   "cached_tokens": 0,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1460,
+   "cached_tokens": 1198,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2412,
+   "cached_tokens": 1457,
+   "output_tokens": 48,
+   "reasoning_tokens": 16,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2481,
+   "cached_tokens": 2409,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3295,
+   "cached_tokens": 2478,
+   "output_tokens": 161,
+   "reasoning_tokens": 81,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3468,
+   "cached_tokens": 3292,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3649,
+   "cached_tokens": 3465,
+   "output_tokens": 42,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 28.6,
+ "usage": {
+  "input_tokens": 19269,
+  "cached_tokens": 14299,
+  "output_tokens": 457,
+  "reasoning_tokens": 97
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex f64becc..be8f990 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -2162,9 +2162,7 @@ class Parser:\n         if kind == \"COLUMN\":\n             this = self._parse_column()\n         else:\n-            this = self._parse_table_parts(\n-                schema=True, is_db_reference=self._prev.token_type == TokenType.SCHEMA\n-            )\n+            this = self._parse_table_parts(schema=True, is_db_reference=kind == \"SCHEMA\")\n \n         cluster = self._parse_on_property() if self._match(TokenType.ON) else None\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

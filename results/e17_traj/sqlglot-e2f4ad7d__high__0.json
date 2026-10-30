@@ -1,0 +1,390 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "fix(redshift): preserve quoting of the one-byte \"char\" type\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_cast",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2113
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Redshift|CHAR",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 281,
+   "output_tokens": 71
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def cast|CAST",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 1085,
+   "output_tokens": 337
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_cast",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 29,
+   "output_tokens": 8
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 750,
+    "end_line": 820
+   },
+   "output_chars": 3355,
+   "output_tokens": 832
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_cast -q"
+   },
+   "output_chars": 1171,
+   "output_tokens": 284
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 2204,
+   "output_tokens": 581
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/generators"
+   },
+   "output_chars": 382,
+   "output_tokens": 142
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "USERDEFINED|userdefined|DataType.Type.CHAR|CHAR:",
+    "path": "sqlglot"
+   },
+   "output_chars": 3506,
+   "output_tokens": 1081
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/redshift.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2021
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/redshift.py"
+   },
+   "output_chars": 6442,
+   "output_tokens": 1615
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/postgres.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2069
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SUPPORTS_USER_DEFINED_TYPES|_parse_types|USERDEFINED",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 1633,
+   "output_tokens": 382
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 6480,
+    "end_line": 6550
+   },
+   "output_chars": 3200,
+   "output_tokens": 717
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "QUOTED_TYPES_TO_PRESERVE",
+    "path": "sqlglot"
+   },
+   "output_chars": 261,
+   "output_tokens": 82
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/postgres.py",
+    "start_line": 70,
+    "end_line": 115
+   },
+   "output_chars": 2000,
+   "output_tokens": 536
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "python - <<'PY'\nfrom sqlglot import parse_one\nfor d in ('postgres','redshift'):\n for q in ('CAST(65 AS \"char\")','CAST(x AS \"CHAR\")','65::\"char\"'):\n  try:\n   e=parse_one(q,read=d)\n   print(d,q, e, e.args.get('to'), e.sql(dialect=d), e.args.get('to').dump() if e.args.get('to') else '')\n  except Exception as ex: print(type(ex),ex)\nPY"
+   },
+   "output_chars": 440,
+   "output_tokens": 140
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "                if (\n                    identifier.quoted\n                    and self.dialect.SUPPORTS_USER_DEFINED_TYPES\n                    and identifier.name in self.QUOTED_TYPES_TO_PRESERVE\n                ):",
+    "new": "                if identifier.quoted and identifier.name in self.QUOTED_TYPES_TO_PRESERVE:"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_cast -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py tests/dialects/test_postgres.py -q"
+   },
+   "output_chars": 95,
+   "output_tokens": 22
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*Parser\\(PostgresParser\\)|SUPPORTS_USER_DEFINED_TYPES = False",
+    "path": "sqlglot"
+   },
+   "output_chars": 922,
+   "output_tokens": 271
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class (RisingWave|Materialize|Postgres)|SUPPORTS_USER_DEFINED_TYPES",
+    "path": "sqlglot/dialects/risingwave.py"
+   },
+   "output_chars": 30,
+   "output_tokens": 8
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class (RisingWave|Materialize|Postgres)|SUPPORTS_USER_DEFINED_TYPES",
+    "path": "sqlglot/dialects/materialize.py"
+   },
+   "output_chars": 31,
+   "output_tokens": 8
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SUPPORTS_USER_DEFINED_TYPES",
+    "path": "sqlglot/dialects/postgres.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_materialize.py tests/dialects/test_risingwave.py -q"
+   },
+   "output_chars": 105,
+   "output_tokens": 21
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated type parsing to preserve explicitly listed quoted types even when a dialect disables general user-defined types. Redshift now retains the one-byte \"char\" type\u2019s quoting; its cast test and related Redshift, Postgres, Materialize, and RisingWave tests pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 309,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 439,
+   "cached_tokens": 0,
+   "output_tokens": 96,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3085,
+   "cached_tokens": 0,
+   "output_tokens": 42,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3146,
+   "cached_tokens": 3082,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4024,
+   "cached_tokens": 3143,
+   "output_tokens": 44,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4363,
+   "cached_tokens": 4021,
+   "output_tokens": 107,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6303,
+   "cached_tokens": 4360,
+   "output_tokens": 98,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12135,
+   "cached_tokens": 6300,
+   "output_tokens": 80,
+   "reasoning_tokens": 40,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12608,
+   "cached_tokens": 12132,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13370,
+   "cached_tokens": 12605,
+   "output_tokens": 44,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13507,
+   "cached_tokens": 13367,
+   "output_tokens": 103,
+   "reasoning_tokens": 66,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14157,
+   "cached_tokens": 13504,
+   "output_tokens": 265,
+   "reasoning_tokens": 127,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14573,
+   "cached_tokens": 14154,
+   "output_tokens": 481,
+   "reasoning_tokens": 392,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15066,
+   "cached_tokens": 14570,
+   "output_tokens": 43,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15135,
+   "cached_tokens": 15063,
+   "output_tokens": 66,
+   "reasoning_tokens": 29,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15234,
+   "cached_tokens": 15132,
+   "output_tokens": 156,
+   "reasoning_tokens": 113,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15672,
+   "cached_tokens": 15231,
+   "output_tokens": 187,
+   "reasoning_tokens": 47,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15907,
+   "cached_tokens": 15669,
+   "output_tokens": 440,
+   "reasoning_tokens": 402,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16379,
+   "cached_tokens": 15904,
+   "output_tokens": 89,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 78.8,
+ "usage": {
+  "input_tokens": 195412,
+  "cached_tokens": 178237,
+  "output_tokens": 2438,
+  "reasoning_tokens": 1299
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex b8b4c3e..7efde98 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -6511,11 +6511,7 @@ class Parser:\n                 any_token=False, tokens=(TokenType.VAR,)\n             )\n             if isinstance(identifier, exp.Identifier):\n-                if (\n-                    identifier.quoted\n-                    and self.dialect.SUPPORTS_USER_DEFINED_TYPES\n-                    and identifier.name in self.QUOTED_TYPES_TO_PRESERVE\n-                ):\n+                if identifier.quoted and identifier.name in self.QUOTED_TYPES_TO_PRESERVE:\n                     this = exp.DataType.build(identifier, udt=True)\n                 else:\n                     try:\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

@@ -1,0 +1,335 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(bigquery): parse FULL/LEFT before set ops as modifiers, not aliases\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_bigquery.py::TestBigQuery::test_set_operations",
+ "steps": [
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_set_operations",
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 140,
+   "output_tokens": 35
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py",
+    "start_line": 3310,
+    "end_line": 3385
+   },
+   "output_chars": 3485,
+   "output_tokens": 939
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "BY NAME|CORRESPONDING|parse_set_operations|set_operation",
+    "path": "sqlglot"
+   },
+   "output_chars": 4397,
+   "output_tokens": 1140
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "side.*FULL|FULL.*UNION",
+    "path": "sqlglot"
+   },
+   "output_chars": 812,
+   "output_tokens": 230
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5880,
+    "end_line": 5985
+   },
+   "output_chars": 4102,
+   "output_tokens": 969
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5680,
+    "end_line": 5725
+   },
+   "output_chars": 2051,
+   "output_tokens": 515
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_join_parts|JOIN_PARTS",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 32,
+   "output_tokens": 10
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FULL|LEFT",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4628,
+    "end_line": 4665
+   },
+   "output_chars": 1744,
+   "output_tokens": 447
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "parse_subquery_alias|SUBQUERY_ALIAS",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 423,
+   "output_tokens": 99
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4118,
+    "end_line": 4155
+   },
+   "output_chars": 1778,
+   "output_tokens": 422
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_subquery",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 30,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4296,
+    "end_line": 4337
+   },
+   "output_chars": 2011,
+   "output_tokens": 462
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _curr|def _ next|_next.token|_next",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 1619,
+   "output_tokens": 443
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "                alias=self._parse_table_alias() if parse_alias else None,\n",
+    "new": "                alias=(\n                    self._parse_table_alias()\n                    if parse_alias\n                    and not (\n                        self._curr.text.upper() in (\"FULL\", \"LEFT\")\n                        and self._next.text.upper() in (\"OUTER\", \"UNION\")\n                    )\n                    else None\n                ),\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "        return self.expression(\n            exp.Subquery(\n                this=this,\n                pivots=self._parse_pivots(),\n                alias=(\n                    self._parse_table_alias()\n                    if parse_alias\n                    and not (\n                        self._curr.text.upper() in (\"FULL\", \"LEFT\")\n                        and self._next.text.upper() in (\"OUTER\", \"UNION\")\n                    )\n                    else None\n                ),\n",
+    "new": "        set_op_modifier = (\n            self._curr.text.upper() in (\"FULL\", \"LEFT\")\n            and self._next.text.upper() in (\"OUTER\", \"UNION\")\n        )\n        return self.expression(\n            exp.Subquery(\n                this=this,\n                pivots=self._parse_pivots(),\n                alias=self._parse_table_alias() if parse_alias and not set_op_modifier else None,\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Unable to complete the fix. The parser still treats FULL as a subquery alias, and the targeted test remains failing."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 31,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 389,
+   "cached_tokens": 0,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1376,
+   "cached_tokens": 0,
+   "output_tokens": 80,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2846,
+   "cached_tokens": 1373,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3860,
+   "cached_tokens": 2843,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4420,
+   "cached_tokens": 3857,
+   "output_tokens": 124,
+   "reasoning_tokens": 43,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4577,
+   "cached_tokens": 4417,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5069,
+   "cached_tokens": 4574,
+   "output_tokens": 52,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5609,
+   "cached_tokens": 5066,
+   "output_tokens": 81,
+   "reasoning_tokens": 46,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5800,
+   "cached_tokens": 5606,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6267,
+   "cached_tokens": 5797,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6318,
+   "cached_tokens": 6264,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6825,
+   "cached_tokens": 6315,
+   "output_tokens": 143,
+   "reasoning_tokens": 102,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7422,
+   "cached_tokens": 6822,
+   "output_tokens": 209,
+   "reasoning_tokens": 92,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7643,
+   "cached_tokens": 7419,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8166,
+   "cached_tokens": 7640,
+   "output_tokens": 412,
+   "reasoning_tokens": 184,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8590,
+   "cached_tokens": 8163,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9113,
+   "cached_tokens": 8587,
+   "output_tokens": 164,
+   "reasoning_tokens": 122,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 61.7,
+ "usage": {
+  "input_tokens": 94602,
+  "cached_tokens": 84743,
+  "output_tokens": 1603,
+  "reasoning_tokens": 604
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 87d5812..f0786c8 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -4299,11 +4299,15 @@ class Parser:\n         if not this:\n             return None\n \n+        set_op_modifier = (\n+            self._curr.text.upper() in (\"FULL\", \"LEFT\")\n+            and self._next.text.upper() in (\"OUTER\", \"UNION\")\n+        )\n         return self.expression(\n             exp.Subquery(\n                 this=this,\n                 pivots=self._parse_pivots(),\n-                alias=self._parse_table_alias() if parse_alias else None,\n+                alias=self._parse_table_alias() if parse_alias and not set_op_modifier else None,\n                 sample=self._parse_table_sample(),\n             )\n         )\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations"
+  ]
+ }
+}

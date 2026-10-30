@@ -1,0 +1,15 @@
+# build and environments
+target/
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.DS_Store
+
+# third-party clone used by E17/E18 (recreate it, see README)
+data/e17/repo/
+
+# private notes, drafts and secrets (never published)
+private/
+.env
+*.env

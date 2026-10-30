@@ -1,0 +1,827 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "fix(bigquery): parse FULL/LEFT before set ops as modifiers, not aliases\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_bigquery.py::TestBigQuery::test_set_operations",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "set_operations",
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 140,
+   "output_tokens": 35
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FULL|LEFT|set operation|set_op",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 72,
+   "output_tokens": 16
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 8062,
+   "output_tokens": 2070
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py",
+    "start_line": 3310,
+    "end_line": 3385
+   },
+   "output_chars": 3485,
+   "output_tokens": 939
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/bigquery.py",
+    "start_line": 1,
+    "end_line": 160
+   },
+   "output_chars": 6224,
+   "output_tokens": 1668
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_set_operations|parse_set_operations|_parse_select|_parse_query_modifiers|_parse_.*alias",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 6765,
+   "output_tokens": 1639
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3960,
+    "end_line": 4185
+   },
+   "output_chars": 8060,
+   "output_tokens": 1837
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4150,
+    "end_line": 4170
+   },
+   "output_chars": 826,
+   "output_tokens": 205
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 1,
+    "end_line": 200
+   },
+   "output_chars": 7500,
+   "output_tokens": 2038
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "SET_OP|set_operation|_parse_set",
+    "path": "sqlglot/parsers/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5960,
+    "end_line": 6035
+   },
+   "output_chars": 3002,
+   "output_tokens": 693
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def parse_set_operation|SET_OP_MODIFIERS|SET_OPERATION",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 376,
+   "output_tokens": 110
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 970,
+    "end_line": 1065
+   },
+   "output_chars": 2837,
+   "output_tokens": 778
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5880,
+    "end_line": 5968
+   },
+   "output_chars": 3475,
+   "output_tokens": 827
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4250,
+    "end_line": 4290
+   },
+   "output_chars": 1845,
+   "output_tokens": 454
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8720,
+    "end_line": 8815
+   },
+   "output_chars": 4088,
+   "output_tokens": 995
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALIAS_TOKENS|TABLE_ALIAS_TOKENS|JOIN_SIDES",
+    "path": "sqlglot/parsers/bigquery.py"
+   },
+   "output_chars": 366,
+   "output_tokens": 108
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 189,
+    "end_line": 230
+   },
+   "output_chars": 1731,
+   "output_tokens": 492
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALIAS_TOKENS:|LEFT,|FULL,",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 736,
+   "output_tokens": 232
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 750,
+    "end_line": 865
+   },
+   "output_chars": 3514,
+   "output_tokens": 903
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_subquery|def _parse_join_parts",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 62,
+   "output_tokens": 20
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4290,
+    "end_line": 4335
+   },
+   "output_chars": 2214,
+   "output_tokens": 503
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_wrapped_select",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 82,
+   "output_tokens": 24
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3940,
+    "end_line": 3970
+   },
+   "output_chars": 1584,
+   "output_tokens": 380
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3955,
+    "end_line": 3990
+   },
+   "output_chars": 1745,
+   "output_tokens": 411
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8788,
+    "end_line": 8845
+   },
+   "output_chars": 2475,
+   "output_tokens": 607
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4600,
+    "end_line": 4650
+   },
+   "output_chars": 2117,
+   "output_tokens": 511
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "self\\._tokens\\[|self\\._index \\+|def _match_text_seq",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 720,
+   "output_tokens": 222
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _retreat",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 49,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1970,
+    "end_line": 2025
+   },
+   "output_chars": 2103,
+   "output_tokens": 584
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_subquery|super\\(\\)._parse",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 7961,
+   "output_tokens": 2230
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2030,
+    "end_line": 2078
+   },
+   "output_chars": 1864,
+   "output_tokens": 480
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    ADJACENT_STRINGS_CANNOT_BE_CONNECTED: t.ClassVar = True\n\n    # BigQuery does not allow ASC/DESC to be used as an identifier, allows GRANT as an identifier\n",
+    "new": "    ADJACENT_STRINGS_CANNOT_BE_CONNECTED: t.ClassVar = True\n\n    def _parse_subquery(\n        self, this: exp.Expr | None, parse_alias: bool = True\n    ) -> exp.Subquery | None:\n        if parse_alias:\n            index = self._index\n            _, side, _ = self._parse_join_parts()\n            is_set_operation = side and self._match_set(self.SET_OPERATIONS, advance=False)\n            self._retreat(index)\n\n            if is_set_operation:\n                parse_alias = False\n\n        return super()._parse_subquery(this, parse_alias=parse_alias)\n\n    # BigQuery does not allow ASC/DESC to be used as an identifier, allows GRANT as an identifier\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "PARSER = BigQueryParser",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "BigQueryParser",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 87,
+   "output_tokens": 23
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2375,
+    "end_line": 2410
+   },
+   "output_chars": 1659,
+   "output_tokens": 407
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_subquery\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 236,
+   "output_tokens": 59
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7060,
+    "end_line": 7110
+   },
+   "output_chars": 2036,
+   "output_tokens": 494
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    def _parse_subquery(\n        self, this: exp.Expr | None, parse_alias: bool = True\n    ) -> exp.Subquery | None:\n        if parse_alias:\n            index = self._index\n            _, side, _ = self._parse_join_parts()\n            is_set_operation = side and self._match_set(self.SET_OPERATIONS, advance=False)\n            self._retreat(index)\n\n            if is_set_operation:\n                parse_alias = False\n\n        return super()._parse_subquery(this, parse_alias=parse_alias)\n\n    # BigQuery does not allow ASC/DESC to be used as an identifier, allows GRANT as an identifier\n",
+    "new": "    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n        if not explicit:\n            index = self._index\n            _, side, _ = self._parse_join_parts()\n            is_set_operation = side and self._match_set(self.SET_OPERATIONS, advance=False)\n            self._retreat(index)\n\n            if is_set_operation:\n                return this\n\n        return super()._parse_alias(this, explicit=explicit)\n\n    # BigQuery does not allow ASC/DESC to be used as an identifier, allows GRANT as an identifier\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 2052,
+   "output_tokens": 438
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "\\(SELECT 1\\) AS x UNION|union.this.*Subquery",
+    "path": "tests"
+   },
+   "output_chars": 209,
+   "output_tokens": 57
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "AS x UNION ALL \\(SELECT|\\) AS .* UNION",
+    "path": "tests"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2539
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "old": "    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n        if not explicit:\n            index = self._index\n            _, side, _ = self._parse_join_parts()\n            is_set_operation = side and self._match_set(self.SET_OPERATIONS, advance=False)\n            self._retreat(index)\n\n            if is_set_operation:\n                return this\n\n        return super()._parse_alias(this, explicit=explicit)\n",
+    "new": "    def _is_set_operation_ahead(self) -> tuple[bool, bool]:\n        index = self._index\n        _, side, _ = self._parse_join_parts()\n        is_set_operation = self._match_set(self.SET_OPERATIONS, advance=False)\n        self._retreat(index)\n        return bool(side), is_set_operation\n\n    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n        has_side, is_set_operation = self._is_set_operation_ahead()\n        if not explicit and has_side and is_set_operation:\n            return this\n\n        expression = super()._parse_alias(this, explicit=explicit)\n\n        # Keep an alias on a parenthesized query attached to the subquery when it is a\n        # set-operation operand, rather than wrapping the subquery in an Alias node.\n        if isinstance(this, exp.Subquery) and isinstance(expression, exp.Alias):\n            _, is_set_operation = self._is_set_operation_ahead()\n            if is_set_operation:\n                this.set(\"alias\", exp.TableAlias(this=expression.args[\"alias\"]))\n                return this\n\n        return expression\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 100,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py -q"
+   },
+   "output_chars": 124,
+   "output_tokens": 24
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 185,
+    "end_line": 235
+   },
+   "output_chars": 2183,
+   "output_tokens": 559
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests -q"
+   },
+   "output_chars": 1705,
+   "output_tokens": 423
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated the BigQuery parser to recognize FULL/LEFT before set operations as modifiers rather than aliases, and to keep aliases on parenthesized set-operation operands attached to their subqueries. The BigQuery dialect tests pass (58 tests, 1,149 subtests). The full suite could not be collected because duckdb is not installed."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 442,
+   "cached_tokens": 0,
+   "output_tokens": 102,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2694,
+   "cached_tokens": 0,
+   "output_tokens": 144,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7113,
+   "cached_tokens": 2691,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8995,
+   "cached_tokens": 7110,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9245,
+   "cached_tokens": 8992,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11330,
+   "cached_tokens": 9242,
+   "output_tokens": 54,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11398,
+   "cached_tokens": 11327,
+   "output_tokens": 64,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12166,
+   "cached_tokens": 11395,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12325,
+   "cached_tokens": 12163,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13147,
+   "cached_tokens": 12322,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14019,
+   "cached_tokens": 13144,
+   "output_tokens": 122,
+   "reasoning_tokens": 86,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14606,
+   "cached_tokens": 14016,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15646,
+   "cached_tokens": 14603,
+   "output_tokens": 56,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15821,
+   "cached_tokens": 15643,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16360,
+   "cached_tokens": 15818,
+   "output_tokens": 53,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16656,
+   "cached_tokens": 16357,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17602,
+   "cached_tokens": 16653,
+   "output_tokens": 211,
+   "reasoning_tokens": 174,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18301,
+   "cached_tokens": 17599,
+   "output_tokens": 278,
+   "reasoning_tokens": 240,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18610,
+   "cached_tokens": 18298,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19158,
+   "cached_tokens": 18607,
+   "output_tokens": 413,
+   "reasoning_tokens": 380,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19606,
+   "cached_tokens": 19155,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 20031,
+   "cached_tokens": 19603,
+   "output_tokens": 317,
+   "reasoning_tokens": 281,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 20770,
+   "cached_tokens": 20028,
+   "output_tokens": 205,
+   "reasoning_tokens": 169,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 21593,
+   "cached_tokens": 20767,
+   "output_tokens": 1154,
+   "reasoning_tokens": 1118,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23269,
+   "cached_tokens": 21590,
+   "output_tokens": 176,
+   "reasoning_tokens": 130,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23678,
+   "cached_tokens": 23266,
+   "output_tokens": 866,
+   "reasoning_tokens": 835,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 24573,
+   "cached_tokens": 23675,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 25202,
+   "cached_tokens": 24570,
+   "output_tokens": 1298,
+   "reasoning_tokens": 1259,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28741,
+   "cached_tokens": 25199,
+   "output_tokens": 369,
+   "reasoning_tokens": 333,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29601,
+   "cached_tokens": 28738,
+   "output_tokens": 496,
+   "reasoning_tokens": 255,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30109,
+   "cached_tokens": 29598,
+   "output_tokens": 44,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30641,
+   "cached_tokens": 30106,
+   "output_tokens": 262,
+   "reasoning_tokens": 224,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30917,
+   "cached_tokens": 30638,
+   "output_tokens": 58,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31009,
+   "cached_tokens": 30914,
+   "output_tokens": 237,
+   "reasoning_tokens": 201,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31664,
+   "cached_tokens": 31006,
+   "output_tokens": 80,
+   "reasoning_tokens": 48,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31814,
+   "cached_tokens": 31661,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32353,
+   "cached_tokens": 0,
+   "output_tokens": 743,
+   "reasoning_tokens": 431,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 33108,
+   "cached_tokens": 31811,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 33592,
+   "cached_tokens": 33105,
+   "output_tokens": 409,
+   "reasoning_tokens": 370,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34069,
+   "cached_tokens": 33589,
+   "output_tokens": 441,
+   "reasoning_tokens": 405,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 37060,
+   "cached_tokens": 34066,
+   "output_tokens": 3305,
+   "reasoning_tokens": 2901,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 40377,
+   "cached_tokens": 37057,
+   "output_tokens": 65,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 40474,
+   "cached_tokens": 40374,
+   "output_tokens": 79,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 40588,
+   "cached_tokens": 40471,
+   "output_tokens": 74,
+   "reasoning_tokens": 36,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 41232,
+   "cached_tokens": 40585,
+   "output_tokens": 281,
+   "reasoning_tokens": 259,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 41947,
+   "cached_tokens": 41229,
+   "output_tokens": 573,
+   "reasoning_tokens": 488,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 244.2,
+ "usage": {
+  "input_tokens": 1053964,
+  "cached_tokens": 978781,
+  "output_tokens": 13539,
+  "reasoning_tokens": 10816
+ },
+ "diff": "diff --git a/sqlglot/parsers/bigquery.py b/sqlglot/parsers/bigquery.py\nindex 72f1c4a..7a33b05 100644\n--- a/sqlglot/parsers/bigquery.py\n+++ b/sqlglot/parsers/bigquery.py\n@@ -193,6 +193,30 @@ class BigQueryParser(parser.Parser):\n     JOINS_HAVE_EQUAL_PRECEDENCE: t.ClassVar = True\n     ADJACENT_STRINGS_CANNOT_BE_CONNECTED: t.ClassVar = True\n \n+    def _is_set_operation_ahead(self) -> tuple[bool, bool]:\n+        index = self._index\n+        _, side, _ = self._parse_join_parts()\n+        is_set_operation = self._match_set(self.SET_OPERATIONS, advance=False)\n+        self._retreat(index)\n+        return bool(side), is_set_operation\n+\n+    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n+        has_side, is_set_operation = self._is_set_operation_ahead()\n+        if not explicit and has_side and is_set_operation:\n+            return this\n+\n+        expression = super()._parse_alias(this, explicit=explicit)\n+\n+        # Keep an alias on a parenthesized query attached to the subquery when it is a\n+        # set-operation operand, rather than wrapping the subquery in an Alias node.\n+        if isinstance(this, exp.Subquery) and isinstance(expression, exp.Alias):\n+            _, is_set_operation = self._is_set_operation_ahead()\n+            if is_set_operation:\n+                this.set(\"alias\", exp.TableAlias(this=expression.args[\"alias\"]))\n+                return this\n+\n+        return expression\n+\n     # BigQuery does not allow ASC/DESC to be used as an identifier, allows GRANT as an identifier\n     ID_VAR_TOKENS: t.ClassVar = {\n         *parser.Parser.ID_VAR_TOKENS,\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

@@ -1,0 +1,22 @@
+sqlglot-6833959a__low__1 wrong_logic
+sqlglot-abd8d1bc__low__0 incomplete
+sqlglot-03c96cbb__low__0 wrong_logic
+sqlglot-03c96cbb__low__1 wrong_logic
+sqlglot-0f79f975__low__0 missed_nonlocal_fact
+sqlglot-0f79f975__low__1 missed_nonlocal_fact
+sqlglot-4bc9c44e__low__1 wrong_logic
+sqlglot-994d3a37__low__0 missed_nonlocal_fact
+sqlglot-994d3a37__low__1 missed_nonlocal_fact
+sqlglot-f337c70e__low__0 incomplete
+sqlglot-a570cf8a__low__0 missed_nonlocal_fact
+sqlglot-a570cf8a__low__1 missed_nonlocal_fact
+sqlglot-e3ed7486__low__0 wrong_logic
+sqlglot-e3ed7486__low__1 wrong_logic
+sqlglot-e3ed7486__high__1 incomplete
+sqlglot-e3ed7486__high__0 wrong_logic
+sqlglot-1587b7ea__low__0 wrong_logic
+sqlglot-1587b7ea__low__1 wrong_logic
+sqlglot-6bb78c9a__low__1 wrong_logic
+{'wrong_logic': 10, 'incomplete': 3, 'missed_nonlocal_fact': 6}
+high {'incomplete': 1, 'wrong_logic': 1}
+low {'wrong_logic': 9, 'incomplete': 2, 'missed_nonlocal_fact': 6}

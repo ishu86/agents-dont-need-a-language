@@ -1,0 +1,261 @@
+{
+ "summary": {
+  "python": {
+   "pass_": "8/8",
+   "code_tokens": 580,
+   "pct_of_python": 100
+  },
+  "typescript": {
+   "pass_": "8/8",
+   "code_tokens": 623,
+   "pct_of_python": 107
+  },
+  "rust": {
+   "pass_": "8/8",
+   "code_tokens": 907,
+   "pct_of_python": 156
+  }
+ },
+ "rows": [
+  {
+   "lang": "python",
+   "task": "is_pal",
+   "ok": true,
+   "code_tokens": 35,
+   "err": "",
+   "out": 56,
+   "cost": 0.21360800000000002,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "is_pal",
+   "ok": true,
+   "code_tokens": 42,
+   "err": "",
+   "out": 72,
+   "cost": 0.209708,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "is_pal",
+   "ok": true,
+   "code_tokens": 63,
+   "err": "",
+   "out": 110,
+   "cost": 0.21416,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "rle",
+   "ok": true,
+   "code_tokens": 39,
+   "err": "",
+   "out": 61,
+   "cost": 0.21363000000000001,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "rle",
+   "ok": true,
+   "code_tokens": 32,
+   "err": "",
+   "out": 51,
+   "cost": 0.21353,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "rle",
+   "ok": true,
+   "code_tokens": 92,
+   "err": "",
+   "out": 138,
+   "cost": 0.214412,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "merge",
+   "ok": true,
+   "code_tokens": 75,
+   "err": "",
+   "out": 114,
+   "cost": 0.056601000000000005,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "merge",
+   "ok": true,
+   "code_tokens": 99,
+   "err": "",
+   "out": 138,
+   "cost": 0.056817,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "merge",
+   "ok": true,
+   "code_tokens": 95,
+   "err": "",
+   "out": 160,
+   "cost": 0.05710900000000001,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "roman",
+   "ok": true,
+   "code_tokens": 117,
+   "err": "",
+   "out": 154,
+   "cost": 0.056924999999999996,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "roman",
+   "ok": true,
+   "code_tokens": 117,
+   "err": "",
+   "out": 154,
+   "cost": 0.056924999999999996,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "roman",
+   "ok": true,
+   "code_tokens": 148,
+   "err": "",
+   "out": 191,
+   "cost": 0.057311,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "two_sum",
+   "ok": true,
+   "code_tokens": 54,
+   "err": "",
+   "out": 85,
+   "cost": 0.056346999999999994,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "two_sum",
+   "ok": true,
+   "code_tokens": 79,
+   "err": "",
+   "out": 124,
+   "cost": 0.056728999999999995,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "two_sum",
+   "ok": true,
+   "code_tokens": 108,
+   "err": "",
+   "out": 168,
+   "cost": 0.057217000000000004,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "lcp",
+   "ok": true,
+   "code_tokens": 74,
+   "err": "",
+   "out": 109,
+   "cost": 0.056523000000000004,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "lcp",
+   "ok": true,
+   "code_tokens": 55,
+   "err": "",
+   "out": 88,
+   "cost": 0.056309,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "lcp",
+   "ok": true,
+   "code_tokens": 134,
+   "err": "",
+   "out": 196,
+   "cost": 1.0047760000000001,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "balanced",
+   "ok": true,
+   "code_tokens": 74,
+   "err": "",
+   "out": 118,
+   "cost": 1.003608,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "balanced",
+   "ok": true,
+   "code_tokens": 97,
+   "err": "",
+   "out": 151,
+   "cost": 1.004314,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "balanced",
+   "ok": true,
+   "code_tokens": 99,
+   "err": "",
+   "out": 164,
+   "cost": 0.057085000000000004,
+   "reason": "completed"
+  },
+  {
+   "lang": "python",
+   "task": "primes",
+   "ok": true,
+   "code_tokens": 112,
+   "err": "",
+   "out": 159,
+   "cost": 0.056983,
+   "reason": "completed"
+  },
+  {
+   "lang": "typescript",
+   "task": "primes",
+   "ok": true,
+   "code_tokens": 102,
+   "err": "",
+   "out": 142,
+   "cost": 0.056809,
+   "reason": "completed"
+  },
+  {
+   "lang": "rust",
+   "task": "primes",
+   "ok": true,
+   "code_tokens": 168,
+   "err": "",
+   "out": 242,
+   "cost": 0.0779439,
+   "reason": "completed"
+  }
+ ]
+}

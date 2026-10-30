@@ -1,0 +1,911 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "fix(bigquery): parse FULL/LEFT before set ops as modifiers, not aliases\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_bigquery.py::TestBigQuery::test_set_operations",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 8062,
+   "output_tokens": 2070
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "set_operations",
+    "path": "tests/dialects/test_bigquery.py"
+   },
+   "output_chars": 140,
+   "output_tokens": 35
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "parse.*set|SetOperation|UNION",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 5348,
+   "output_tokens": 1306
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_bigquery.py",
+    "start_line": 3280,
+    "end_line": 3395
+   },
+   "output_chars": 5631,
+   "output_tokens": 1491
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Parser|class BigQuery|MODIFIERS_ATTACHED_TO_SET_OP|_parse_select",
+    "path": "sqlglot/dialects/bigquery.py"
+   },
+   "output_chars": 28,
+   "output_tokens": 8
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4050,
+    "end_line": 4180
+   },
+   "output_chars": 5480,
+   "output_tokens": 1252
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5880,
+    "end_line": 5985
+   },
+   "output_chars": 4102,
+   "output_tokens": 969
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_table_alias|_parse_alias|ALIAS_TOKENS|can_be_identifier",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 3275,
+   "output_tokens": 841
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 800,
+    "end_line": 875
+   },
+   "output_chars": 2474,
+   "output_tokens": 675
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8735,
+    "end_line": 8790
+   },
+   "output_chars": 2466,
+   "output_tokens": 600
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5320,
+    "end_line": 5390
+   },
+   "output_chars": 2929,
+   "output_tokens": 722
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/bigquery.py",
+    "start_line": 1,
+    "end_line": 125
+   },
+   "output_chars": 4661,
+   "output_tokens": 1356
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class BigQueryParser|SET_OPERATIONS|ALIAS_TOKENS|MODIFIERS_ATTACHED",
+    "path": "sqlglot/parsers/bigquery.py"
+   },
+   "output_chars": 407,
+   "output_tokens": 117
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/bigquery.py",
+    "start_line": 180,
+    "end_line": 240
+   },
+   "output_chars": 2519,
+   "output_tokens": 694
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_join_parts",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 32,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4618,
+    "end_line": 4665
+   },
+   "output_chars": 2100,
+   "output_tokens": 534
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1760,
+    "end_line": 1850
+   },
+   "output_chars": 4013,
+   "output_tokens": 1208
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8788,
+    "end_line": 8825
+   },
+   "output_chars": 1615,
+   "output_tokens": 396
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 1966,
+   "output_tokens": 477
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "-q -"
+   },
+   "output_chars": 62,
+   "output_tokens": 20
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4280,
+    "end_line": 4320
+   },
+   "output_chars": 1696,
+   "output_tokens": 400
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4245,
+    "end_line": 4285
+   },
+   "output_chars": 1806,
+   "output_tokens": 450
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3940,
+    "end_line": 4005
+   },
+   "output_chars": 3000,
+   "output_tokens": 711
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2360,
+    "end_line": 2410
+   },
+   "output_chars": 2179,
+   "output_tokens": 525
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "self\\._next|_tokens\\[|_index \\+",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 2293,
+   "output_tokens": 648
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_dialect.py",
+    "start_line": 40,
+    "end_line": 75
+   },
+   "output_chars": 1573,
+   "output_tokens": 361
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 730,
+    "end_line": 810
+   },
+   "output_chars": 2416,
+   "output_tokens": 585
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "JOIN_SIDES:|JOIN_KINDS:|SET_OPERATIONS:",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 112,
+   "output_tokens": 40
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 995,
+    "end_line": 1035
+   },
+   "output_chars": 1075,
+   "output_tokens": 317
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1978,
+    "end_line": 2010
+   },
+   "output_chars": 1224,
+   "output_tokens": 350
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n        # In some dialects, LIMIT and OFFSET can act as both identifiers and clauses\n        # so this section tries to parse the clause version and if it fails, it treats the token\n        # as an identifier (alias)\n        if self._can_parse_limit_or_offset():\n            return this\n\n        # WINDOW is in ID_VAR_TOKENS, so it can be consumed as an implicit alias. Detect the\n",
+    "new": "    def _parse_alias(self, this: exp.Expr | None, explicit: bool = False) -> exp.Expr | None:\n        # In some dialects, LIMIT and OFFSET can act as both identifiers and clauses\n        # so this section tries to parse the clause version and if it fails, it treats the token\n        # as an identifier (alias)\n        if self._can_parse_limit_or_offset():\n            return this\n\n        # Set operation sides (e.g. FULL/LEFT) can also be implicit aliases. If they precede\n        # a set operator, leave them for _parse_set_operations instead of consuming them here.\n        if self._curr.token_type in self.JOIN_SIDES:\n            next_token_type = self._next.token_type\n            if next_token_type in self.JOIN_KINDS:\n                next_index = self._index + 2\n                next_token_type = (\n                    self._tokens[next_index].token_type\n                    if next_index < self._tokens_size\n                    else TokenType.UNKNOWN\n                )\n            if next_token_type in self.SET_OPERATIONS:\n                return this\n\n        # WINDOW is in ID_VAR_TOKENS, so it can be consumed as an implicit alias. Detect the\n"
+   },
+   "output_chars": 45,
+   "output_tokens": 15
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8745,
+    "end_line": 8765
+   },
+   "output_chars": 954,
+   "output_tokens": 239
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "        if self._can_parse_limit_or_offset():\n            return this\n\n        # WINDOW is in ID_VAR_TOKENS, so it can be consumed as an implicit alias. Detect the\n",
+    "new": "        if self._can_parse_limit_or_offset():\n            return this\n\n        # Set operation sides (e.g. FULL/LEFT) can also be implicit aliases. If they precede\n        # a set operator, leave them for _parse_set_operations instead of consuming them here.\n        if self._curr.token_type in self.JOIN_SIDES:\n            next_token_type = self._next.token_type\n            if next_token_type in self.JOIN_KINDS:\n                next_index = self._index + 2\n                next_token_type = (\n                    self._tokens[next_index].token_type\n                    if next_index < self._tokens_size\n                    else TokenType.UNKNOWN\n                )\n            if next_token_type in self.SET_OPERATIONS:\n                return this\n\n        # WINDOW is in ID_VAR_TOKENS, so it can be consumed as an implicit alias. Detect the\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TokenType.UNKNOWN",
+    "path": "sqlglot"
+   },
+   "output_chars": 567,
+   "output_tokens": 158
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 2052,
+   "output_tokens": 438
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_primary|_parse_wrapped_select",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 357,
+   "output_tokens": 102
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7085,
+    "end_line": 7145
+   },
+   "output_chars": 2654,
+   "output_tokens": 608
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7055,
+    "end_line": 7108
+   },
+   "output_chars": 2176,
+   "output_tokens": 518
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Alias.*SetOperation|SetOperation.*Alias|alias.*Subquery|pushdown",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 94,
+   "output_tokens": 23
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Alias\\(.*Subquery|assert_is\\(exp\\.Alias\\)|isinstance\\(.*exp\\.Alias",
+    "path": "tests"
+   },
+   "output_chars": 105,
+   "output_tokens": 26
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "\\.this, exp\\.Subquery|this.assert_is\\(exp\\.Subquery",
+    "path": "tests"
+   },
+   "output_chars": 216,
+   "output_tokens": 58
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "        if alias:\n            comments.extend(alias.pop_comments())\n            this = self.expression(exp.Alias(this=this, alias=alias), comments=comments)\n            column = this.this\n\n            # Moves the comment next to the alias in `expr /* comment */ AS alias`\n            if not this.comments and column and column.comments:\n                this.comments = column.pop_comments()\n",
+    "new": "        if alias:\n            comments.extend(alias.pop_comments())\n\n            if isinstance(this, exp.Subquery):\n                this.set(\"alias\", self.expression(exp.TableAlias(this=alias)))\n            else:\n                this = self.expression(exp.Alias(this=this, alias=alias), comments=comments)\n                column = this.this\n\n                # Moves the comment next to the alias in `expr /* comment */ AS alias`\n                if not this.comments and column and column.comments:\n                    this.comments = column.pop_comments()\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 100,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py -q"
+   },
+   "output_chars": 124,
+   "output_tokens": 24
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -q"
+   },
+   "output_chars": 5448,
+   "output_tokens": 1233
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "        if alias:\n            comments.extend(alias.pop_comments())\n\n            if isinstance(this, exp.Subquery):\n                this.set(\"alias\", self.expression(exp.TableAlias(this=alias)))\n            else:\n                this = self.expression(exp.Alias(this=this, alias=alias), comments=comments)\n                column = this.this\n\n                # Moves the comment next to the alias in `expr /* comment */ AS alias`\n                if not this.comments and column and column.comments:\n                    this.comments = column.pop_comments()\n",
+    "new": "        if alias:\n            comments.extend(alias.pop_comments())\n            this = self.expression(exp.Alias(this=this, alias=alias), comments=comments)\n            column = this.this\n\n            # Moves the comment next to the alias in `expr /* comment */ AS alias`\n            if not this.comments and column and column.comments:\n                this.comments = column.pop_comments()\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "    def _parse_set_operations(self, this: exp.Expr | None) -> exp.Expr | None:\n        while this:\n            setop = self.parse_set_operation(this)\n            if not setop:\n                break\n            this = setop\n",
+    "new": "    def _parse_set_operations(self, this: exp.Expr | None) -> exp.Expr | None:\n        while this:\n            setop = self.parse_set_operation(this)\n            if not setop:\n                break\n\n            if isinstance(setop.this, exp.Alias) and isinstance(setop.this.this, exp.Subquery):\n                subquery = setop.this.this\n                subquery.set(\"alias\", self.expression(exp.TableAlias(this=setop.this.args[\"alias\"])))\n                setop.set(\"this\", subquery)\n\n            this = setop\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            if isinstance(setop.this, exp.Alias) and isinstance(setop.this.this, exp.Subquery):\n                subquery = setop.this.this\n                subquery.set(\"alias\", self.expression(exp.TableAlias(this=setop.this.args[\"alias\"])))\n                setop.set(\"this\", subquery)\n",
+    "new": "            if isinstance(setop.this, exp.Alias) and isinstance(setop.this.this, exp.Subquery):\n                subquery = setop.this.this\n                alias = self.expression(exp.TableAlias(this=setop.this.args[\"alias\"]))\n                subquery.set(\"alias\", alias)\n                setop.set(\"this\", subquery)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_bigquery.py::TestBigQuery::test_set_operations -q"
+   },
+   "output_chars": 100,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_tsql.py -q"
+   },
+   "output_chars": 157,
+   "output_tokens": 28
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -q"
+   },
+   "output_chars": 959,
+   "output_tokens": 116
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5892,
+    "end_line": 5995
+   },
+   "output_chars": 4069,
+   "output_tokens": 969
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8745,
+    "end_line": 8788
+   },
+   "output_chars": 2146,
+   "output_tokens": 519
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            if isinstance(setop.this, exp.Alias) and isinstance(setop.this.this, exp.Subquery):\n                subquery = setop.this.this\n",
+    "new": "            # Keep an alias on a parenthesized query as a Subquery alias, rather than\n            # an Alias wrapper, so the set operation operand has the expected shape.\n            if isinstance(setop.this, exp.Alias) and isinstance(setop.this.this, exp.Subquery):\n                subquery = setop.this.this\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests -q"
+   },
+   "output_chars": 1705,
+   "output_tokens": 423
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated set-operation parsing so FULL/LEFT (and other set sides) followed by a set operator are not consumed as implicit aliases. Preserved parenthesized query aliases as Subquery aliases on set-operation operands. The BigQuery set-operations test and full dialect test suite pass (771 tests, 11,428 subtests). The complete test suite could not be collected because duckdb is not installed."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 29,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 443,
+   "cached_tokens": 0,
+   "output_tokens": 97,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3980,
+   "cached_tokens": 0,
+   "output_tokens": 51,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5533,
+   "cached_tokens": 3977,
+   "output_tokens": 198,
+   "reasoning_tokens": 32,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8839,
+   "cached_tokens": 5530,
+   "output_tokens": 135,
+   "reasoning_tokens": 101,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9660,
+   "cached_tokens": 8836,
+   "output_tokens": 89,
+   "reasoning_tokens": 53,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10360,
+   "cached_tokens": 9657,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11127,
+   "cached_tokens": 10357,
+   "output_tokens": 133,
+   "reasoning_tokens": 94,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12627,
+   "cached_tokens": 11124,
+   "output_tokens": 49,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12804,
+   "cached_tokens": 12624,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13545,
+   "cached_tokens": 12801,
+   "output_tokens": 202,
+   "reasoning_tokens": 170,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13768,
+   "cached_tokens": 13542,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14347,
+   "cached_tokens": 13765,
+   "output_tokens": 389,
+   "reasoning_tokens": 353,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15955,
+   "cached_tokens": 14344,
+   "output_tokens": 233,
+   "reasoning_tokens": 197,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16595,
+   "cached_tokens": 15952,
+   "output_tokens": 227,
+   "reasoning_tokens": 190,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17310,
+   "cached_tokens": 16592,
+   "output_tokens": 186,
+   "reasoning_tokens": 164,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17527,
+   "cached_tokens": 17307,
+   "output_tokens": 140,
+   "reasoning_tokens": 104,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18078,
+   "cached_tokens": 17524,
+   "output_tokens": 153,
+   "reasoning_tokens": 117,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18692,
+   "cached_tokens": 18075,
+   "output_tokens": 197,
+   "reasoning_tokens": 161,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19611,
+   "cached_tokens": 18689,
+   "output_tokens": 204,
+   "reasoning_tokens": 168,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 20351,
+   "cached_tokens": 19608,
+   "output_tokens": 605,
+   "reasoning_tokens": 564,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 21615,
+   "cached_tokens": 20348,
+   "output_tokens": 157,
+   "reasoning_tokens": 120,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22144,
+   "cached_tokens": 21612,
+   "output_tokens": 372,
+   "reasoning_tokens": 338,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23112,
+   "cached_tokens": 22141,
+   "output_tokens": 300,
+   "reasoning_tokens": 258,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23463,
+   "cached_tokens": 23109,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23824,
+   "cached_tokens": 23460,
+   "output_tokens": 129,
+   "reasoning_tokens": 93,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 24314,
+   "cached_tokens": 23821,
+   "output_tokens": 1092,
+   "reasoning_tokens": 681,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 25432,
+   "cached_tokens": 24311,
+   "output_tokens": 54,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 25736,
+   "cached_tokens": 25429,
+   "output_tokens": 259,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26007,
+   "cached_tokens": 25733,
+   "output_tokens": 49,
+   "reasoning_tokens": 21,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26225,
+   "cached_tokens": 26004,
+   "output_tokens": 99,
+   "reasoning_tokens": 62,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26773,
+   "cached_tokens": 26222,
+   "output_tokens": 763,
+   "reasoning_tokens": 726,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27649,
+   "cached_tokens": 26770,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28302,
+   "cached_tokens": 27646,
+   "output_tokens": 49,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28880,
+   "cached_tokens": 28299,
+   "output_tokens": 349,
+   "reasoning_tokens": 305,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29263,
+   "cached_tokens": 28877,
+   "output_tokens": 2103,
+   "reasoning_tokens": 2056,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31403,
+   "cached_tokens": 29260,
+   "output_tokens": 50,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31522,
+   "cached_tokens": 31400,
+   "output_tokens": 260,
+   "reasoning_tokens": 35,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31794,
+   "cached_tokens": 31519,
+   "output_tokens": 226,
+   "reasoning_tokens": 189,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32052,
+   "cached_tokens": 31791,
+   "output_tokens": 199,
+   "reasoning_tokens": 170,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32286,
+   "cached_tokens": 32049,
+   "output_tokens": 54,
+   "reasoning_tokens": 29,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 33584,
+   "cached_tokens": 32283,
+   "output_tokens": 577,
+   "reasoning_tokens": 352,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34173,
+   "cached_tokens": 33581,
+   "output_tokens": 206,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34391,
+   "cached_tokens": 34170,
+   "output_tokens": 205,
+   "reasoning_tokens": 33,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34608,
+   "cached_tokens": 34388,
+   "output_tokens": 88,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34765,
+   "cached_tokens": 34605,
+   "output_tokens": 46,
+   "reasoning_tokens": 21,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 34938,
+   "cached_tokens": 34762,
+   "output_tokens": 130,
+   "reasoning_tokens": 94,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 36048,
+   "cached_tokens": 34935,
+   "output_tokens": 242,
+   "reasoning_tokens": 206,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 36820,
+   "cached_tokens": 36045,
+   "output_tokens": 545,
+   "reasoning_tokens": 412,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 37377,
+   "cached_tokens": 36817,
+   "output_tokens": 49,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 37860,
+   "cached_tokens": 37374,
+   "output_tokens": 185,
+   "reasoning_tokens": 86,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 270.9,
+ "usage": {
+  "input_tokens": 1157824,
+  "cached_tokens": 1119065,
+  "output_tokens": 12325,
+  "reasoning_tokens": 8856
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 87d5812..049d973 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -5968,6 +5968,15 @@ class Parser:\n             setop = self.parse_set_operation(this)\n             if not setop:\n                 break\n+\n+            # Keep an alias on a parenthesized query as a Subquery alias, rather than\n+            # an Alias wrapper, so the set operation operand has the expected shape.\n+            if isinstance(setop.this, exp.Alias) and isinstance(setop.this.this, exp.Subquery):\n+                subquery = setop.this.this\n+                alias = self.expression(exp.TableAlias(this=setop.this.args[\"alias\"]))\n+                subquery.set(\"alias\", alias)\n+                setop.set(\"this\", subquery)\n+\n             this = setop\n \n         if isinstance(this, exp.SetOperation) and self.MODIFIERS_ATTACHED_TO_SET_OP:\n@@ -8751,6 +8760,20 @@ class Parser:\n         if self._can_parse_limit_or_offset():\n             return this\n \n+        # Set operation sides (e.g. FULL/LEFT) can also be implicit aliases. If they precede\n+        # a set operator, leave them for _parse_set_operations instead of consuming them here.\n+        if self._curr.token_type in self.JOIN_SIDES:\n+            next_token_type = self._next.token_type\n+            if next_token_type in self.JOIN_KINDS:\n+                next_index = self._index + 2\n+                next_token_type = (\n+                    self._tokens[next_index].token_type\n+                    if next_index < self._tokens_size\n+                    else TokenType.UNKNOWN\n+                )\n+            if next_token_type in self.SET_OPERATIONS:\n+                return this\n+\n         # WINDOW is in ID_VAR_TOKENS, so it can be consumed as an implicit alias. Detect the\n         # named-window clause shape (`WINDOW <ident> AS (...)`) and avoid swallowing it.\n         if self._can_parse_named_window():\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

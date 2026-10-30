@@ -1,0 +1,10 @@
+{
+ "calls": 12001,
+ "mean": 223160,
+ "median": 189188,
+ "p10": 71769.0,
+ "p90": 414956.0,
+ "pct_of_input_from_calls_over_200k": 72.0,
+ "calls_over_200k_pct": 47.0,
+ "input_if_capped_at_100k_pct": 42.2
+}

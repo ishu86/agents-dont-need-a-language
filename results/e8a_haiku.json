@@ -1,0 +1,351 @@
+{
+ "summary": {
+  "str_replace": {
+   "n": 12,
+   "success": 11,
+   "applied": 11,
+   "mean_out_tokens": 521,
+   "cost_usd": 0.0474
+  },
+  "hashline": {
+   "n": 12,
+   "success": 11,
+   "applied": 12,
+   "mean_out_tokens": 543,
+   "cost_usd": 0.0505
+  },
+  "rewrite": {
+   "n": 12,
+   "success": 11,
+   "applied": 12,
+   "mean_out_tokens": 3598,
+   "cost_usd": 0.0771
+  }
+ },
+ "rows": [
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/actor/utils.py",
+   "ok": true,
+   "applied": true,
+   "out": 518,
+   "cost": 0.0063042,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/actor/utils.py",
+   "ok": true,
+   "applied": true,
+   "out": 324,
+   "cost": 0.006376800000000001,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/actor/utils.py",
+   "ok": true,
+   "applied": true,
+   "out": 3145,
+   "cost": 0.0127969,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/browser/watchdogs/crash_watchdog.py",
+   "ok": true,
+   "applied": true,
+   "out": 418,
+   "cost": 0.006774800000000001,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/browser/watchdogs/crash_watchdog.py",
+   "ok": true,
+   "applied": true,
+   "out": 434,
+   "cost": 0.0071084,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/browser/watchdogs/crash_watchdog.py",
+   "ok": true,
+   "applied": true,
+   "out": 5688,
+   "cost": 0.009405,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/skills/utils.py",
+   "ok": true,
+   "applied": true,
+   "out": 476,
+   "cost": 0.00308426,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/skills/utils.py",
+   "ok": true,
+   "applied": true,
+   "out": 616,
+   "cost": 0.0032936600000000003,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/skills/utils.py",
+   "ok": true,
+   "applied": true,
+   "out": 1848,
+   "cost": 0.00376546,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/llm/google/serializer.py",
+   "ok": true,
+   "applied": true,
+   "out": 757,
+   "cost": 0.00324236,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/llm/google/serializer.py",
+   "ok": true,
+   "applied": true,
+   "out": 492,
+   "cost": 0.00323666,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/llm/google/serializer.py",
+   "ok": true,
+   "applied": true,
+   "out": 2551,
+   "cost": 0.00413456,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/llm/mistral/chat.py",
+   "ok": true,
+   "applied": true,
+   "out": 350,
+   "cost": 0.0032916600000000005,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/llm/mistral/chat.py",
+   "ok": true,
+   "applied": true,
+   "out": 364,
+   "cost": 0.0035128600000000005,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/llm/mistral/chat.py",
+   "ok": true,
+   "applied": true,
+   "out": 3159,
+   "cost": 0.00469136,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/mcp/controller.py",
+   "ok": false,
+   "applied": false,
+   "out": 534,
+   "cost": 0.0034266600000000006,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/mcp/controller.py",
+   "ok": false,
+   "applied": true,
+   "out": 1353,
+   "cost": 0.004342,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/mcp/controller.py",
+   "ok": false,
+   "applied": true,
+   "out": 4114,
+   "cost": 0.00521186,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/telemetry/service.py",
+   "ok": true,
+   "applied": true,
+   "out": 559,
+   "cost": 0.0031571600000000004,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/telemetry/service.py",
+   "ok": true,
+   "applied": true,
+   "out": 331,
+   "cost": 0.0031849600000000006,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/telemetry/service.py",
+   "ok": true,
+   "applied": true,
+   "out": 2103,
+   "cost": 0.009957299999999999,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/browser/watchdogs/recording_watchdog.py",
+   "ok": true,
+   "applied": true,
+   "out": 458,
+   "cost": 0.00339406,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/browser/watchdogs/recording_watchdog.py",
+   "ok": true,
+   "applied": true,
+   "out": 713,
+   "cost": 0.0037383600000000005,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/browser/watchdogs/recording_watchdog.py",
+   "ok": true,
+   "applied": true,
+   "out": 3513,
+   "cost": 0.00491676,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/skills/install.py",
+   "ok": true,
+   "applied": true,
+   "out": 467,
+   "cost": 0.0032325600000000006,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/skills/install.py",
+   "ok": true,
+   "applied": true,
+   "out": 183,
+   "cost": 0.0034174,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/skills/install.py",
+   "ok": true,
+   "applied": true,
+   "out": 2697,
+   "cost": 0.004488799999999999,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/llm/schema.py",
+   "ok": true,
+   "applied": true,
+   "out": 562,
+   "cost": 0.0035505000000000003,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/llm/schema.py",
+   "ok": true,
+   "applied": true,
+   "out": 421,
+   "cost": 0.0036948,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/llm/schema.py",
+   "ok": true,
+   "applied": true,
+   "out": 3263,
+   "cost": 0.0048962,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/llm/anthropic/serializer.py",
+   "ok": true,
+   "applied": true,
+   "out": 489,
+   "cost": 0.0038292000000000005,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/llm/anthropic/serializer.py",
+   "ok": true,
+   "applied": true,
+   "out": 532,
+   "cost": 0.004030860000000001,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/llm/anthropic/serializer.py",
+   "ok": true,
+   "applied": true,
+   "out": 4752,
+   "cost": 0.00580986,
+   "reason": "completed"
+  },
+  {
+   "fmt": "str_replace",
+   "file": "browser_use/init_cmd.py",
+   "ok": true,
+   "applied": true,
+   "out": 661,
+   "cost": 0.004083,
+   "reason": "completed"
+  },
+  {
+   "fmt": "hashline",
+   "file": "browser_use/init_cmd.py",
+   "ok": true,
+   "applied": true,
+   "out": 755,
+   "cost": 0.004553,
+   "reason": "completed"
+  },
+  {
+   "fmt": "rewrite",
+   "file": "browser_use/init_cmd.py",
+   "ok": true,
+   "applied": true,
+   "out": 6345,
+   "cost": 0.0070232,
+   "reason": "completed"
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+diff -ruN a/src/shipping.ts b/src/shipping.ts
+--- a/src/shipping.ts	2026-10-30 13:51:17
++++ b/src/shipping.ts	2026-10-30 13:51:51
+@@ -5,7 +5,7 @@
+ // Otherwise base + per-kg for each started kg.
+ export function shippingFor(order: any, tier: any, totalWeightG: number): number {
+   const p = order.pricing;
+-  const goods = p.subtotalCents - p.discountCents;
++  const goods = p.subtotalCents;
+   if (!totalWeightG) return 0;
+   if (tier.freeShipping) return 0;
+   if (goods >= state.config.freeShippingThresholdCents) return 0;

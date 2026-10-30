@@ -1,0 +1,210 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Feat(snowflake): add support for input => select ... kwarg syntax\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_flatten",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "flatten",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 165,
+   "output_tokens": 45
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "input",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_flatten",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4510,
+    "end_line": 4560
+   },
+   "output_chars": 2344,
+   "output_tokens": 668
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4550,
+    "end_line": 4645
+   },
+   "output_chars": 3347,
+   "output_tokens": 930
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1975
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7270,
+    "end_line": 7325
+   },
+   "output_chars": 2356,
+   "output_tokens": 600
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Kwarg",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 100,
+   "output_tokens": 26
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1014,
+    "end_line": 1025
+   },
+   "output_chars": 449,
+   "output_tokens": 96
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "TokenType.FARROW: lambda self, expressions: self.expression(\n            exp.Kwarg(this=exp.var(expressions[0].name), expression=self._parse_disjunction())\n        ),",
+    "new": "TokenType.FARROW: lambda self, expressions: self.expression(\n            exp.Kwarg(\n                this=exp.var(expressions[0].name),\n                expression=self._parse_select_or_expression(),\n            )\n        ),"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 106,
+   "output_tokens": 21
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 432,
+   "cached_tokens": 0,
+   "output_tokens": 99,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 618,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1335,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2314,
+   "cached_tokens": 1332,
+   "output_tokens": 77,
+   "reasoning_tokens": 39,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4377,
+   "cached_tokens": 2311,
+   "output_tokens": 59,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5047,
+   "cached_tokens": 4374,
+   "output_tokens": 72,
+   "reasoning_tokens": 43,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5156,
+   "cached_tokens": 5044,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5297,
+   "cached_tokens": 5153,
+   "output_tokens": 159,
+   "reasoning_tokens": 34,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5468,
+   "cached_tokens": 5294,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5536,
+   "cached_tokens": 5465,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 38.0,
+ "usage": {
+  "input_tokens": 35892,
+  "cached_tokens": 28973,
+  "output_tokens": 669,
+  "reasoning_tokens": 139
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 6a4c2f1..8692da8 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -1019,7 +1019,10 @@ class Parser:\n             )\n         ),\n         TokenType.FARROW: lambda self, expressions: self.expression(\n-            exp.Kwarg(this=exp.var(expressions[0].name), expression=self._parse_disjunction())\n+            exp.Kwarg(\n+                this=exp.var(expressions[0].name),\n+                expression=self._parse_select_or_expression(),\n+            )\n         ),\n     }\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

@@ -1,0 +1,74 @@
+diff -ruN a/src/customers.ts b/src/customers.ts
+--- a/src/customers.ts	2026-10-30 13:39:08
++++ b/src/customers.ts	2026-10-30 13:46:38
+@@ -1,5 +1,6 @@
+ import type { Config, Ctx, Customer, Db, Cents, Result, VipTier } from "./types.ts";
+ import { err, ok } from "./types.ts";
++import { record } from "./audit.ts";
+ 
+ export interface CustomerInput {
+   id: string;
+@@ -17,9 +18,20 @@
+     email: input.email,
+     region: input.region || ctx.config.defaultRegion,
+     lifetimeSpendCents: 0,
++    taxExempt: false,
+   };
+   ctx.db.customers.set(customer.id, customer);
+   return ok(customer);
++}
++
++/** Flags (or unflags) a customer as tax exempt in `ctx.db` and audits the change. */
++export function setTaxExempt(ctx: Ctx, id: string, exempt: boolean): Result<Customer> {
++  const c = ctx.db.customers.get(id);
++  if (!c) return err("not_found", `unknown customer ${id}`);
++  const updated: Customer = { ...c, taxExempt: exempt };
++  ctx.db.customers.set(id, updated);
++  record(ctx.log, ctx.clock, "tax_exempt_set", id, String(exempt));
++  return ok(updated);
+ }
+ 
+ export function getCustomer(db: Db, id: string): Customer | undefined {
+diff -ruN a/src/index.ts b/src/index.ts
+--- a/src/index.ts	2026-10-30 13:39:56
++++ b/src/index.ts	2026-10-30 13:46:38
+@@ -6,7 +6,7 @@
+ import { createDb, createLog } from "./storage.ts";
+ import { addProduct, getProduct, listProducts, type ProductInput } from "./catalog.ts";
+ import { addStock, stockOf } from "./inventory.ts";
+-import { addCustomer, getCustomer, tierOf, type CustomerInput } from "./customers.ts";
++import { addCustomer, getCustomer, setTaxExempt, tierOf, type CustomerInput } from "./customers.ts";
+ import { addCoupon, defaultRules, type CouponInput, type RuleRegistry } from "./pricing.ts";
+ import { addItem, applyCoupon, checkout, createOrder, getOrder, type CreateOrderInput } from "./orders.ts";
+ import { refund, type RefundResult } from "./refunds.ts";
+@@ -43,6 +43,7 @@
+     getOrder: (orderId: string): Order | undefined => getOrder(ctx.db, orderId),
+     getProduct: (sku: string): Product | undefined => getProduct(ctx.db, sku),
+     listProducts: (): Product[] => listProducts(ctx.db),
++    setTaxExempt: (customerId: string, exempt: boolean): Result<Customer> => setTaxExempt(ctx, customerId, exempt),
+     getCustomer: (id: string): Customer | undefined => getCustomer(ctx.db, id),
+     /** Name of the customer's current VIP tier, e.g. "none", "silver", "gold". */
+     tier: (customerId: string): string | undefined => {
+diff -ruN a/src/pricing.ts b/src/pricing.ts
+--- a/src/pricing.ts	2026-10-30 13:39:56
++++ b/src/pricing.ts	2026-10-30 13:46:38
+@@ -124,7 +124,7 @@
+   const taxableSub = sumCents(lines.filter((l) => l.taxable).map((l) => l.lineCents));
+   const taxableDiscount = subtotalCents === 0 ? 0 : Math.round((discountCents * taxableSub) / subtotalCents);
+   const taxableCents = taxableSub - taxableDiscount;
+-  const taxCents = taxFor(config, shipRegion, taxableCents);
++  const taxCents = customer.taxExempt ? 0 : taxFor(config, shipRegion, taxableCents);
+ 
+   const weightG = lines.reduce((w, l) => w + l.weightG * l.qty, 0);
+   const shippingCents = shippingFor(config, tier, weightG, goodsCents);
+diff -ruN a/src/types.ts b/src/types.ts
+--- a/src/types.ts	2026-10-30 13:39:08
++++ b/src/types.ts	2026-10-30 13:46:38
+@@ -46,6 +46,7 @@
+   email: string;
+   region: string;
+   lifetimeSpendCents: Cents;
++  taxExempt: boolean;
+ }
+ 
+ export interface VipTier {

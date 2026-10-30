@@ -1,0 +1,8 @@
+{
+ "sessions": 86,
+ "median_first_turn_context": 45443.5,
+ "p90_first_turn_context": 60521.4,
+ "median_model_calls_per_session": 37.0,
+ "mean_model_calls": 140,
+ "baseline_pct_of_all_input": 19.5
+}

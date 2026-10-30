@@ -1,0 +1,49 @@
+diff --git a/sqlglot/dialects/mysql.py b/sqlglot/dialects/mysql.py
+index 701774d2d..1936f8b4a 100644
+--- a/sqlglot/dialects/mysql.py
++++ b/sqlglot/dialects/mysql.py
+@@ -96,7 +96,6 @@ class MySQL(Dialect):
+             "SERIAL": TokenType.SERIAL,
+             "SIGNED": TokenType.BIGINT,
+             "SIGNED INTEGER": TokenType.BIGINT,
+-            "SOUNDS LIKE": TokenType.SOUNDS_LIKE,
+             "START": TokenType.BEGIN,
+             "TIMESTAMP": TokenType.TIMESTAMPTZ,
+             "TINYBLOB": TokenType.TINYBLOB,
+diff --git a/sqlglot/parsers/mysql.py b/sqlglot/parsers/mysql.py
+index 7315568ab..ebe915188 100644
+--- a/sqlglot/parsers/mysql.py
++++ b/sqlglot/parsers/mysql.py
+@@ -88,12 +88,6 @@ class MySQLParser(parser.Parser):
+ 
+     RANGE_PARSERS = {
+         **parser.Parser.RANGE_PARSERS,
+-        TokenType.SOUNDS_LIKE: lambda self, this: self.expression(
+-            exp.EQ(
+-                this=self.expression(exp.Soundex(this=this)),
+-                expression=self.expression(exp.Soundex(this=self._parse_term())),
+-            )
+-        ),
+         TokenType.MEMBER_OF: lambda self, this: self.expression(
+             exp.JSONArrayContains(this=this, expression=self._parse_wrapped(self._parse_expression))
+         ),
+@@ -306,6 +300,19 @@ class MySQLParser(parser.Parser):
+     VALUES_FOLLOWED_BY_PAREN = False
+     SUPPORTS_PARTITION_SELECTION = True
+ 
++    def _parse_range(self, this: exp.Expr | None = None) -> exp.Expr | None:
++        this = this or self._parse_bitwise()
++
++        if self._match_text_seq("SOUNDS", "LIKE"):
++            this = self.expression(
++                exp.EQ(
++                    this=self.expression(exp.Soundex(this=this)),
++                    expression=self.expression(exp.Soundex(this=self._parse_term())),
++                )
++            )
++
++        return super()._parse_range(this)
++
+     def _parse_alter_table_rename(self):
+         if self._match_texts(("INDEX", "KEY")):
+             old = self._parse_field(any_token=True)

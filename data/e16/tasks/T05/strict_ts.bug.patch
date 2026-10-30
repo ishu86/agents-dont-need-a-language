@@ -1,0 +1,17 @@
+diff -ruN a/src/orders.ts b/src/orders.ts
+--- a/src/orders.ts	2026-10-30 13:39:56
++++ b/src/orders.ts	2026-10-30 13:46:37
+@@ -168,12 +168,12 @@
+     if (!usable.ok) return usable;
+   }
+ 
++  if (priced.couponCode) recordCouponUse(ctx.db, priced.couponCode);
+   const reserved = reserve(ctx.db, priced.items);
+   if (!reserved.ok) {
+     record(ctx.log, ctx.clock, "checkout_failed", orderId, reserved.error.code);
+     return reserved;
+   }
+-  if (priced.couponCode) recordCouponUse(ctx.db, priced.couponCode);
+ 
+   const lines = buildLines(ctx.db, priced.items);
+   if (!lines.ok) return lines;

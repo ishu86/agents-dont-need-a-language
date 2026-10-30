@@ -1,0 +1,468 @@
+{
+ "summary": {
+  "full": {
+   "success": "15/15",
+   "mean_input_tokens": 3869
+  },
+  "outline_doc": {
+   "success": "14/15",
+   "mean_input_tokens": 867
+  },
+  "outline": {
+   "success": "13/15",
+   "mean_input_tokens": 748
+  }
+ },
+ "rows": [
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "_extract_content",
+   "want": "_extract_content",
+   "in_tokens": 3673,
+   "out": 99,
+   "cost": 0.0040098,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "_extract_content",
+   "want": "_extract_content",
+   "in_tokens": 965,
+   "out": 134,
+   "cost": 0.0033785000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "_extract_content",
+   "want": "_extract_content",
+   "in_tokens": 866,
+   "out": 109,
+   "cost": 0.0033298000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "save_to_file",
+   "want": "save_to_file",
+   "in_tokens": 2587,
+   "out": 227,
+   "cost": 0.0037146000000000006,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "save_to_file",
+   "want": "save_to_file",
+   "in_tokens": 511,
+   "out": 282,
+   "cost": 0.0032815000000000006,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "save_to_file",
+   "want": "save_to_file",
+   "in_tokens": 413,
+   "out": 200,
+   "cost": 0.0027568600000000003,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "_ainvoke_responses_api",
+   "want": "_ainvoke_responses_api",
+   "in_tokens": 2436,
+   "out": 228,
+   "cost": 0.0038719,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "_ainvoke_responses_api",
+   "want": "_ainvoke_responses_api",
+   "in_tokens": 862,
+   "out": 153,
+   "cost": 0.0033388000000000003,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "_ainvoke_responses_api",
+   "want": "_ainvoke_responses_api",
+   "in_tokens": 795,
+   "out": 180,
+   "cost": 0.0033273000000000005,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "create_history_gif",
+   "want": "create_history_gif",
+   "in_tokens": 3317,
+   "out": 8,
+   "cost": 0.0040369,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "create_history_gif",
+   "want": "create_history_gif",
+   "in_tokens": 491,
+   "out": 128,
+   "cost": 0.0032077000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "create_history_gif",
+   "want": "create_history_gif",
+   "in_tokens": 414,
+   "out": 155,
+   "cost": 0.0031944000000000005,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "cleanup_font_cache",
+   "want": "cleanup_font_cache",
+   "in_tokens": 4991,
+   "out": 123,
+   "cost": 0.0046134,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "cleanup_font_cache",
+   "want": "cleanup_font_cache",
+   "in_tokens": 1074,
+   "out": 94,
+   "cost": 0.0034093,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "cleanup_font_cache",
+   "want": "cleanup_font_cache",
+   "in_tokens": 962,
+   "out": 113,
+   "cost": 0.0033740000000000003,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "_get_usage",
+   "want": "_get_usage",
+   "in_tokens": 2215,
+   "out": 99,
+   "cost": 0.0037326,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "_get_usage",
+   "want": "_get_usage",
+   "in_tokens": 723,
+   "out": 148,
+   "cost": 0.0032971000000000003,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "_get_usage",
+   "want": "_get_usage",
+   "in_tokens": 656,
+   "out": 147,
+   "cost": 0.0032718,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "get_element_by_prompt",
+   "want": "get_element_by_prompt",
+   "in_tokens": 4800,
+   "out": 189,
+   "cost": 0.0045845999999999994,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "get_element_by_prompt",
+   "want": "get_element_by_prompt",
+   "in_tokens": 979,
+   "out": 254,
+   "cost": 0.0034365000000000003,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "get_element_by_prompt",
+   "want": "get_element_by_prompt",
+   "in_tokens": 754,
+   "out": 11,
+   "cost": 0.0032426,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "_serialize_content_part_text",
+   "want": "_serialize_content_part_text",
+   "in_tokens": 2757,
+   "out": 189,
+   "cost": 0.0039778,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "_serialize_content_part_text",
+   "want": "_serialize_content_part_text",
+   "in_tokens": 642,
+   "out": 161,
+   "cost": 0.0033032000000000005,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": false,
+   "got": "_text_content_part_to_anthropic",
+   "want": "_serialize_content_part_text",
+   "in_tokens": 490,
+   "out": 15,
+   "cost": 0.2517025,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "from_agent_and_file",
+   "want": "from_agent_and_file",
+   "in_tokens": 2929,
+   "out": 136,
+   "cost": 0.0040363,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "from_agent_and_file",
+   "want": "from_agent_and_file",
+   "in_tokens": 1419,
+   "out": 165,
+   "cost": 0.0035491999999999998,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "from_agent_and_file",
+   "want": "from_agent_and_file",
+   "in_tokens": 1333,
+   "out": 173,
+   "cost": 0.00352,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "get_terminal_width",
+   "want": "get_terminal_width",
+   "in_tokens": 5586,
+   "out": 178,
+   "cost": 0.004882700000000001,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": false,
+   "got": "_get_terminal_width",
+   "want": "get_terminal_width",
+   "in_tokens": 620,
+   "out": 10,
+   "cost": 0.0032039,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "get_terminal_width",
+   "want": "get_terminal_width",
+   "in_tokens": 522,
+   "out": 169,
+   "cost": 0.02611145,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "_tool_call_from_text",
+   "want": "_tool_call_from_text",
+   "in_tokens": 4417,
+   "out": 118,
+   "cost": 0.0044579,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "_tool_call_from_text",
+   "want": "_tool_call_from_text",
+   "in_tokens": 1146,
+   "out": 208,
+   "cost": 0.0034781,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "_tool_call_from_text",
+   "want": "_tool_call_from_text",
+   "in_tokens": 1064,
+   "out": 253,
+   "cost": 0.0034684000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "attach_handler_to_session",
+   "want": "attach_handler_to_session",
+   "in_tokens": 3321,
+   "out": 188,
+   "cost": 0.0041745,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "attach_handler_to_session",
+   "want": "attach_handler_to_session",
+   "in_tokens": 648,
+   "out": 110,
+   "cost": 0.0032567000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": false,
+   "got": "attach_to_session",
+   "want": "attach_handler_to_session",
+   "in_tokens": 591,
+   "out": 8,
+   "cost": 0.02589495,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "get_user_message",
+   "want": "get_user_message",
+   "in_tokens": 5557,
+   "out": 7,
+   "cost": 0.004732,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "get_user_message",
+   "want": "get_user_message",
+   "in_tokens": 991,
+   "out": 141,
+   "cost": 0.0033708,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "get_user_message",
+   "want": "get_user_message",
+   "in_tokens": 854,
+   "out": 249,
+   "cost": 0.0033786,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "ensure_pricing_loaded",
+   "want": "ensure_pricing_loaded",
+   "in_tokens": 6113,
+   "out": 125,
+   "cost": 0.0051746000000000006,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "ensure_pricing_loaded",
+   "want": "ensure_pricing_loaded",
+   "in_tokens": 1128,
+   "out": 117,
+   "cost": 0.0034386000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "ensure_pricing_loaded",
+   "want": "ensure_pricing_loaded",
+   "in_tokens": 844,
+   "out": 285,
+   "cost": 0.0034270000000000004,
+   "reason": "completed"
+  },
+  {
+   "arm": "full",
+   "ok": true,
+   "got": "_merge_storage_states",
+   "want": "_merge_storage_states",
+   "in_tokens": 3337,
+   "out": 125,
+   "cost": 0.0041468,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline_doc",
+   "ok": true,
+   "got": "_merge_storage_states",
+   "want": "_merge_storage_states",
+   "in_tokens": 811,
+   "out": 10,
+   "cost": 0.0032817000000000002,
+   "reason": "completed"
+  },
+  {
+   "arm": "outline",
+   "ok": true,
+   "got": "_merge_storage_states",
+   "want": "_merge_storage_states",
+   "in_tokens": 656,
+   "out": 10,
+   "cost": 0.02610395,
+   "reason": "completed"
+  }
+ ]
+}

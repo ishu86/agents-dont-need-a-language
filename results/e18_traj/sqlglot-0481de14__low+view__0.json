@@ -1,0 +1,268 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(clickhouse)!: always wrap value in NOT value IS ...\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_clickhouse.py::TestClickhouse::test_clickhouse",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "IS NOT|Not\\(|def not_sql|Not:",
+    "path": "sqlglot"
+   },
+   "output_chars": 1358,
+   "output_tokens": 409
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "not_sql"
+   },
+   "output_chars": 102,
+   "output_tokens": 33
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Generator"
+   },
+   "output_chars": 6054,
+   "output_tokens": 1614
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "not_sql"
+   },
+   "output_chars": 26,
+   "output_tokens": 6
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_clickhouse.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2025
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3010,
+    "end_line": 3040
+   },
+   "output_chars": 1439,
+   "output_tokens": 383
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "ClickHouse.Generator"
+   },
+   "output_chars": 781,
+   "output_tokens": 216
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "exp.Not"
+   },
+   "output_chars": 426,
+   "output_tokens": 185
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/clickhouse.py",
+    "start_line": 1190,
+    "end_line": 1245
+   },
+   "output_chars": 2079,
+   "output_tokens": 499
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_clickhouse.py::TestClickhouse::test_clickhouse -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2095
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/clickhouse.py",
+    "start_line": 837,
+    "end_line": 865
+   },
+   "output_chars": 1228,
+   "output_tokens": 296
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/clickhouse.py",
+    "old": "        def is_sql(self, expression: exp.Is) -> str:\n            is_sql = super().is_sql(expression)\n",
+    "new": "        def not_sql(self, expression: exp.Not) -> str:\n            return f\"NOT {self.wrap(self.sql(expression, 'this'))}\"\n\n        def is_sql(self, expression: exp.Is) -> str:\n            is_sql = super().is_sql(expression)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_clickhouse.py::TestClickhouse::test_clickhouse -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1902
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/clickhouse.py",
+    "old": "        def not_sql(self, expression: exp.Not) -> str:\n            return f\"NOT {self.wrap(self.sql(expression, 'this'))}\"\n",
+    "new": "        def not_sql(self, expression: exp.Not) -> str:\n            this = expression.this\n            this_sql = self.sql(expression, \"this\")\n            if isinstance(this, exp.Is) and not isinstance(this.this, exp.Subquery):\n                this_sql = self.wrap(this_sql)\n            return f\"NOT {this_sql}\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_clickhouse.py::TestClickhouse::test_clickhouse -q"
+   },
+   "output_chars": 47,
+   "output_tokens": 20
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added a ClickHouse-specific NOT renderer that wraps IS expressions as needed, while preserving existing subquery parentheses. The targeted ClickHouse test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 505,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 16,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 615,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1070,
+   "cached_tokens": 0,
+   "output_tokens": 85,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4870,
+   "cached_tokens": 1067,
+   "output_tokens": 59,
+   "reasoning_tokens": 22,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5323,
+   "cached_tokens": 4867,
+   "output_tokens": 22,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5572,
+   "cached_tokens": 5320,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5785,
+   "cached_tokens": 5569,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6334,
+   "cached_tokens": 5782,
+   "output_tokens": 108,
+   "reasoning_tokens": 71,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8548,
+   "cached_tokens": 6331,
+   "output_tokens": 122,
+   "reasoning_tokens": 83,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8977,
+   "cached_tokens": 8545,
+   "output_tokens": 270,
+   "reasoning_tokens": 149,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9259,
+   "cached_tokens": 8974,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11207,
+   "cached_tokens": 9256,
+   "output_tokens": 283,
+   "reasoning_tokens": 140,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11502,
+   "cached_tokens": 11204,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11568,
+   "cached_tokens": 11499,
+   "output_tokens": 44,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 46.4,
+ "usage": {
+  "input_tokens": 91135,
+  "cached_tokens": 78414,
+  "output_tokens": 1191,
+  "reasoning_tokens": 481
+ },
+ "diff": "diff --git a/sqlglot/dialects/clickhouse.py b/sqlglot/dialects/clickhouse.py\nindex fa86e3a..f449eb4 100644\n--- a/sqlglot/dialects/clickhouse.py\n+++ b/sqlglot/dialects/clickhouse.py\n@@ -1220,6 +1220,13 @@ class ClickHouse(Dialect):\n         def projectiondef_sql(self, expression: exp.ProjectionDef) -> str:\n             return f\"PROJECTION {self.sql(expression.this)} {self.wrap(expression.expression)}\"\n \n+        def not_sql(self, expression: exp.Not) -> str:\n+            this = expression.this\n+            this_sql = self.sql(expression, \"this\")\n+            if isinstance(this, exp.Is) and not isinstance(this.this, exp.Subquery):\n+                this_sql = self.wrap(this_sql)\n+            return f\"NOT {this_sql}\"\n+\n         def is_sql(self, expression: exp.Is) -> str:\n             is_sql = super().is_sql(expression)\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

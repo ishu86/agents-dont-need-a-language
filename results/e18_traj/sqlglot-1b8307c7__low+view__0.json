@@ -1,0 +1,340 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(duckdb): Fix INTERVAL roundtrip of DATE_ADD\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_duckdb.py::TestDuckDB::test_duckdb",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 206,
+   "output_tokens": 67
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DATE_ADD|INTERVAL",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 65,
+   "output_tokens": 18
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "DateAdd"
+   },
+   "output_chars": 59,
+   "output_tokens": 18
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "Interval"
+   },
+   "output_chars": 52,
+   "output_tokens": 15
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DuckDB",
+    "path": "tests/dialects/test_duckdb.py"
+   },
+   "output_chars": 148,
+   "output_tokens": 41
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 730,
+    "end_line": 820
+   },
+   "output_chars": 3606,
+   "output_tokens": 762
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "DateAdd"
+   },
+   "output_chars": 685,
+   "output_tokens": 212
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "UNWRAPPED_INTERVAL_VALUES"
+   },
+   "output_chars": 34,
+   "output_tokens": 13
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "DateAdd"
+   },
+   "output_chars": 737,
+   "output_tokens": 319
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 1,
+    "end_line": 75
+   },
+   "output_chars": 2248,
+   "output_tokens": 591
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "Interval"
+   },
+   "output_chars": 604,
+   "output_tokens": 259
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 1,
+    "end_line": 55
+   },
+   "output_chars": 2262,
+   "output_tokens": 599
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3010,
+    "end_line": 3055
+   },
+   "output_chars": 2183,
+   "output_tokens": 558
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 850,
+    "end_line": 885
+   },
+   "output_chars": 1699,
+   "output_tokens": 340
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_duckdb -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2125
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 550,
+    "end_line": 575
+   },
+   "output_chars": 1472,
+   "output_tokens": 347
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 4000,
+    "end_line": 4025
+   },
+   "output_chars": 1187,
+   "output_tokens": 284
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 5638,
+    "end_line": 5665
+   },
+   "output_chars": 804,
+   "output_tokens": 248
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 57,
+    "end_line": 105
+   },
+   "output_chars": 2026,
+   "output_tokens": 531
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "    return f\"{self.sql(this)} {op} {self.sql(exp.Interval(this=expression.expression, unit=unit))}\"\n",
+    "new": "    interval = expression.expression\n    if not isinstance(interval, exp.Interval):\n        interval = exp.Interval(this=interval, unit=unit)\n\n    return f\"{self.sql(this)} {op} {self.sql(interval)}\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_duckdb -q"
+   },
+   "output_chars": 48,
+   "output_tokens": 20
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated DuckDB date-delta generation to preserve an existing INTERVAL expression instead of wrapping it in a second INTERVAL. The targeted DuckDB test now passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 508,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 604,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 668,
+   "cached_tokens": 0,
+   "output_tokens": 109,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1651,
+   "cached_tokens": 0,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1894,
+   "cached_tokens": 1648,
+   "output_tokens": 21,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1938,
+   "cached_tokens": 1891,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2285,
+   "cached_tokens": 1935,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2924,
+   "cached_tokens": 2282,
+   "output_tokens": 17,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3210,
+   "cached_tokens": 2921,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3856,
+   "cached_tokens": 3207,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4460,
+   "cached_tokens": 3853,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4848,
+   "cached_tokens": 4457,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7021,
+   "cached_tokens": 4845,
+   "output_tokens": 145,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8074,
+   "cached_tokens": 7018,
+   "output_tokens": 62,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8678,
+   "cached_tokens": 8071,
+   "output_tokens": 168,
+   "reasoning_tokens": 53,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8858,
+   "cached_tokens": 8675,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8926,
+   "cached_tokens": 8855,
+   "output_tokens": 48,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 46.6,
+ "usage": {
+  "input_tokens": 70403,
+  "cached_tokens": 59658,
+  "output_tokens": 880,
+  "reasoning_tokens": 103
+ },
+ "diff": "diff --git a/sqlglot/dialects/duckdb.py b/sqlglot/dialects/duckdb.py\nindex 76fafcb..b389533 100644\n--- a/sqlglot/dialects/duckdb.py\n+++ b/sqlglot/dialects/duckdb.py\n@@ -76,7 +76,11 @@ def _date_delta_sql(self: DuckDB.Generator, expression: DATETIME_DELTA) -> str:\n \n     this = exp.cast(this, to_type) if to_type else this\n \n-    return f\"{self.sql(this)} {op} {self.sql(exp.Interval(this=expression.expression, unit=unit))}\"\n+    interval = expression.expression\n+    if not isinstance(interval, exp.Interval):\n+        interval = exp.Interval(this=interval, unit=unit)\n+\n+    return f\"{self.sql(this)} {op} {self.sql(interval)}\"\n \n \n # BigQuery -> DuckDB conversion for the DATE function\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

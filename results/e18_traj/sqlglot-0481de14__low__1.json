@@ -1,0 +1,182 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(clickhouse)!: always wrap value in NOT value IS ...\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_clickhouse.py::TestClickhouse::test_clickhouse",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "IS NOT|Not|Boolean",
+    "path": "sqlglot/dialects/clickhouse.py"
+   },
+   "output_chars": 190,
+   "output_tokens": 41
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 233,
+   "output_tokens": 74
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "IS NOT|is not|is_null",
+    "path": "sqlglot"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2217
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/clickhouse.py",
+    "start_line": 1180,
+    "end_line": 1255
+   },
+   "output_chars": 2481,
+   "output_tokens": 582
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_clickhouse",
+    "path": "tests/dialects/test_clickhouse.py"
+   },
+   "output_chars": 76,
+   "output_tokens": 19
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_clickhouse.py",
+    "start_line": 1,
+    "end_line": 80
+   },
+   "output_chars": 5073,
+   "output_tokens": 1269
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/clickhouse.py",
+    "old": "            if isinstance(expression.parent, exp.Not) and isinstance(expression.this, exp.Subquery):\n                # WHERE (SELECT ...) IS NOT NULL -> NOT ((SELECT ...) IS NULL)\n                is_sql = self.wrap(is_sql)\n",
+    "new": "            if isinstance(expression.parent, exp.Not):\n                # NOT x IS NULL needs parentheses so that NOT applies to the whole predicate.\n                is_sql = self.wrap(is_sql)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_clickhouse.py::TestClickhouse::test_clickhouse -q"
+   },
+   "output_chars": 47,
+   "output_tokens": 20
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated ClickHouse SQL generation to parenthesize every IS predicate negated by NOT, rather than limiting this to subqueries. The specified test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 308,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 400,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 488,
+   "cached_tokens": 0,
+   "output_tokens": 20,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 593,
+   "cached_tokens": 0,
+   "output_tokens": 31,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2852,
+   "cached_tokens": 0,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3484,
+   "cached_tokens": 2849,
+   "output_tokens": 41,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3555,
+   "cached_tokens": 3481,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4870,
+   "cached_tokens": 3552,
+   "output_tokens": 213,
+   "reasoning_tokens": 91,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5095,
+   "cached_tokens": 4867,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5161,
+   "cached_tokens": 5092,
+   "output_tokens": 46,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 25.0,
+ "usage": {
+  "input_tokens": 26806,
+  "cached_tokens": 19841,
+  "output_tokens": 514,
+  "reasoning_tokens": 99
+ },
+ "diff": "diff --git a/sqlglot/dialects/clickhouse.py b/sqlglot/dialects/clickhouse.py\nindex fa86e3a..2ae09a2 100644\n--- a/sqlglot/dialects/clickhouse.py\n+++ b/sqlglot/dialects/clickhouse.py\n@@ -1223,8 +1223,8 @@ class ClickHouse(Dialect):\n         def is_sql(self, expression: exp.Is) -> str:\n             is_sql = super().is_sql(expression)\n \n-            if isinstance(expression.parent, exp.Not) and isinstance(expression.this, exp.Subquery):\n-                # WHERE (SELECT ...) IS NOT NULL -> NOT ((SELECT ...) IS NULL)\n+            if isinstance(expression.parent, exp.Not):\n+                # NOT x IS NULL needs parentheses so that NOT applies to the whole predicate.\n                 is_sql = self.wrap(is_sql)\n \n             return is_sql\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

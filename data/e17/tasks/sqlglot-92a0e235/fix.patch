@@ -1,0 +1,64 @@
+diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py
+index d9cad1b59..b1ec8a053 100644
+--- a/sqlglot/dialects/postgres.py
++++ b/sqlglot/dialects/postgres.py
+@@ -325,6 +325,7 @@ class Postgres(Dialect):
+             "@@": TokenType.DAT,
+             "@>": TokenType.AT_GT,
+             "<@": TokenType.LT_AT,
++            "?&": TokenType.QMARK_AMP,
+             "?|": TokenType.QMARK_PIPE,
+             "|/": TokenType.PIPE_SLASH,
+             "||/": TokenType.DPIPE_SLASH,
+diff --git a/sqlglot/expressions.py b/sqlglot/expressions.py
+index f1f5c1fae..f5db3519f 100644
+--- a/sqlglot/expressions.py
++++ b/sqlglot/expressions.py
+@@ -6710,6 +6710,11 @@ class JSONBContainsAnyTopKeys(Binary, Func):
+     pass
+ 
+ 
++# https://www.postgresql.org/docs/9.5/functions-json.html
++class JSONBContainsAllTopKeys(Binary, Func):
++    pass
++
++
+ class JSONBExists(Func):
+     arg_types = {"this": True, "path": True}
+     _sql_names = ["JSONB_EXISTS"]
+diff --git a/sqlglot/generator.py b/sqlglot/generator.py
+index 01368e6d5..1fa540a2e 100644
+--- a/sqlglot/generator.py
++++ b/sqlglot/generator.py
+@@ -118,6 +118,7 @@ class Generator(metaclass=_Generator):
+         exp.AnalyzeWith: lambda self, e: self.expressions(e, prefix="WITH ", sep=" "),
+         exp.ArrayContainsAll: lambda self, e: self.binary(e, "@>"),
+         exp.JSONBContainsAnyTopKeys: lambda self, e: self.binary(e, "?|"),
++        exp.JSONBContainsAllTopKeys: lambda self, e: self.binary(e, "?&"),
+         exp.ArrayOverlaps: lambda self, e: self.binary(e, "&&"),
+         exp.AutoRefreshProperty: lambda self, e: f"AUTO REFRESH {self.sql(e, 'this')}",
+         exp.BackupProperty: lambda self, e: f"BACKUP {self.sql(e, 'this')}",
+diff --git a/sqlglot/parser.py b/sqlglot/parser.py
+index f889d4075..13416793d 100644
+--- a/sqlglot/parser.py
++++ b/sqlglot/parser.py
+@@ -942,6 +942,7 @@ class Parser(metaclass=_Parser):
+         TokenType.RLIKE: binary_range_parser(exp.RegexpLike),
+         TokenType.SIMILAR_TO: binary_range_parser(exp.SimilarTo),
+         TokenType.FOR: lambda self, this: self._parse_comprehension(this),
++        TokenType.QMARK_AMP: binary_range_parser(exp.JSONBContainsAllTopKeys),
+         TokenType.QMARK_PIPE: binary_range_parser(exp.JSONBContainsAnyTopKeys),
+     }
+ 
+diff --git a/sqlglot/tokens.py b/sqlglot/tokens.py
+index 82269e866..d4f20f445 100644
+--- a/sqlglot/tokens.py
++++ b/sqlglot/tokens.py
+@@ -85,6 +85,7 @@ class TokenType(AutoName):
+     DAMP = auto()
+     XOR = auto()
+     DSTAR = auto()
++    QMARK_AMP = auto()
+     QMARK_PIPE = auto()
+ 
+     URI_START = auto()

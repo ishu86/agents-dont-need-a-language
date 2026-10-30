@@ -1,0 +1,12 @@
+diff -ruN a/src/orders.ts b/src/orders.ts
+--- a/src/orders.ts	2026-10-30 13:39:56
++++ b/src/orders.ts	2026-10-30 13:46:37
+@@ -53,7 +53,7 @@
+   const coupon = order.couponCode ? getCoupon(ctx.db, order.couponCode) ?? null : null;
+   const pricing = priceOrder(ctx.config, rules, {
+     customer,
+-    shipRegion: order.shipRegion,
++    shipRegion: customer.region,
+     lines: lines.value,
+     coupon,
+   });

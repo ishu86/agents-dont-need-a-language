@@ -1,0 +1,835 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "fix(snowflake): parse LIST and LS stage commands\n\n* fix(snowflake): preserve LIST and LS stage commands\n\n* fix(snowflake): model LIST and LS as stage expressions\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_alias",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "LIST|LS",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 126,
+   "output_tokens": 43
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_list_stage_alias",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 42,
+   "output_tokens": 11
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Stage",
+    "path": "sqlglot/exp.py"
+   },
+   "output_chars": 293,
+   "output_tokens": 136
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 3580,
+    "end_line": 3650
+   },
+   "output_chars": 3471,
+   "output_tokens": 843
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 1,
+    "end_line": 150
+   },
+   "output_chars": 5809,
+   "output_tokens": 1693
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*Stage|Stage(",
+    "path": "sqlglot"
+   },
+   "output_chars": 80,
+   "output_tokens": 23
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ListStage|list_stage|LIST",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 62,
+   "output_tokens": 18
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ListStage",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "LS",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 415,
+   "output_tokens": 122
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "LIST.*STAGE|list stage|LIST_STAGE|ListStage",
+    "path": "."
+   },
+   "output_chars": 464,
+   "output_tokens": 121
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 291,
+   "output_tokens": 92
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "parse.*stage|STAGE|Stage",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 336,
+   "output_tokens": 96
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 780,
+    "end_line": 970
+   },
+   "output_chars": 8060,
+   "output_tokens": 1920
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DirectoryStage|Stage\\(",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 65,
+   "output_tokens": 17
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_command|COMMANDS|COMMAND_PARSERS|_parse_statement",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 929,
+   "output_tokens": 249
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/dml.py",
+    "start_line": 160,
+    "end_line": 215
+   },
+   "output_chars": 1426,
+   "output_tokens": 352
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "COMMANDS|Command\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 350,
+   "output_tokens": 89
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DirectoryStage|_parse_directory",
+    "path": "sqlglot"
+   },
+   "output_chars": 438,
+   "output_tokens": 115
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1,
+    "end_line": 150
+   },
+   "output_chars": 6147,
+   "output_tokens": 1538
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/__init__.py",
+    "start_line": 1,
+    "end_line": 80
+   },
+   "output_chars": 2399,
+   "output_tokens": 682
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 2260,
+    "end_line": 2435
+   },
+   "output_chars": 7222,
+   "output_tokens": 1729
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 400,
+    "end_line": 490
+   },
+   "output_chars": 3695,
+   "output_tokens": 1031
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 6310,
+    "end_line": 6370
+   },
+   "output_chars": 2749,
+   "output_tokens": 672
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "COMMANDS =|COMMANDS:",
+    "path": "sqlglot"
+   },
+   "output_chars": 908,
+   "output_tokens": 292
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/tokens.py",
+    "start_line": 520,
+    "end_line": 570
+   },
+   "output_chars": 1782,
+   "output_tokens": 501
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_alias -q"
+   },
+   "output_chars": 4781,
+   "output_tokens": 1142
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 700,
+    "end_line": 780
+   },
+   "output_chars": 3792,
+   "output_tokens": 965
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "@|STAGED_FILE|_parse_table_parts",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 915,
+   "output_tokens": 227
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/snowflake.py",
+    "start_line": 1,
+    "end_line": 100
+   },
+   "output_chars": 3252,
+   "output_tokens": 844
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1100,
+    "end_line": 1180
+   },
+   "output_chars": 3282,
+   "output_tokens": 776
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_location_path",
+    "path": "sqlglot"
+   },
+   "output_chars": 81,
+   "output_tokens": 25
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1270,
+    "end_line": 1320
+   },
+   "output_chars": 2016,
+   "output_tokens": 498
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_string\\(|def _parse_id_var",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 28,
+   "output_tokens": 10
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_statement",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 180,
+    "end_line": 205
+   },
+   "output_chars": 586,
+   "output_tokens": 145
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Var|class Command",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 392,
+   "output_tokens": 109
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_dialect.py",
+    "start_line": 1,
+    "end_line": 90
+   },
+   "output_chars": 3302,
+   "output_tokens": 800
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/snowflake.py",
+    "start_line": 120,
+    "end_line": 170
+   },
+   "output_chars": 2394,
+   "output_tokens": 497
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class SnowflakeGenerator|def directorystage_sql",
+    "path": "sqlglot/generators/snowflake.py"
+   },
+   "output_chars": 51,
+   "output_tokens": 10
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2043
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def .*stage_sql|class SnowflakeGenerator|def get_sql",
+    "path": "sqlglot/generators/snowflake.py"
+   },
+   "output_chars": 51,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/snowflake.py",
+    "start_line": 350,
+    "end_line": 430
+   },
+   "output_chars": 3492,
+   "output_tokens": 870
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 370,
+    "end_line": 425
+   },
+   "output_chars": 2124,
+   "output_tokens": 515
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _next|@property\\n.*next|self\\._tokens\\[self\\._index",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 194,
+   "output_tokens": 44
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _next|_next\\(",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _advance\\(|def _curr|_index:",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 260,
+   "output_tokens": 89
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1975,
+    "end_line": 2048
+   },
+   "output_chars": 2942,
+   "output_tokens": 818
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_string\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 53,
+   "output_tokens": 16
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8910,
+    "end_line": 8945
+   },
+   "output_chars": 1546,
+   "output_tokens": 382
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions/dml.py",
+    "old": "class DirectoryStage(Expression):\n    pass\n\n\nclass Insert(Expression, DDL, DML):",
+    "new": "class DirectoryStage(Expression):\n    pass\n\n\nclass ListStage(Expression):\n    arg_types = {\"this\": True, \"pattern\": False}\n\n\nclass Insert(Expression, DDL, DML):"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "old": "    def _parse_directory(self) -> exp.DirectoryStage:\n        table = self._parse_table_parts()\n        this = table.this if isinstance(table, exp.Table) else table\n        return self.expression(exp.DirectoryStage(this=this))\n\n    def _parse_describe(self) -> exp.Describe:",
+    "new": "    def _parse_statement(self) -> exp.Expr | None:\n        if (\n            self._curr\n            and self._curr.text.upper() in (\"LIST\", \"LS\")\n            and (self._next.text == \"@\" or self._next.token_type == TokenType.STRING)\n        ):\n            comments = self._curr.comments\n            self._advance()\n            statement = self._parse_list_stage()\n            statement.add_comments(comments, prepend=True)\n            return statement\n\n        return super()._parse_statement()\n\n    def _parse_list_stage(self) -> exp.ListStage:\n        start = self._curr\n        if self._match_text_seq(\"@\", advance=False):\n            this = self._parse_location_path()\n        elif self._match(TokenType.STRING):\n            this = exp.var(self._find_sql(start, self._prev))\n        else:\n            self.raise_error(\"Expected a stage location\")\n            return self.expression(exp.ListStage(this=exp.var(\"\")))\n\n        pattern = None\n        if self._match_text_seq(\"PATTERN\"):\n            if not self._match(TokenType.EQ):\n                self.raise_error(\"Expected '=' after PATTERN\")\n\n            pattern = self._parse_string()\n            if not pattern or not pattern.is_string:\n                self.raise_error(\"Expected a string literal after PATTERN =\")\n\n        return self.expression(exp.ListStage(this=this, pattern=pattern))\n\n    def _parse_directory(self) -> exp.DirectoryStage:\n        table = self._parse_table_parts()\n        this = table.this if isinstance(table, exp.Table) else table\n        return self.expression(exp.DirectoryStage(this=this))\n\n    def _parse_describe(self) -> exp.Describe:"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generators/snowflake.py",
+    "old": "    AFTER_HAVING_MODIFIER_TRANSFORMS = generator.AFTER_HAVING_MODIFIER_TRANSFORMS\n\n    IS_BOOL_ALLOWED = False",
+    "new": "    AFTER_HAVING_MODIFIER_TRANSFORMS = generator.AFTER_HAVING_MODIFIER_TRANSFORMS\n\n    def liststage_sql(self, expression: exp.ListStage) -> str:\n        sql = f\"LIST {self.sql(expression, 'this')}\"\n        pattern = expression.args.get(\"pattern\")\n        if pattern:\n            sql += f\" PATTERN = {self.sql(pattern)}\"\n        return sql\n\n    IS_BOOL_ALLOWED = False"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_pattern tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_alias tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_invalid_pattern tests/dialects/test_snowflake.py::TestSnowflake::test_list_stage_identifiers -q"
+   },
+   "output_chars": 97,
+   "output_tokens": 21
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py -q"
+   },
+   "output_chars": 236,
+   "output_tokens": 38
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_statement\\(self\\) -> exp.Expr \\| None",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 320,
+   "output_tokens": 97
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 925,
+    "end_line": 985
+   },
+   "output_chars": 2428,
+   "output_tokens": 538
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/dml.py",
+    "start_line": 185,
+    "end_line": 205
+   },
+   "output_chars": 492,
+   "output_tokens": 127
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/snowflake.py",
+    "start_line": 378,
+    "end_line": 405
+   },
+   "output_chars": 1177,
+   "output_tokens": 297
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests -q"
+   },
+   "output_chars": 1706,
+   "output_tokens": 427
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 336,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 466,
+   "cached_tokens": 0,
+   "output_tokens": 101,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 786,
+   "cached_tokens": 0,
+   "output_tokens": 124,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3498,
+   "cached_tokens": 0,
+   "output_tokens": 108,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3778,
+   "cached_tokens": 3495,
+   "output_tokens": 112,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4228,
+   "cached_tokens": 3775,
+   "output_tokens": 128,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6571,
+   "cached_tokens": 4225,
+   "output_tokens": 62,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6996,
+   "cached_tokens": 6568,
+   "output_tokens": 176,
+   "reasoning_tokens": 38,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9634,
+   "cached_tokens": 6993,
+   "output_tokens": 160,
+   "reasoning_tokens": 22,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13556,
+   "cached_tokens": 9631,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14101,
+   "cached_tokens": 13553,
+   "output_tokens": 74,
+   "reasoning_tokens": 35,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 15328,
+   "cached_tokens": 14098,
+   "output_tokens": 206,
+   "reasoning_tokens": 84,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17599,
+   "cached_tokens": 15325,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18424,
+   "cached_tokens": 17596,
+   "output_tokens": 241,
+   "reasoning_tokens": 211,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18701,
+   "cached_tokens": 18421,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19248,
+   "cached_tokens": 18698,
+   "output_tokens": 197,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19750,
+   "cached_tokens": 19245,
+   "output_tokens": 81,
+   "reasoning_tokens": 44,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 20642,
+   "cached_tokens": 19747,
+   "output_tokens": 191,
+   "reasoning_tokens": 152,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 21341,
+   "cached_tokens": 20639,
+   "output_tokens": 60,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 21422,
+   "cached_tokens": 21338,
+   "output_tokens": 73,
+   "reasoning_tokens": 35,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23549,
+   "cached_tokens": 21419,
+   "output_tokens": 2227,
+   "reasoning_tokens": 2182,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 25797,
+   "cached_tokens": 23546,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26715,
+   "cached_tokens": 25794,
+   "output_tokens": 75,
+   "reasoning_tokens": 37,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27316,
+   "cached_tokens": 26712,
+   "output_tokens": 320,
+   "reasoning_tokens": 272,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27691,
+   "cached_tokens": 27313,
+   "output_tokens": 30,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27735,
+   "cached_tokens": 27688,
+   "output_tokens": 46,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27881,
+   "cached_tokens": 27732,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28744,
+   "cached_tokens": 27878,
+   "output_tokens": 337,
+   "reasoning_tokens": 305,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29108,
+   "cached_tokens": 28741,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29535,
+   "cached_tokens": 29105,
+   "output_tokens": 240,
+   "reasoning_tokens": 137,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29787,
+   "cached_tokens": 29532,
+   "output_tokens": 494,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30293,
+   "cached_tokens": 29784,
+   "output_tokens": 326,
+   "reasoning_tokens": 162,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30631,
+   "cached_tokens": 30290,
+   "output_tokens": 121,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30784,
+   "cached_tokens": 30628,
+   "output_tokens": 44,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30877,
+   "cached_tokens": 30781,
+   "output_tokens": 219,
+   "reasoning_tokens": 64,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 32193,
+   "cached_tokens": 30874,
+   "output_tokens": 656,
+   "reasoning_tokens": 634,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "max_steps",
+ "wall_s": 168.9,
+ "usage": {
+  "input_tokens": 695041,
+  "cached_tokens": 661164,
+  "output_tokens": 7471,
+  "reasoning_tokens": 4591
+ },
+ "diff": "diff --git a/sqlglot/expressions/dml.py b/sqlglot/expressions/dml.py\nindex 49d386a..9ecbc66 100644\n--- a/sqlglot/expressions/dml.py\n+++ b/sqlglot/expressions/dml.py\n@@ -192,6 +192,10 @@ class DirectoryStage(Expression):\n     pass\n \n \n+class ListStage(Expression):\n+    arg_types = {\"this\": True, \"pattern\": False}\n+\n+\n class Insert(Expression, DDL, DML):\n     arg_types = {\n         \"hint\": False,\ndiff --git a/sqlglot/generators/snowflake.py b/sqlglot/generators/snowflake.py\nindex c75b2c8..90c07fd 100644\n--- a/sqlglot/generators/snowflake.py\n+++ b/sqlglot/generators/snowflake.py\n@@ -382,6 +382,13 @@ class SnowflakeGenerator(generator.Generator):\n \n     AFTER_HAVING_MODIFIER_TRANSFORMS = generator.AFTER_HAVING_MODIFIER_TRANSFORMS\n \n+    def liststage_sql(self, expression: exp.ListStage) -> str:\n+        sql = f\"LIST {self.sql(expression, 'this')}\"\n+        pattern = expression.args.get(\"pattern\")\n+        if pattern:\n+            sql += f\" PATTERN = {self.sql(pattern)}\"\n+        return sql\n+\n     IS_BOOL_ALLOWED = False\n     DIRECTED_JOINS = True\n     SUPPORTS_UESCAPE = False\ndiff --git a/sqlglot/parsers/snowflake.py b/sqlglot/parsers/snowflake.py\nindex bf2f709..02c1c24 100644\n--- a/sqlglot/parsers/snowflake.py\n+++ b/sqlglot/parsers/snowflake.py\n@@ -933,6 +933,41 @@ class SnowflakeParser(parser.Parser):\n         ),\n     }\n \n+    def _parse_statement(self) -> exp.Expr | None:\n+        if (\n+            self._curr\n+            and self._curr.text.upper() in (\"LIST\", \"LS\")\n+            and (self._next.text == \"@\" or self._next.token_type == TokenType.STRING)\n+        ):\n+            comments = self._curr.comments\n+            self._advance()\n+            statement = self._parse_list_stage()\n+            statement.add_comments(comments, prepend=True)\n+            return statement\n+\n+        return super()._parse_statement()\n+\n+    def _parse_list_stage(self) -> exp.ListStage:\n+        start = self._curr\n+        if self._match_text_seq(\"@\", advance=False):\n+            this = self._parse_location_path()\n+        elif self._match(TokenType.STRING):\n+            this = exp.var(self._find_sql(start, self._prev))\n+        else:\n+            self.raise_error(\"Expected a stage location\")\n+            return self.expression(exp.ListStage(this=exp.var(\"\")))\n+\n+        pattern = None\n+        if self._match_text_seq(\"PATTERN\"):\n+            if not self._match(TokenType.EQ):\n+                self.raise_error(\"Expected '=' after PATTERN\")\n+\n+            pattern = self._parse_string()\n+            if not pattern or not pattern.is_string:\n+                self.raise_error(\"Expected a string literal after PATTERN =\")\n+\n+        return self.expression(exp.ListStage(this=this, pattern=pattern))\n+\n     def _parse_directory(self) -> exp.DirectoryStage:\n         table = self._parse_table_parts()\n         this = table.this if isinstance(table, exp.Table) else table\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

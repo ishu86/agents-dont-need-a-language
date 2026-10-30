@@ -1,0 +1,23 @@
+data/bugs/py/app.py
+  data/bugs/py/app.py:20:34 - error: Argument missing for parameter "email" (reportCallIssue)
+  data/bugs/py/app.py:21:21 - error: Argument of type "Literal['1']" cannot be assigned to parameter "uid" of type "int" in function "find"
+    "Literal['1']" is not assignable to "int" (reportArgumentType)
+  data/bugs/py/app.py:22:13 - error: "name" is not a known attribute of "None" (reportOptionalMemberAccess)
+  data/bugs/py/app.py:23:20 - error: Cannot access attribute "nmae" for class "User"
+    Attribute "nmae" is unknown (reportAttributeAccessIssue)
+  data/bugs/py/app.py:24:32 - error: Expected 1 positional argument (reportCallIssue)
+  data/bugs/py/app.py:25:11 - error: "undefined_var" is not defined (reportUndefinedVariable)
+  data/bugs/py/app.py:26:14 - error: Type "int" is not assignable to declared type "str"
+    "int" is not assignable to "str" (reportAssignmentType)
+  data/bugs/py/app.py:27:26 - error: "upper" is not a known attribute of "None" (reportOptionalMemberAccess)
+8 errors, 0 warnings, 0 informations
+
+---compact---
+app.py:20 Argument missing for parameter "email" (reportCallIssue)
+app.py:21 Argument of type "Literal['1']" cannot be assigned to parameter "uid" of type "int" in function "find"
+app.py:22 "name" is not a known attribute of "None" (reportOptionalMemberAccess)
+app.py:23 Cannot access attribute "nmae" for class "User"
+app.py:24 Expected 1 positional argument (reportCallIssue)
+app.py:25 "undefined_var" is not defined (reportUndefinedVariable)
+app.py:26 Type "int" is not assignable to declared type "str"
+app.py:27 "upper" is not a known attribute of "None" (reportOptionalMemberAccess)

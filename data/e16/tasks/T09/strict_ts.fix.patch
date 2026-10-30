@@ -1,0 +1,52 @@
+diff -ruN a/src/config.ts b/src/config.ts
+--- a/src/config.ts	2026-10-30 13:39:08
++++ b/src/config.ts	2026-10-30 13:46:38
+@@ -9,6 +9,7 @@
+     freeShippingThresholdCents: 5000,
+     bulkQty: 10,
+     bulkBps: 1000,
++    clearanceBps: 2000,
+     vipTiers: [
+       { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false },
+       { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false },
+diff -ruN a/src/pricing.ts b/src/pricing.ts
+--- a/src/pricing.ts	2026-10-30 13:39:56
++++ b/src/pricing.ts	2026-10-30 13:46:38
+@@ -59,6 +59,17 @@
+   },
+ };
+ 
++export const clearanceRule: DiscountRule = {
++  name: "clearance",
++  apply({ config, lines }) {
++    let total = 0;
++    for (const line of lines) {
++      if (line.category === "clearance") total += percentOf(line.lineCents, config.clearanceBps);
++    }
++    return total;
++  },
++};
++
+ export const vipRule: DiscountRule = {
+   name: "vip",
+   apply({ tier, coupon, remainingCents }) {
+@@ -78,7 +89,7 @@
+ 
+ /** Order matters: each rule sees what the previous ones left. */
+ export function defaultRules(): RuleRegistry {
+-  return [bulkRule, vipRule, couponRule];
++  return [bulkRule, clearanceRule, vipRule, couponRule];
+ }
+ 
+ /** Runs the registry in order. Pure. */
+diff -ruN a/src/types.ts b/src/types.ts
+--- a/src/types.ts	2026-10-30 13:39:08
++++ b/src/types.ts	2026-10-30 13:46:38
+@@ -133,6 +133,7 @@
+   freeShippingThresholdCents: Cents;
+   bulkQty: number;
+   bulkBps: number;
++  clearanceBps: number;
+   /** ascending by minSpendCents; first entry is the base tier */
+   vipTiers: VipTier[];
+ }

@@ -1,0 +1,428 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(snowflake): ALTER TABLE ADD with IF NOT EXISTS\n\n* fix(snowflake): ALTER TABLE ADD with IF NOT EXISTS\n\n* refactor tests\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_snowflake",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ADD COLUMN|IF NOT EXISTS|alter_table",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 340,
+   "output_tokens": 125
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2076
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALTER TABLE|ADD COLUMN|IF NOT EXISTS",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 2704,
+   "output_tokens": 692
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2167
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_alter|AlterTable|ADD.*COLUMN|_parse_column_def",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 1596,
+   "output_tokens": 441
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7350,
+    "end_line": 7390
+   },
+   "output_chars": 1902,
+   "output_tokens": 448
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ALTER_TABLE_ADD_REQUIRED_FOR_EACH_COLUMN|class Snowflake",
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 87,
+   "output_tokens": 22
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "AddColumn|ColumnDef.*exists|alter_table_add",
+    "path": "sqlglot"
+   },
+   "output_chars": 169,
+   "output_tokens": 50
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class ColumnDef|class Schema|class Alter",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 301,
+   "output_tokens": 134
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class ColumnDef|class Schema|class AddPartition",
+    "path": "sqlglot"
+   },
+   "output_chars": 336,
+   "output_tokens": 95
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_schema",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 105,
+   "output_tokens": 28
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5939,
+    "end_line": 5955
+   },
+   "output_chars": 854,
+   "output_tokens": 215
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 1744,
+    "end_line": 1765
+   },
+   "output_chars": 607,
+   "output_tokens": 162
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            self._match_text_seq(\"ADD\")\n            if self._match_set(self.ADD_CONSTRAINT_TOKENS, advance=False):",
+    "new": "            self._match_text_seq(\"ADD\")\n            exists = self._parse_exists(not_=True)\n            if self._match_set(self.ADD_CONSTRAINT_TOKENS, advance=False):"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            column_def = self._parse_add_column()\n            if isinstance(column_def, exp.ColumnDef):\n                return column_def\n\n            exists = self._parse_exists(not_=True)",
+    "new": "            column_def = self._parse_add_column()\n            if isinstance(column_def, exp.ColumnDef):\n                if exists:\n                    column_def.set(\"exists\", exists)\n                return column_def\n\n            exists = exists or self._parse_exists(not_=True)"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "        if not self._match_set(self.ADD_CONSTRAINT_TOKENS, advance=False) and (\n            not self.dialect.ALTER_TABLE_ADD_REQUIRED_FOR_EACH_COLUMN",
+    "new": "        exists = self._parse_exists(not_=True)\n        if not self._match_set(self.ADD_CONSTRAINT_TOKENS, advance=False) and (\n            not self.dialect.ALTER_TABLE_ADD_REQUIRED_FOR_EACH_COLUMN"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            schema = self._parse_schema()\n\n            return ensure_list(schema) if schema else self._parse_csv(self._parse_field_def)",
+    "new": "            schema = self._parse_schema()\n            columns = ensure_list(schema) if schema else self._parse_csv(self._parse_field_def)\n            if exists:\n                for column in columns:\n                    if isinstance(column, exp.ColumnDef):\n                        column.set(\"exists\", exists)\n            return columns"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2155
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def columndef_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 84,
+   "output_tokens": 26
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1006,
+    "end_line": 1028
+   },
+   "output_chars": 1277,
+   "output_tokens": 309
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            if exists:\n                for column in columns:\n                    if isinstance(column, exp.ColumnDef):\n                        column.set(\"exists\", exists)\n            return columns",
+    "new": "            if exists and columns and isinstance(columns[0], exp.ColumnDef):\n                columns[0].set(\"exists\", exists)\n            return columns"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2131
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Implemented parsing of IF NOT EXISTS modifiers for ALTER TABLE ADD column definitions, including table-wide and per-column Snowflake syntax. The requested Snowflake test still reports a failure for the per-column modifier case, so the fix is incomplete."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 329,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 430,
+   "cached_tokens": 0,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 483,
+   "cached_tokens": 0,
+   "output_tokens": 23,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 642,
+   "cached_tokens": 0,
+   "output_tokens": 27,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2756,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3497,
+   "cached_tokens": 2753,
+   "output_tokens": 47,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5722,
+   "cached_tokens": 3494,
+   "output_tokens": 60,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6234,
+   "cached_tokens": 5719,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6727,
+   "cached_tokens": 6231,
+   "output_tokens": 67,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6827,
+   "cached_tokens": 6724,
+   "output_tokens": 72,
+   "reasoning_tokens": 36,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6960,
+   "cached_tokens": 6824,
+   "output_tokens": 47,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7152,
+   "cached_tokens": 6957,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7291,
+   "cached_tokens": 7149,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7359,
+   "cached_tokens": 7288,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7619,
+   "cached_tokens": 7356,
+   "output_tokens": 83,
+   "reasoning_tokens": 45,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7875,
+   "cached_tokens": 7616,
+   "output_tokens": 254,
+   "reasoning_tokens": 156,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8141,
+   "cached_tokens": 7872,
+   "output_tokens": 194,
+   "reasoning_tokens": 67,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8347,
+   "cached_tokens": 8138,
+   "output_tokens": 149,
+   "reasoning_tokens": 37,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8508,
+   "cached_tokens": 8344,
+   "output_tokens": 139,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8659,
+   "cached_tokens": 8505,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10862,
+   "cached_tokens": 8656,
+   "output_tokens": 56,
+   "reasoning_tokens": 23,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10955,
+   "cached_tokens": 10859,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11310,
+   "cached_tokens": 10952,
+   "output_tokens": 123,
+   "reasoning_tokens": 26,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11445,
+   "cached_tokens": 11307,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13624,
+   "cached_tokens": 11442,
+   "output_tokens": 62,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 84.1,
+ "usage": {
+  "input_tokens": 169754,
+  "cached_tokens": 154186,
+  "output_tokens": 1737,
+  "reasoning_tokens": 463
+ },
+ "diff": "diff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 71851e8..50871c5 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -7358,6 +7358,7 @@ class Parser(metaclass=_Parser):\n     def _parse_alter_table_add(self) -> t.List[exp.Expression]:\n         def _parse_add_alteration() -> t.Optional[exp.Expression]:\n             self._match_text_seq(\"ADD\")\n+            exists = self._parse_exists(not_=True)\n             if self._match_set(self.ADD_CONSTRAINT_TOKENS, advance=False):\n                 return self.expression(\n                     exp.AddConstraint, expressions=self._parse_csv(self._parse_constraint)\n@@ -7365,9 +7366,11 @@ class Parser(metaclass=_Parser):\n \n             column_def = self._parse_add_column()\n             if isinstance(column_def, exp.ColumnDef):\n+                if exists:\n+                    column_def.set(\"exists\", exists)\n                 return column_def\n \n-            exists = self._parse_exists(not_=True)\n+            exists = exists or self._parse_exists(not_=True)\n             if self._match_pair(TokenType.PARTITION, TokenType.L_PAREN, advance=False):\n                 return self.expression(\n                     exp.AddPartition, exists=exists, this=self._parse_field(any_token=True)\n@@ -7375,6 +7378,7 @@ class Parser(metaclass=_Parser):\n \n             return None\n \n+        exists = self._parse_exists(not_=True)\n         if not self._match_set(self.ADD_CONSTRAINT_TOKENS, advance=False) and (\n             not self.dialect.ALTER_TABLE_ADD_REQUIRED_FOR_EACH_COLUMN\n             or self._match_text_seq(\"COLUMNS\")\n@@ -7382,8 +7386,10 @@ class Parser(metaclass=_Parser):\n             self._match(TokenType.COLUMN)\n \n             schema = self._parse_schema()\n-\n-            return ensure_list(schema) if schema else self._parse_csv(self._parse_field_def)\n+            columns = ensure_list(schema) if schema else self._parse_csv(self._parse_field_def)\n+            if exists and columns and isinstance(columns[0], exp.ColumnDef):\n+                columns[0].set(\"exists\", exists)\n+            return columns\n \n         return self._parse_csv(_parse_add_alteration)\n \n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": false,
+  "failed_tests": [
+   "tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake",
+   "tests/dialects/test_spark.py::TestSpark::test_spark"
+  ]
+ }
+}

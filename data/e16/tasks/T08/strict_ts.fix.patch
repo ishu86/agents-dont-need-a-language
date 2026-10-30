@@ -1,0 +1,131 @@
+diff -ruN a/src/config.ts b/src/config.ts
+--- a/src/config.ts	2026-10-30 13:39:08
++++ b/src/config.ts	2026-10-30 13:46:38
+@@ -10,9 +10,9 @@
+     bulkQty: 10,
+     bulkBps: 1000,
+     vipTiers: [
+-      { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false },
+-      { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false },
+-      { name: "gold", minSpendCents: 100000, discountBps: 1000, freeShipping: true },
++      { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false, pointsMultiplier: 1 },
++      { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false, pointsMultiplier: 1 },
++      { name: "gold", minSpendCents: 100000, discountBps: 1000, freeShipping: true, pointsMultiplier: 2 },
+     ],
+   };
+ }
+diff -ruN a/src/customers.ts b/src/customers.ts
+--- a/src/customers.ts	2026-10-30 13:39:08
++++ b/src/customers.ts	2026-10-30 13:46:38
+@@ -17,6 +17,7 @@
+     email: input.email,
+     region: input.region || ctx.config.defaultRegion,
+     lifetimeSpendCents: 0,
++    points: 0,
+   };
+   ctx.db.customers.set(customer.id, customer);
+   return ok(customer);
+@@ -44,4 +45,11 @@
+   const c = db.customers.get(id);
+   if (!c) return;
+   db.customers.set(id, { ...c, lifetimeSpendCents: Math.max(0, c.lifetimeSpendCents + deltaCents) });
++}
++
++/** Adds `delta` (may be negative) loyalty points to the stored customer, never below 0. */
++export function adjustPoints(db: Db, id: string, delta: number): void {
++  const c = db.customers.get(id);
++  if (!c) return;
++  db.customers.set(id, { ...c, points: Math.max(0, c.points + delta) });
+ }
+diff -ruN a/src/index.ts b/src/index.ts
+--- a/src/index.ts	2026-10-30 13:39:56
++++ b/src/index.ts	2026-10-30 13:46:38
+@@ -49,6 +49,8 @@
+       const c = getCustomer(ctx.db, customerId);
+       return c ? tierOf(ctx.config, c).name : undefined;
+     },
++    /** Loyalty points balance; undefined for unknown customers. */
++    points: (customerId: string): number | undefined => getCustomer(ctx.db, customerId)?.points,
+     stock: (sku: string): number => stockOf(ctx.db, sku),
+     outbox: (): EmailMessage[] => listOutbox(ctx.db),
+     audit: (): AuditEntry[] => entries(ctx.log),
+diff -ruN a/src/orders.ts b/src/orders.ts
+--- a/src/orders.ts	2026-10-30 13:39:56
++++ b/src/orders.ts	2026-10-30 13:46:38
+@@ -1,6 +1,6 @@
+ import type { Cents, Ctx, Db, Order, OrderItem, Pricing, Result } from "./types.ts";
+ import { err, ok } from "./types.ts";
+-import { getCustomer, adjustSpend } from "./customers.ts";
++import { adjustPoints, adjustSpend, getCustomer, tierOf } from "./customers.ts";
+ import { getProduct } from "./catalog.ts";
+ import { reserve } from "./inventory.ts";
+ import {
+@@ -79,6 +79,7 @@
+     lineNetCents: {},
+     refundedByLine: {},
+     refundedCents: 0,
++    pointsMultiplier: 1,
+     createdAt: ctx.clock.now(),
+     paidAt: null,
+   };
+@@ -180,11 +181,13 @@
+   const paid: Order = {
+     ...priced,
+     status: "paid",
++    pointsMultiplier: tierOf(ctx.config, customer).pointsMultiplier,
+     lineNetCents: allocateLineNet(priced.pricing, lines.value),
+     paidAt: ctx.clock.now(),
+   };
+   saveOrder(ctx.db, paid);
+   adjustSpend(ctx.db, customer.id, paid.pricing.totalCents);
++  adjustPoints(ctx.db, customer.id, Math.floor(paid.pricing.totalCents / 100) * paid.pointsMultiplier);
+   record(ctx.log, ctx.clock, "checkout", orderId, String(paid.pricing.totalCents));
+   queueEmail(ctx, customer, "order_confirmation", orderId);
+   return ok(paid);
+diff -ruN a/src/refunds.ts b/src/refunds.ts
+--- a/src/refunds.ts	2026-10-30 13:39:56
++++ b/src/refunds.ts	2026-10-30 13:46:38
+@@ -1,6 +1,6 @@
+ import type { Cents, Ctx, Order, OrderStatus, Result } from "./types.ts";
+ import { err, ok } from "./types.ts";
+-import { getCustomer, adjustSpend } from "./customers.ts";
++import { adjustPoints, adjustSpend, getCustomer } from "./customers.ts";
+ import { release, type StockLine } from "./inventory.ts";
+ import { record } from "./audit.ts";
+ import { queueEmail } from "./notifications.ts";
+@@ -63,6 +63,7 @@
+   ctx.db.orders.set(orderId, updated);
+   release(ctx.db, lines);
+   adjustSpend(ctx.db, order.customerId, -amount);
++  adjustPoints(ctx.db, order.customerId, -Math.floor(amount / 100) * order.pointsMultiplier);
+   record(ctx.log, ctx.clock, "refund", orderId, String(amount));
+   const customer = getCustomer(ctx.db, order.customerId);
+   if (customer) queueEmail(ctx, customer, "refund_issued", orderId);
+diff -ruN a/src/types.ts b/src/types.ts
+--- a/src/types.ts	2026-10-30 13:39:08
++++ b/src/types.ts	2026-10-30 13:46:38
+@@ -46,6 +46,7 @@
+   email: string;
+   region: string;
+   lifetimeSpendCents: Cents;
++  points: number;
+ }
+ 
+ export interface VipTier {
+@@ -53,6 +54,7 @@
+   minSpendCents: Cents;
+   discountBps: number;
+   freeShipping: boolean;
++  pointsMultiplier: number;
+ }
+ 
+ export interface Coupon {
+@@ -102,6 +104,8 @@
+   lineNetCents: Record<string, Cents>;
+   refundedByLine: Record<string, { qty: number; cents: Cents }>;
+   refundedCents: Cents;
++  /** loyalty multiplier the customer's tier had at checkout */
++  pointsMultiplier: number;
+   createdAt: number;
+   paidAt: number | null;
+ }

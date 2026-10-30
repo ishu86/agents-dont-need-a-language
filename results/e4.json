@@ -1,0 +1,58 @@
+{
+ "tsc5 (ts)": {
+  "warm_seconds": 1.45,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 200,
+  "compact_tokens": 168,
+  "compact_pct_of_raw": 84
+ },
+ "tsc7/Go (ts)": {
+  "warm_seconds": 1.12,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 200,
+  "compact_tokens": 168,
+  "compact_pct_of_raw": 84
+ },
+ "pyright (py)": {
+  "warm_seconds": 0.68,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 438,
+  "compact_tokens": 156,
+  "compact_pct_of_raw": 36
+ },
+ "mypy (py)": {
+  "warm_seconds": 0.56,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 220,
+  "compact_tokens": 181,
+  "compact_pct_of_raw": 82
+ },
+ "ty (py)": {
+  "warm_seconds": 0.09,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 592,
+  "compact_tokens": 142,
+  "compact_pct_of_raw": 24
+ },
+ "pyrefly basic (py)": {
+  "warm_seconds": 0.21,
+  "bug_lines_caught": "1/8",
+  "raw_tokens": 92,
+  "compact_tokens": 16,
+  "compact_pct_of_raw": 17
+ },
+ "pyrefly strict (py)": {
+  "warm_seconds": 0.2,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 486,
+  "compact_tokens": 186,
+  "compact_pct_of_raw": 38
+ },
+ "cargo check (rs)": {
+  "warm_seconds": 0.13,
+  "bug_lines_caught": "8/8",
+  "raw_tokens": 1025,
+  "compact_tokens": 118,
+  "compact_pct_of_raw": 12
+ }
+}

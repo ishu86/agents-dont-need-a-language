@@ -1,0 +1,12 @@
+diff -ruN a/src/pricing.ts b/src/pricing.ts
+--- a/src/pricing.ts	2026-10-30 13:46:37
++++ b/src/pricing.ts	2026-10-30 13:39:56
+@@ -127,7 +127,7 @@
+   const taxCents = taxFor(config, shipRegion, taxableCents);
+ 
+   const weightG = lines.reduce((w, l) => w + l.weightG * l.qty, 0);
+-  const shippingCents = shippingFor(config, tier, weightG, subtotalCents);
++  const shippingCents = shippingFor(config, tier, weightG, goodsCents);
+ 
+   return {
+     subtotalCents,

@@ -1,0 +1,17 @@
+diff -ruN a/src/orders.js b/src/orders.js
+--- a/src/orders.js	2026-10-30 13:50:52
++++ b/src/orders.js	2026-10-30 13:51:51
+@@ -88,12 +88,12 @@
+     if (bad) throw bad;
+   }
+ 
++  if (order.couponCode) recordCouponUse(order.couponCode);
+   const short = reserve(order.items);
+   if (short !== -1) {
+     record("checkout_failed", orderId, "out_of_stock");
+     throw `out_of_stock: not enough stock for ${order.items[short].sku}`;
+   }
+-  if (order.couponCode) recordCouponUse(order.couponCode);
+ 
+   order.status = "paid";
+   order.paidAt = state.clock.now();

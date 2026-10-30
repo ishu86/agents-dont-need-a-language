@@ -1,0 +1,752 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "Feat(postgres): add support for XMLELEMENT\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_postgres.py::TestPostgres::test_xmlelement",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "xmlelement|XMLELEMENT|XMLATTRIBUTES",
+    "path": "."
+   },
+   "output_chars": 848,
+   "output_tokens": 235
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2077
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_postgres.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2032
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_postgres.py",
+    "start_line": 1280,
+    "end_line": 1315
+   },
+   "output_chars": 1332,
+   "output_tokens": 316
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class XML|Xml|XML",
+    "path": "sqlglot/exp.py"
+   },
+   "output_chars": 293,
+   "output_tokens": 138
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FUNCTIONS|build.*function|Parser.*FUNCTION|FUNC",
+    "path": "sqlglot/dialects/postgres.py"
+   },
+   "output_chars": 255,
+   "output_tokens": 62
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "XMLCOMMENT|XMLELEMENT",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot"
+   },
+   "output_chars": 233,
+   "output_tokens": 74
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 340,
+    "end_line": 440
+   },
+   "output_chars": 4593,
+   "output_tokens": 1061
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*Element|XML|Xml",
+    "path": "sqlglot/expressions.py"
+   },
+   "output_chars": 53,
+   "output_tokens": 16
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 80,
+    "end_line": 250
+   },
+   "output_chars": 7644,
+   "output_tokens": 1995
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FUNCTION_PARSERS|FUNCTIONS =|def _parse_function",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 502,
+   "output_tokens": 144
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 6630,
+    "end_line": 6705
+   },
+   "output_chars": 1844,
+   "output_tokens": 592
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5270,
+    "end_line": 5445
+   },
+   "output_chars": 7080,
+   "output_tokens": 1694
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*\\(Func\\)|class .*\\(Condition\\)",
+    "path": "sqlglot/expressions.py"
+   },
+   "output_chars": 5528,
+   "output_tokens": 1609
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.XMLTable|XMLTable",
+    "path": "sqlglot"
+   },
+   "output_chars": 349,
+   "output_tokens": 103
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 290,
+    "end_line": 365
+   },
+   "output_chars": 3153,
+   "output_tokens": 811
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 470,
+    "end_line": 570
+   },
+   "output_chars": 4777,
+   "output_tokens": 1090
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 5070,
+    "end_line": 5160
+   },
+   "output_chars": 3238,
+   "output_tokens": 871
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/oracle.py",
+    "start_line": 150,
+    "end_line": 215
+   },
+   "output_chars": 2818,
+   "output_tokens": 635
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_id_var|def _parse_column\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 92,
+   "output_tokens": 27
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def alias_sql|def anonymous_sql|def function_fallback_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 199,
+   "output_tokens": 55
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "XMLATTRIBUTES",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5045,
+    "end_line": 5080
+   },
+   "output_chars": 1498,
+   "output_tokens": 378
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 6570,
+    "end_line": 6625
+   },
+   "output_chars": 2505,
+   "output_tokens": 598
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3020,
+    "end_line": 3075
+   },
+   "output_chars": 2835,
+   "output_tokens": 721
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3520,
+    "end_line": 3550
+   },
+   "output_chars": 1169,
+   "output_tokens": 268
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py::TestPostgres::test_xmlelement -q"
+   },
+   "output_chars": 6553,
+   "output_tokens": 1642
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_lambda",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 153,
+   "output_tokens": 41
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5440,
+    "end_line": 5475
+   },
+   "output_chars": 1385,
+   "output_tokens": 347
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5468,
+    "end_line": 5515
+   },
+   "output_chars": 2166,
+   "output_tokens": 535
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def sql\\(|func_name|_sql\\(self, expression",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2169
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 860,
+    "end_line": 900
+   },
+   "output_chars": 1471,
+   "output_tokens": 303
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "old": "class XMLTable(Func):\n    arg_types = {\"this\": True, \"passing\": False, \"columns\": False, \"by_ref\": False}\n\n\nclass Year(Func):",
+    "new": "class XMLTable(Func):\n    arg_types = {\"this\": True, \"passing\": False, \"columns\": False, \"by_ref\": False}\n\n\nclass XMLElement(Func):\n    arg_types = {\"name\": True, \"expressions\": False}\n    _sql_names = [\"XMLELEMENT\"]\n\n\nclass XMLAttributes(Func):\n    arg_types = {\"expressions\": True}\n    _sql_names = [\"XMLATTRIBUTES\"]\n\n\nclass XMLComment(Func):\n    _sql_names = [\"XMLCOMMENT\"]\n\n\nclass Year(Func):"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            \"TO_TIMESTAMP\": _build_to_timestamp,\n            \"UNNEST\": exp.Explode.from_arg_list,",
+    "new": "            \"TO_TIMESTAMP\": _build_to_timestamp,\n            \"XMLCOMMENT\": exp.XMLComment.from_arg_list,\n            \"UNNEST\": exp.Explode.from_arg_list,"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            \"DATE_PART\": lambda self: self._parse_date_part(),\n            \"JSONB_EXISTS\": lambda self: self._parse_jsonb_exists(),",
+    "new": "            \"DATE_PART\": lambda self: self._parse_date_part(),\n            \"JSONB_EXISTS\": lambda self: self._parse_jsonb_exists(),\n            \"XMLELEMENT\": lambda self: self._parse_xml_element(),\n            \"XMLATTRIBUTES\": lambda self: self._parse_xml_attributes(), "
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "        def _parse_jsonb_exists(self) -> exp.JSONBExists:\n            return self.expression(\n                exp.JSONBExists,\n                this=self._parse_bitwise(),\n                path=self._match(TokenType.COMMA)\n                and self.dialect.to_json_path(self._parse_bitwise()),\n            )\n\n        def _parse_generated_as_identity(",
+    "new": "        def _parse_jsonb_exists(self) -> exp.JSONBExists:\n            return self.expression(\n                exp.JSONBExists,\n                this=self._parse_bitwise(),\n                path=self._match(TokenType.COMMA)\n                and self.dialect.to_json_path(self._parse_bitwise()),\n            )\n\n        def _parse_xml_element(self) -> exp.XMLElement:\n            self._match_text_seq(\"NAME\")\n            name = self._parse_id_var()\n            expressions = self._match(TokenType.COMMA) and self._parse_csv(\n                lambda: self._parse_lambda()\n            )\n            return self.expression(exp.XMLElement, name=name, expressions=expressions)\n\n        def _parse_xml_attributes(self) -> exp.XMLAttributes:\n            expressions = self._parse_csv(lambda: self._parse_lambda(alias=True))\n            return self.expression(exp.XMLAttributes, expressions=expressions)\n\n        def _parse_generated_as_identity("
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 209,
+   "output_tokens": 67
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def substring_sql|def xmltable_sql",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 96,
+   "output_tokens": 28
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def expressions\\(",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 26,
+   "output_tokens": 7
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3580,
+    "end_line": 3610
+   },
+   "output_chars": 1152,
+   "output_tokens": 290
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def func\\(",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 19,
+   "output_tokens": 7
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3550,
+    "end_line": 3577
+   },
+   "output_chars": 1105,
+   "output_tokens": 302
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            exp.ExplodingGenerateSeries: rename_func(\"GENERATE_SERIES\"),\n            exp.GroupConcat: _string_agg_sql,",
+    "new": "            exp.ExplodingGenerateSeries: rename_func(\"GENERATE_SERIES\"),\n            exp.XMLElement: lambda self, e: self.func(\n                \"XMLELEMENT\", f\"NAME {self.sql(e, 'name')}\", *e.expressions\n            ),\n            exp.GroupConcat: _string_agg_sql,"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 390,
+    "end_line": 405
+   },
+   "output_chars": 801,
+   "output_tokens": 206
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            \"XMLATTRIBUTES\": lambda self: self._parse_xml_attributes(), \n",
+    "new": "            \"XMLATTRIBUTES\": lambda self: self._parse_xml_attributes(),\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py::TestPostgres::test_xmlelement -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_postgres.py -q"
+   },
+   "output_chars": 117,
+   "output_tokens": 22
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests -q"
+   },
+   "output_chars": 1705,
+   "output_tokens": 429
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "XMLElement|XMLAttributes|XMLComment|_parse_xml_element|xmlelement",
+    "path": "sqlglot"
+   },
+   "output_chars": 851,
+   "output_tokens": 227
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects -q"
+   },
+   "output_chars": 497,
+   "output_tokens": 60
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Implemented PostgreSQL parsing and SQL generation for XMLELEMENT, including XMLATTRIBUTES and XMLCOMMENT support. The target test, PostgreSQL tests, and all dialect tests pass. Full test collection was blocked because duckdb is not installed."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 308,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 410,
+   "cached_tokens": 0,
+   "output_tokens": 91,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4874,
+   "cached_tokens": 0,
+   "output_tokens": 159,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5590,
+   "cached_tokens": 4871,
+   "output_tokens": 34,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5709,
+   "cached_tokens": 5587,
+   "output_tokens": 158,
+   "reasoning_tokens": 12,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9121,
+   "cached_tokens": 5706,
+   "output_tokens": 184,
+   "reasoning_tokens": 38,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13341,
+   "cached_tokens": 9118,
+   "output_tokens": 363,
+   "reasoning_tokens": 213,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17149,
+   "cached_tokens": 13338,
+   "output_tokens": 519,
+   "reasoning_tokens": 405,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 17782,
+   "cached_tokens": 17146,
+   "output_tokens": 142,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 19927,
+   "cached_tokens": 17779,
+   "output_tokens": 571,
+   "reasoning_tokens": 532,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22151,
+   "cached_tokens": 19924,
+   "output_tokens": 85,
+   "reasoning_tokens": 54,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22288,
+   "cached_tokens": 22148,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 22680,
+   "cached_tokens": 22285,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 23260,
+   "cached_tokens": 22677,
+   "output_tokens": 581,
+   "reasoning_tokens": 539,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26021,
+   "cached_tokens": 23257,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26368,
+   "cached_tokens": 26018,
+   "output_tokens": 349,
+   "reasoning_tokens": 143,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 26729,
+   "cached_tokens": 26365,
+   "output_tokens": 377,
+   "reasoning_tokens": 282,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27118,
+   "cached_tokens": 26726,
+   "output_tokens": 130,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27260,
+   "cached_tokens": 27115,
+   "output_tokens": 337,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27609,
+   "cached_tokens": 27257,
+   "output_tokens": 81,
+   "reasoning_tokens": 61,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27768,
+   "cached_tokens": 27606,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 27841,
+   "cached_tokens": 27765,
+   "output_tokens": 186,
+   "reasoning_tokens": 155,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28045,
+   "cached_tokens": 27838,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28381,
+   "cached_tokens": 28042,
+   "output_tokens": 152,
+   "reasoning_tokens": 121,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28551,
+   "cached_tokens": 28378,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 28899,
+   "cached_tokens": 28548,
+   "output_tokens": 367,
+   "reasoning_tokens": 231,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29278,
+   "cached_tokens": 28896,
+   "output_tokens": 49,
+   "reasoning_tokens": 11,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29544,
+   "cached_tokens": 29275,
+   "output_tokens": 76,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29632,
+   "cached_tokens": 29541,
+   "output_tokens": 46,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29704,
+   "cached_tokens": 29629,
+   "output_tokens": 42,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 29779,
+   "cached_tokens": 29701,
+   "output_tokens": 345,
+   "reasoning_tokens": 323,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30564,
+   "cached_tokens": 29776,
+   "output_tokens": 100,
+   "reasoning_tokens": 58,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 30902,
+   "cached_tokens": 30561,
+   "output_tokens": 413,
+   "reasoning_tokens": 388,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 31386,
+   "cached_tokens": 30899,
+   "output_tokens": 90,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 164.9,
+ "usage": {
+  "input_tokens": 755969,
+  "cached_tokens": 723772,
+  "output_tokens": 6260,
+  "reasoning_tokens": 3668
+ },
+ "diff": "diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py\nindex e0f3c1b..8821473 100644\n--- a/sqlglot/dialects/postgres.py\n+++ b/sqlglot/dialects/postgres.py\n@@ -384,6 +384,7 @@ class Postgres(Dialect):\n             \"TO_CHAR\": build_formatted_time(exp.TimeToStr, \"postgres\"),\n             \"TO_DATE\": build_formatted_time(exp.StrToDate, \"postgres\"),\n             \"TO_TIMESTAMP\": _build_to_timestamp,\n+            \"XMLCOMMENT\": exp.XMLComment.from_arg_list,\n             \"UNNEST\": exp.Explode.from_arg_list,\n             \"SHA256\": lambda args: exp.SHA2(this=seq_get(args, 0), length=exp.Literal.number(256)),\n             \"SHA384\": lambda args: exp.SHA2(this=seq_get(args, 0), length=exp.Literal.number(384)),\n@@ -395,6 +396,8 @@ class Postgres(Dialect):\n             **parser.Parser.FUNCTION_PARSERS,\n             \"DATE_PART\": lambda self: self._parse_date_part(),\n             \"JSONB_EXISTS\": lambda self: self._parse_jsonb_exists(),\n+            \"XMLELEMENT\": lambda self: self._parse_xml_element(),\n+            \"XMLATTRIBUTES\": lambda self: self._parse_xml_attributes(),\n         }\n \n         BITWISE = {\n@@ -476,6 +479,18 @@ class Postgres(Dialect):\n                 and self.dialect.to_json_path(self._parse_bitwise()),\n             )\n \n+        def _parse_xml_element(self) -> exp.XMLElement:\n+            self._match_text_seq(\"NAME\")\n+            name = self._parse_id_var()\n+            expressions = self._match(TokenType.COMMA) and self._parse_csv(\n+                lambda: self._parse_lambda()\n+            )\n+            return self.expression(exp.XMLElement, name=name, expressions=expressions)\n+\n+        def _parse_xml_attributes(self) -> exp.XMLAttributes:\n+            expressions = self._parse_csv(lambda: self._parse_lambda(alias=True))\n+            return self.expression(exp.XMLAttributes, expressions=expressions)\n+\n         def _parse_generated_as_identity(\n             self,\n         ) -> (\n@@ -545,6 +560,9 @@ class Postgres(Dialect):\n             exp.DateSub: _date_add_sql(\"-\"),\n             exp.Explode: rename_func(\"UNNEST\"),\n             exp.ExplodingGenerateSeries: rename_func(\"GENERATE_SERIES\"),\n+            exp.XMLElement: lambda self, e: self.func(\n+                \"XMLELEMENT\", f\"NAME {self.sql(e, 'name')}\", *e.expressions\n+            ),\n             exp.GroupConcat: _string_agg_sql,\n             exp.IntDiv: rename_func(\"DIV\"),\n             exp.JSONExtract: _json_extract_sql(\"JSON_EXTRACT_PATH\", \"->\"),\ndiff --git a/sqlglot/expressions.py b/sqlglot/expressions.py\nindex 39975d7..ad57286 100644\n--- a/sqlglot/expressions.py\n+++ b/sqlglot/expressions.py\n@@ -6669,6 +6669,20 @@ class XMLTable(Func):\n     arg_types = {\"this\": True, \"passing\": False, \"columns\": False, \"by_ref\": False}\n \n \n+class XMLElement(Func):\n+    arg_types = {\"name\": True, \"expressions\": False}\n+    _sql_names = [\"XMLELEMENT\"]\n+\n+\n+class XMLAttributes(Func):\n+    arg_types = {\"expressions\": True}\n+    _sql_names = [\"XMLATTRIBUTES\"]\n+\n+\n+class XMLComment(Func):\n+    _sql_names = [\"XMLCOMMENT\"]\n+\n+\n class Year(Func):\n     pass\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

@@ -1,0 +1,250 @@
+{
+ "summary": {
+  "py/raw": {
+   "success": "5/5",
+   "feed_tokens": 437,
+   "mean_out": 2041,
+   "cost": 0.0128
+  },
+  "py/compact": {
+   "success": "5/5",
+   "feed_tokens": 156,
+   "mean_out": 2214,
+   "cost": 0.0134
+  },
+  "rs/raw": {
+   "success": "5/5",
+   "feed_tokens": 1024,
+   "mean_out": 2048,
+   "cost": 0.0136
+  },
+  "rs/compact": {
+   "success": "5/5",
+   "feed_tokens": 118,
+   "mean_out": 2284,
+   "cost": 0.0133
+  }
+ },
+ "rows": [
+  {
+   "lang": "py",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    assert u is not None\n    print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = \"placeholder\"\n    print(undefined_var)\n    y: int = total_age([1])\n    print((users[0].email or \"\").upper())\n",
+   "out": 2319,
+   "cost": 0.0027257899999999996,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    if u is not None:\n        print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = \"undefined\"  # TODO: set the intended value\n    print(undefined_var)\n    y: int = total_age([1])\n    if users[0].email is not None:\n        print(users[0].email.upper())\n\nif __name__ == \"__main__\":\n    main()\n",
+   "out": 2907,
+   "cost": 0.0030197899999999996,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    assert u is not None\n    print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = 0\n    print(undefined_var)\n    y: str = str(total_age([1]))\n    print((users[0].email or \"\").upper())\n\nif __name__ == \"__main__\":\n    main()\n",
+   "out": 1662,
+   "cost": 0.00239729,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    assert u is not None\n    print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = 0\n    print(undefined_var)\n    y: int = total_age([1])\n    print((users[0].email or \"\").upper())\n\nif __name__ == \"__main__\":\n    main()\n",
+   "out": 1254,
+   "cost": 0.0020136900000000003,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]  # 8 missing field\n    u = find(users, 1)                                              # 1 wrong arg type\n    if u is not None:                                               # 6 optional access\n        print(u.name)\n    print(users[0].name)                                            # 2 typo attribute\n    x: int = total_age([1, 2])                                      # 5 wrong arg count\n    undefined_var = \"undefined\"                                     # 4 undefined\n    print(undefined_var)\n    y: int = total_age([1])                                         # 3 wrong return type use\n    email = users[0].email                                          # 6b optional access\n    if email is not None:\n        print(email.upper())\n",
+   "out": 2064,
+   "cost": 0.0025982899999999996,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    assert u is not None\n    print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = \"x\"\n    print(undefined_var)\n    y: int = total_age([1])\n    print((users[0].email or \"\").upper())\n\nif __name__ == \"__main__\":\n    main()\n",
+   "out": 1576,
+   "cost": 0.00234999,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    if u is not None:\n        print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = 0\n    print(undefined_var)\n    y: int = total_age([1])\n    if users[0].email is not None:\n        print(users[0].email.upper())\n",
+   "out": 1739,
+   "cost": 0.0037584000000000003,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    assert u is not None\n    print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2, 3])\n    undefined_var = \"undefined\"\n    print(undefined_var)\n    y: str = str(total_age([1]))\n    email = users[0].email\n    assert email is not None\n    print(email.upper())\n",
+   "out": 3436,
+   "cost": 0.00327999,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    assert u is not None\n    print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2, 3])\n    undefined_var = x\n    print(undefined_var)\n    y: int = total_age([1])\n    print((users[0].email or \"\").upper())\n\nif __name__ == \"__main__\":\n    main()\n",
+   "out": 2271,
+   "cost": 0.00269749,
+   "reason": "completed"
+  },
+  {
+   "lang": "py",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "from dataclasses import dataclass\nfrom typing import Optional\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    email: Optional[str]\n\ndef find(users: list[User], uid: int) -> Optional[User]:\n    for u in users:\n        if u.id == uid:\n            return u\n    return None\n\ndef total_age(ages: list[int]) -> int:\n    return sum(ages)\n\ndef main() -> None:\n    users = [User(1, \"a\", None), User(id=2, name=\"b\", email=None)]\n    u = find(users, 1)\n    if u is not None:\n        print(u.name)\n    print(users[0].name)\n    x: int = total_age([1, 2])\n    undefined_var = \"undefined\"\n    print(undefined_var)\n    y: str = str(total_age([1]))\n    if users[0].email is not None:\n        print(users[0].email.upper())\n",
+   "out": 2049,
+   "cost": 0.0013039899999999999,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8\n    let u = find(&users, 1);                                     // 1 wrong arg type\n    println!(\"{}\", u.unwrap().name);                             // 6 optional access\n    println!(\"{}\", users[0].name);                               // 2 typo\n    let x: u32 = total_age(&[1, 2]);                             // 5 arg count\n    let undefined_var = users.len();                             // 4 undefined\n    println!(\"{}\", undefined_var);                               // 4 undefined\n    let y: String = total_age(&[1]).to_string();                 // 3 wrong type\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase()); // 6b optional\n}\n",
+   "out": 1557,
+   "cost": 0.00249888,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8\n    let u = find(&users, 1);                                   // 1 wrong arg type\n    println!(\"{}\", u.unwrap().name);                           // 6 optional access\n    println!(\"{}\", users[0].name);                             // 2 typo\n    let x: u32 = total_age(&[1, 2]);                           // 5 arg count\n    let undefined_var = \"defined\";                             // 4 undefined\n    println!(\"{}\", undefined_var);                             // 4 undefined\n    let y: String = total_age(&[1]).to_string();               // 3 wrong type\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase()); // 6b optional\n}\n",
+   "out": 1856,
+   "cost": 0.00250234,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8\n    let u = find(&users, 1);                                   // 1 wrong arg type\n    println!(\"{}\", u.unwrap().name);                           // 6 optional access\n    println!(\"{}\", users[0].name);                             // 2 typo\n    let x: u32 = total_age(&[1, 2]);                           // 5 arg count\n    let undefined_var = \"undefined\";\n    println!(\"{}\", undefined_var);                             // 4 undefined\n    let y: String = total_age(&[1]).to_string();               // 3 wrong type\n    println!(\"{}\", users[0].email.clone().unwrap_or_default().to_uppercase()); // 6b optional\n}\n",
+   "out": 2552,
+   "cost": 0.0046151000000000005,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8\n    let u = find(&users, 1);                                     // 1 wrong arg type\n    println!(\"{}\", u.unwrap().name);                             // 6 optional access\n    println!(\"{}\", users[0].name);                               // 2 typo\n    let x: u32 = total_age(&[1, 2]);                             // 5 arg count\n    let undefined_var = 0u32;                                    // 4 undefined\n    println!(\"{}\", undefined_var);                               // 4 undefined\n    let y: String = total_age(&[1]).to_string();                 // 3 wrong type\n    println!(\"{}\", users[0].email.clone().unwrap_or_default().to_uppercase()); // 6b optional\n}\n",
+   "out": 1703,
+   "cost": 0.00114334,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "raw",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8\n    let u = find(&users, 1);                                   // 1 wrong arg type\n    println!(\"{}\", u.unwrap().name);                           // 6 optional access\n    println!(\"{}\", users[0].name);                             // 2 typo\n    let x: u32 = total_age(&[1, 2]);                           // 5 arg count\n    let undefined_var = 0;                                     // 4 undefined\n    println!(\"{}\", undefined_var);                             // 4 undefined\n    let y: String = total_age(&[1]).to_string();               // 3 wrong type\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase()); // 6b optional\n}\n",
+   "out": 2572,
+   "cost": 0.0028603400000000003,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8\n    let u = find(&users, 1);                                     // 1 wrong arg type\n    if let Some(u) = u {                                         // 6 optional access\n        println!(\"{}\", u.name);\n    }\n    println!(\"{}\", users[0].name);                               // 2 typo\n    let x: u32 = total_age(&[1, 2]);                             // 5 arg count\n    let undefined_var = \"undefined\";                             // 4 undefined\n    println!(\"{}\", undefined_var);\n    let y: u32 = total_age(&[1]);                                // 3 wrong type\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase()); // 6b optional\n}\n",
+   "out": 1669,
+   "cost": 0.00239589,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![\n        User { id: 1, name: \"a\".into(), email: None },\n        User { id: 2, name: \"b\".into(), email: None },\n    ]; // 8\n    let u = find(&users, 1);                                   // 1\n    if let Some(u) = u {                                       // 6\n        println!(\"{}\", u.name);\n    }\n    println!(\"{}\", users[0].name);                             // 2\n    let x: u32 = total_age(&[1, 2]);                           // 5\n    let undefined_var = 0; // placeholder: set to the intended value\n    println!(\"{}\", undefined_var);                             // 4\n    let y: String = total_age(&[1]).to_string();               // 3\n    println!(\"{}\", users[0].email.as_deref().unwrap_or_default().to_uppercase()); // 6b\n}\n",
+   "out": 2403,
+   "cost": 0.00290893,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![User { id: 1, name: \"a\".into(), email: None }, User { id: 2, name: \"b\".into(), email: None }]; // 8: missing field\n    let u = find(&users, 1);                                     // 1: wrong arg type\n    println!(\"{}\", u.map_or(\"\", |u| u.name.as_str()));           // 6: optional access\n    println!(\"{}\", users[0].name);                               // 2: typo\n    let x: u32 = total_age(&[1, 2]);                             // 5: arg count\n    let undefined_var = x;                                       // 4: defined\n    println!(\"{}\", undefined_var);\n    let y: u32 = total_age(&[1]);                                // 3: wrong type\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase()); // 6b: optional access\n}\n",
+   "out": 2529,
+   "cost": 0.00154339,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![\n        User { id: 1, name: \"a\".into(), email: None },\n        User { id: 2, name: \"b\".into(), email: None },\n    ];\n    let u = find(&users, 1);\n    if let Some(u) = u {\n        println!(\"{}\", u.name);\n    }\n    println!(\"{}\", users[0].name);\n    let x: u32 = total_age(&[1, 2]);\n    let undefined_var = \"undefined\";\n    println!(\"{}\", undefined_var);\n    let y: u32 = total_age(&[1]);\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase());\n}\n",
+   "out": 2451,
+   "cost": 0.0032391300000000002,
+   "reason": "completed"
+  },
+  {
+   "lang": "rs",
+   "arm": "compact",
+   "ok": true,
+   "check_ok": true,
+   "kept_prints": true,
+   "text": "struct User { id: u32, name: String, email: Option<String> }\n\nfn find(users: &[User], uid: u32) -> Option<&User> {\n    users.iter().find(|u| u.id == uid)\n}\n\nfn total_age(ages: &[u32]) -> u32 {\n    ages.iter().sum()\n}\n\nfn main() {\n    let users = vec![\n        User { id: 1, name: \"a\".into(), email: None },\n        User { id: 2, name: \"b\".into(), email: None },\n    ];\n    let u = find(&users, 1);\n    println!(\"{}\", u.unwrap().name);\n    println!(\"{}\", users[0].name);\n    let x: u32 = total_age(&[1, 2]);\n    let undefined_var = x;\n    println!(\"{}\", undefined_var);\n    let y: u32 = total_age(&[1]);\n    println!(\"{}\", users[0].email.as_deref().unwrap_or(\"\").to_uppercase());\n}\n",
+   "out": 2369,
+   "cost": 0.0031981300000000004,
+   "reason": "completed"
+  }
+ ]
+}

@@ -1,0 +1,105 @@
+error[E0425]: cannot find value `undefined_var` in this scope
+  --> src/main.rs:17:20
+   |
+17 |     println!("{}", undefined_var);                               // 4 undefined
+   |                    ^^^^^^^^^^^^^ not found in this scope
+
+error[E0063]: missing field `email` in initializer of `User`
+  --> src/main.rs:12:69
+   |
+12 |     let users = vec![User { id: 1, name: "a".into(), email: None }, User { id: 2, name: "b".into() }]; // 8
+   |                                                                     ^^^^ missing `email`
+
+error[E0308]: mismatched types
+  --> src/main.rs:13:26
+   |
+13 |     let u = find(&users, "1");                                   // 1 wrong arg type
+   |             ----         ^^^ expected `u32`, found `&str`
+   |             |
+   |             arguments to this function are incorrect
+   |
+note: function defined here
+  --> src/main.rs:3:4
+   |
+ 3 | fn find(users: &[User], uid: u32) -> Option<&User> {
+   |    ^^^^                 --------
+
+error[E0609]: no field `name` on type `Option<&User>`
+  --> src/main.rs:14:22
+   |
+14 |     println!("{}", u.name);                                      // 6 optional access
+   |                      ^^^^ unknown field
+   |
+help: one of the expressions' fields has a field of the same name
+   |
+14 |     println!("{}", u.unwrap().name);                                      // 6 optional access
+   |                      +++++++++
+
+error[E0609]: no field `nmae` on type `User`
+  --> src/main.rs:15:29
+   |
+15 |     println!("{}", users[0].nmae);                               // 2 typo
+   |                             ^^^^ unknown field
+   |
+help: a field with a similar name exists
+   |
+15 -     println!("{}", users[0].nmae);                               // 2 typo
+15 +     println!("{}", users[0].name);                               // 2 typo
+   |
+
+error[E0061]: this function takes 1 argument but 2 arguments were supplied
+  --> src/main.rs:16:18
+   |
+16 |     let x: u32 = total_age(&[1, 2], 3);                          // 5 arg count
+   |                  ^^^^^^^^^          - unexpected argument #2 of type `{integer}`
+   |
+note: function defined here
+  --> src/main.rs:7:4
+   |
+ 7 | fn total_age(ages: &[u32]) -> u32 {
+   |    ^^^^^^^^^
+help: remove the extra argument
+   |
+16 -     let x: u32 = total_age(&[1, 2], 3);                          // 5 arg count
+16 +     let x: u32 = total_age(&[1, 2]);                          // 5 arg count
+   |
+
+error[E0308]: mismatched types
+  --> src/main.rs:18:21
+   |
+18 |     let y: String = total_age(&[1]);                             // 3 wrong type
+   |            ------   ^^^^^^^^^^^^^^^ expected `String`, found `u32`
+   |            |
+   |            expected due to this
+   |
+help: try using a conversion method
+   |
+18 |     let y: String = total_age(&[1]).to_string();                             // 3 wrong type
+   |                                    ++++++++++++
+
+error[E0599]: no method named `to_uppercase` found for enum `Option<T>` in the current scope
+  --> src/main.rs:19:35
+   |
+19 |     println!("{}", users[0].email.to_uppercase());               // 6b optional
+   |                                   ^^^^^^^^^^^^ method not found in `Option<String>`
+   |
+note: the method `to_uppercase` exists on the type `String`
+  --> /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/alloc/src/str.rs:648:4
+help: consider using `Option::expect` to unwrap the `String` value, panicking if the value is an `Option::None`
+   |
+19 |     println!("{}", users[0].email.expect("REASON").to_uppercase());               // 6b optional
+   |                                  +++++++++++++++++
+
+Some errors have detailed explanations: E0061, E0063, E0308, E0425, E0599, E0609.
+For more information about an error, try `rustc --explain E0061`.
+error: could not compile `app` (bin "app") due to 8 previous errors
+
+---compact---
+main.rs:17 cannot find value `undefined_var` in this scope
+main.rs:12 missing field `email` in initializer of `User`
+main.rs:13 mismatched types
+main.rs:14 no field `name` on type `Option<&User>`
+main.rs:15 no field `nmae` on type `User`
+main.rs:16 this function takes 1 argument but 2 arguments were supplied
+main.rs:18 mismatched types
+main.rs:19 no method named `to_uppercase` found for enum `Option<T>` in the current scope

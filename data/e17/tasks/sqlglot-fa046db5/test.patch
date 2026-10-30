@@ -1,0 +1,14 @@
+diff --git a/tests/dialects/test_redshift.py b/tests/dialects/test_redshift.py
+index fbbc6683b..fbbb7d2b9 100644
+--- a/tests/dialects/test_redshift.py
++++ b/tests/dialects/test_redshift.py
+@@ -7,6 +7,9 @@ class TestRedshift(Validator):
+ 
+     def test_redshift(self):
+         self.validate_identity("SELECT COSH(1.5)")
++        self.validate_identity(
++            "ROUND(CAST(a AS DOUBLE PRECISION) / CAST(b AS DOUBLE PRECISION), 2)"
++        )
+         self.validate_all(
+             "SELECT SPLIT_TO_ARRAY('12,345,6789')",
+             write={

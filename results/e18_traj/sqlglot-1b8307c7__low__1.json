@@ -1,0 +1,249 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(duckdb): Fix INTERVAL roundtrip of DATE_ADD\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_duckdb.py::TestDuckDB::test_duckdb",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 206,
+   "output_tokens": 67
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DATE_ADD|INTERVAL",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 65,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 710,
+    "end_line": 820
+   },
+   "output_chars": 4134,
+   "output_tokens": 868
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "interval_sql|UNWRAPPED_INTERVAL_VALUES|dateadd",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 436,
+   "output_tokens": 107
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 840,
+    "end_line": 885
+   },
+   "output_chars": 2188,
+   "output_tokens": 434
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "date_add|DateAdd|DATE_ADD",
+    "path": "sqlglot"
+   },
+   "output_chars": 8060,
+   "output_tokens": 2385
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 35,
+    "end_line": 72
+   },
+   "output_chars": 1206,
+   "output_tokens": 328
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 57,
+    "end_line": 90
+   },
+   "output_chars": 1338,
+   "output_tokens": 356
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "duckdb",
+    "path": "tests/dialects/test_duckdb.py"
+   },
+   "output_chars": 8060,
+   "output_tokens": 2484
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 680,
+    "end_line": 720
+   },
+   "output_chars": 1871,
+   "output_tokens": 579
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_duckdb -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2125
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "    return f\"{self.sql(this)} {op} {self.sql(exp.Interval(this=expression.expression, unit=unit))}\"\n",
+    "new": "    interval = expression.expression\n    if not isinstance(interval, exp.Interval):\n        interval = exp.Interval(this=interval, unit=unit)\n\n    return f\"{self.sql(this)} {op} {self.sql(interval)}\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_duckdb -q"
+   },
+   "output_chars": 48,
+   "output_tokens": 20
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Fixed DuckDB DATE_ADD generation to preserve an existing INTERVAL argument instead of wrapping it in a second INTERVAL. The targeted DuckDB test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 311,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 407,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 471,
+   "cached_tokens": 0,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1387,
+   "cached_tokens": 0,
+   "output_tokens": 41,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1546,
+   "cached_tokens": 1384,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2028,
+   "cached_tokens": 1543,
+   "output_tokens": 31,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4455,
+   "cached_tokens": 2025,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4831,
+   "cached_tokens": 4452,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5235,
+   "cached_tokens": 4828,
+   "output_tokens": 40,
+   "reasoning_tokens": 7,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7770,
+   "cached_tokens": 5232,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8396,
+   "cached_tokens": 7767,
+   "output_tokens": 82,
+   "reasoning_tokens": 43,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10614,
+   "cached_tokens": 8393,
+   "output_tokens": 185,
+   "reasoning_tokens": 70,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10811,
+   "cached_tokens": 10611,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10879,
+   "cached_tokens": 10808,
+   "output_tokens": 46,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 36.9,
+ "usage": {
+  "input_tokens": 69141,
+  "cached_tokens": 57043,
+  "output_tokens": 699,
+  "reasoning_tokens": 120
+ },
+ "diff": "diff --git a/sqlglot/dialects/duckdb.py b/sqlglot/dialects/duckdb.py\nindex 76fafcb..b389533 100644\n--- a/sqlglot/dialects/duckdb.py\n+++ b/sqlglot/dialects/duckdb.py\n@@ -76,7 +76,11 @@ def _date_delta_sql(self: DuckDB.Generator, expression: DATETIME_DELTA) -> str:\n \n     this = exp.cast(this, to_type) if to_type else this\n \n-    return f\"{self.sql(this)} {op} {self.sql(exp.Interval(this=expression.expression, unit=unit))}\"\n+    interval = expression.expression\n+    if not isinstance(interval, exp.Interval):\n+        interval = exp.Interval(this=interval, unit=unit)\n+\n+    return f\"{self.sql(this)} {op} {self.sql(interval)}\"\n \n \n # BigQuery -> DuckDB conversion for the DATE function\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

@@ -1,0 +1,98 @@
+diff --git a/sqlglot/expressions/ddl.py b/sqlglot/expressions/ddl.py
+index 9576a1aa0..829c917ac 100644
+--- a/sqlglot/expressions/ddl.py
++++ b/sqlglot/expressions/ddl.py
+@@ -246,7 +246,7 @@ class AlterColumn(Expression):
+ 
+ 
+ class ModifyColumn(Expression):
+-    pass
++    arg_types = {"this": True, "rename_from": False}
+ 
+ 
+ class AlterIndex(Expression):
+diff --git a/sqlglot/generator.py b/sqlglot/generator.py
+index e47b24bf8..73979846e 100644
+--- a/sqlglot/generator.py
++++ b/sqlglot/generator.py
+@@ -470,6 +470,9 @@ class Generator:
+     # Whether ALTER TABLE ... MODIFY COLUMN column-redefinition syntax is supported
+     SUPPORTS_MODIFY_COLUMN = False
+ 
++    # Whether ALTER TABLE ... CHANGE COLUMN column-rename-and-redefine syntax is supported
++    SUPPORTS_CHANGE_COLUMN = False
++
+     # Whether the LikeProperty needs to be specified inside of the schema clause
+     LIKE_PROPERTY_INSIDE_SCHEMA = False
+ 
+@@ -4007,9 +4010,15 @@ class Generator:
+         return f"ALTER COLUMN {this} DROP DEFAULT"
+ 
+     def modifycolumn_sql(self, expression: exp.ModifyColumn) -> str:
++        this = self.sql(expression, "this")
++        rename_from = self.sql(expression, "rename_from")
++        if rename_from:
++            if not self.SUPPORTS_CHANGE_COLUMN:
++                self.unsupported("CHANGE COLUMN is not supported in this dialect")
++            return f"CHANGE COLUMN {rename_from} {this}"
+         if not self.SUPPORTS_MODIFY_COLUMN:
+             self.unsupported("MODIFY COLUMN is not supported in this dialect")
+-        return f"MODIFY COLUMN {self.sql(expression, 'this')}"
++        return f"MODIFY COLUMN {this}"
+ 
+     def alterindex_sql(self, expression: exp.AlterIndex) -> str:
+         this = self.sql(expression, "this")
+diff --git a/sqlglot/generators/mysql.py b/sqlglot/generators/mysql.py
+index ff87e38bf..1c1218140 100644
+--- a/sqlglot/generators/mysql.py
++++ b/sqlglot/generators/mysql.py
+@@ -112,6 +112,7 @@ class MySQLGenerator(generator.Generator):
+     SUPPORTS_UESCAPE = False
+     SUPPORTS_DECODE_CASE = False
+     SUPPORTS_MODIFY_COLUMN = True
++    SUPPORTS_CHANGE_COLUMN = True
+ 
+     AFTER_HAVING_MODIFIER_TRANSFORMS = generator.AFTER_HAVING_MODIFIER_TRANSFORMS
+ 
+diff --git a/sqlglot/parsers/mysql.py b/sqlglot/parsers/mysql.py
+index 8fb5301cd..183ded1e6 100644
+--- a/sqlglot/parsers/mysql.py
++++ b/sqlglot/parsers/mysql.py
+@@ -252,6 +252,7 @@ class MySQLParser(parser.Parser):
+ 
+     ALTER_PARSERS = {
+         **parser.Parser.ALTER_PARSERS,
++        "CHANGE": lambda self: self._parse_alter_table_modify(rename=True),
+         "MODIFY": lambda self: self._parse_alter_table_modify(),
+         "AUTO_INCREMENT": lambda self: self._parse_property_assignment(exp.AutoIncrementProperty),
+     }
+@@ -315,18 +316,27 @@ class MySQLParser(parser.Parser):
+             return self.expression(exp.DropPrimaryKey())
+         return super()._parse_alter_drop_action()
+ 
+-    def _parse_alter_table_modify(self) -> exp.Expr | None:
++    def _parse_alter_table_modify(self, rename: bool = False) -> exp.Expr | None:
++        # MODIFY [COLUMN]            col_name      column_definition [FIRST | AFTER col_name]
++        # CHANGE [COLUMN] old_col_name new_col_name column_definition [FIRST | AFTER col_name]
+         self._match(TokenType.COLUMN)
+ 
+         column = self._parse_field(any_token=True)
+         if column is None:
+             return None
+ 
++        rename_from = None
++        if rename:
++            rename_from = column
++            column = self._parse_field(any_token=True)
++            if column is None:
++                return None
++
+         column_def = self._parse_column_def(column)
+         if not isinstance(column_def, exp.ColumnDef):
+             return None
+ 
+-        return self.expression(exp.ModifyColumn(this=column_def))
++        return self.expression(exp.ModifyColumn(this=column_def, rename_from=rename_from))
+ 
+     def _parse_generated_as_identity(
+         self,

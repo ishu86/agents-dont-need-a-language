@@ -1,0 +1,369 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "feat(hive)!: support FROM-first multi-table INSERT\n\nParse Hive/Spark `FROM x INSERT ... SELECT ... [INSERT ... SELECT ...]`\ninto exp.MultitableInserts with no kind, including a leading CTE, and\ngenerate it back in that form; other dialects get an unsupported warning.\nLATERAL VIEWs after a leading FROM are now parsed once for every\nFROM-first statement, so `FROM x LATERAL VIEW ... SELECT ...` parses too.\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_hive.py::TestHive::test_lateral_view\ntests/dialects/test_hive.py::TestHive::test_multitable_inserts\ntests/dialects/test_spark.py::TestSpark::test_multitable_inserts",
+ "steps": [
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "MultitableInserts"
+   },
+   "output_chars": 68,
+   "output_tokens": 17
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Hive"
+   },
+   "output_chars": 1313,
+   "output_tokens": 368
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "MultitableInserts"
+   },
+   "output_chars": 109,
+   "output_tokens": 47
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "lateral view|LATERAL VIEW|multitable",
+    "path": "sqlglot"
+   },
+   "output_chars": 1992,
+   "output_tokens": 544
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3540,
+    "end_line": 3690
+   },
+   "output_chars": 6518,
+   "output_tokens": 1463
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 5735,
+    "end_line": 5800
+   },
+   "output_chars": 2948,
+   "output_tokens": 735
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/hive.py"
+   },
+   "output_chars": 4518,
+   "output_tokens": 1305
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_hive.py",
+    "start_line": 1180,
+    "end_line": 1260
+   },
+   "output_chars": 3182,
+   "output_tokens": 812
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_spark.py",
+    "start_line": 1,
+    "end_line": 80
+   },
+   "output_chars": 5080,
+   "output_tokens": 1247
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/hive.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2061
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_lateral|_parse_from|FROM",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 2912,
+   "output_tokens": 780
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4000,
+    "end_line": 4055
+   },
+   "output_chars": 2570,
+   "output_tokens": 614
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4380,
+    "end_line": 4440
+   },
+   "output_chars": 3030,
+   "output_tokens": 659
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4130,
+    "end_line": 4195
+   },
+   "output_chars": 2655,
+   "output_tokens": 564
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3420,
+    "end_line": 3445
+   },
+   "output_chars": 1163,
+   "output_tokens": 273
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3658,
+    "end_line": 3675
+   },
+   "output_chars": 847,
+   "output_tokens": 195
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 4524,
+    "end_line": 4555
+   },
+   "output_chars": 1194,
+   "output_tokens": 294
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "            from_ = self._parse_from(joins=True, skip_from_token=True, consume_pipe=True)\n            # Support parentheses for duckdb FROM-first syntax\n            select = self._parse_select(from_=from_)",
+    "new": "            from_ = self._parse_from(joins=True, skip_from_token=True, consume_pipe=True)\n            # Hive/Spark FROM-first multi-table INSERT syntax.\n            if self._match(TokenType.INSERT):\n                source = from_.this if from_ else None\n                expressions = []\n                while True:\n                    insert = self._parse_insert()\n                    query = insert.args.get(\"expression\") if isinstance(insert, exp.Insert) else None\n                    expressions.append(query or insert)\n                    if not self._match(TokenType.INSERT):\n                        break\n                return self.expression(exp.MultitableInserts(expressions=expressions, source=source))\n            # Support parentheses for duckdb FROM-first syntax\n            select = self._parse_select(from_=from_)"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class HiveGenerator|multitable",
+    "path": "sqlglot/generators/hive.py"
+   },
+   "output_chars": 46,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generators/hive.py",
+    "start_line": 220,
+    "end_line": 270
+   },
+   "output_chars": 1681,
+   "output_tokens": 451
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "old": "                    query = insert.args.get(\"expression\") if isinstance(insert, exp.Insert) else None\n                    expressions.append(query or insert)",
+    "new": "                    expressions.append(insert)"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "old": "    def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n        kind = self.sql(expression, \"kind\")\n        expressions = self.seg(self.expressions(expression, sep=\" \"))\n        res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n        return res",
+    "new": "    def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n        if expression.args.get(\"kind\") is None and expression.args.get(\"source\"):\n            source = self.sql(expression, \"source\")\n            inserts = []\n            for insert in expression.expressions:\n                target = self.sql(insert, \"this\")\n                query = self.sql(insert, \"expression\")\n                overwrite = \"OVERWRITE \" if insert.args.get(\"overwrite\") else \"\"\n                inserts.append(f\"INSERT {overwrite}INTO {target} {query}\")\n            return f\"FROM {source} {' '.join(inserts)}\"\n        kind = self.sql(expression, \"kind\")\n        expressions = self.seg(self.expressions(expression, sep=\" \"))\n        res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\n        return res"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_hive.py::TestHive::test_lateral_view tests/dialects/test_hive.py::TestHive::test_multitable_inserts tests/dialects/test_spark.py::TestSpark::test_multitable_inserts -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2022
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Unable to complete the fix; the attempted parser hook was not on the active statement-parsing path, and the targeted tests still fail."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 626,
+   "cached_tokens": 0,
+   "output_tokens": 98,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1737,
+   "cached_tokens": 0,
+   "output_tokens": 167,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7513,
+   "cached_tokens": 1734,
+   "output_tokens": 25,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9610,
+   "cached_tokens": 7510,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10436,
+   "cached_tokens": 9607,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11095,
+   "cached_tokens": 10433,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11799,
+   "cached_tokens": 11092,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12408,
+   "cached_tokens": 11796,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12726,
+   "cached_tokens": 12405,
+   "output_tokens": 150,
+   "reasoning_tokens": 114,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13082,
+   "cached_tokens": 12723,
+   "output_tokens": 91,
+   "reasoning_tokens": 55,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13478,
+   "cached_tokens": 13079,
+   "output_tokens": 302,
+   "reasoning_tokens": 63,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13792,
+   "cached_tokens": 13475,
+   "output_tokens": 64,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13876,
+   "cached_tokens": 13789,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14374,
+   "cached_tokens": 13873,
+   "output_tokens": 123,
+   "reasoning_tokens": 62,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14509,
+   "cached_tokens": 14371,
+   "output_tokens": 305,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14826,
+   "cached_tokens": 14506,
+   "output_tokens": 96,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16955,
+   "cached_tokens": 14823,
+   "output_tokens": 71,
+   "reasoning_tokens": 26,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 54.7,
+ "usage": {
+  "input_tokens": 192842,
+  "cached_tokens": 175216,
+  "output_tokens": 1699,
+  "reasoning_tokens": 372
+ },
+ "diff": "diff --git a/sqlglot/generator.py b/sqlglot/generator.py\nindex e0d16e8..38fee52 100644\n--- a/sqlglot/generator.py\n+++ b/sqlglot/generator.py\n@@ -5763,6 +5763,15 @@ class Generator:\n         return f\"{condition}{insert}\"\n \n     def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:\n+        if expression.args.get(\"kind\") is None and expression.args.get(\"source\"):\n+            source = self.sql(expression, \"source\")\n+            inserts = []\n+            for insert in expression.expressions:\n+                target = self.sql(insert, \"this\")\n+                query = self.sql(insert, \"expression\")\n+                overwrite = \"OVERWRITE \" if insert.args.get(\"overwrite\") else \"\"\n+                inserts.append(f\"INSERT {overwrite}INTO {target} {query}\")\n+            return f\"FROM {source} {' '.join(inserts)}\"\n         kind = self.sql(expression, \"kind\")\n         expressions = self.seg(self.expressions(expression, sep=\" \"))\n         res = f\"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}\"\ndiff --git a/sqlglot/parser.py b/sqlglot/parser.py\nindex 0106fad..e78ecb4 100644\n--- a/sqlglot/parser.py\n+++ b/sqlglot/parser.py\n@@ -4021,6 +4021,16 @@ class Parser:\n             )\n         elif self._match(TokenType.FROM):\n             from_ = self._parse_from(joins=True, skip_from_token=True, consume_pipe=True)\n+            # Hive/Spark FROM-first multi-table INSERT syntax.\n+            if self._match(TokenType.INSERT):\n+                source = from_.this if from_ else None\n+                expressions = []\n+                while True:\n+                    insert = self._parse_insert()\n+                    expressions.append(insert)\n+                    if not self._match(TokenType.INSERT):\n+                        break\n+                return self.expression(exp.MultitableInserts(expressions=expressions, source=source))\n             # Support parentheses for duckdb FROM-first syntax\n             select = self._parse_select(from_=from_)\n             if select:\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_hive.py::TestHive::test_lateral_view",
+   "tests/dialects/test_hive.py::TestHive::test_multitable_inserts",
+   "tests/dialects/test_spark.py::TestSpark::test_multitable_inserts"
+  ]
+ }
+}

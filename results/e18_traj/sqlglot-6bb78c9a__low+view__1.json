@@ -1,0 +1,411 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Feat(snowflake): add support for input => select ... kwarg syntax\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_flatten",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLATTEN|flatten",
+    "path": "."
+   },
+   "output_chars": 8061,
+   "output_tokens": 2312
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "Flatten"
+   },
+   "output_chars": 64,
+   "output_tokens": 17
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Flatten"
+   },
+   "output_chars": 887,
+   "output_tokens": 283
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "Flatten"
+   },
+   "output_chars": 185,
+   "output_tokens": 66
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 7488,
+   "output_tokens": 2074
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/array.py",
+    "start_line": 175,
+    "end_line": 215
+   },
+   "output_chars": 1078,
+   "output_tokens": 287
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 420,
+    "end_line": 480
+   },
+   "output_chars": 2970,
+   "output_tokens": 786
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLATTEN|flatten",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 347,
+   "output_tokens": 99
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 835,
+    "end_line": 885
+   },
+   "output_chars": 2178,
+   "output_tokens": 578
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 500,
+    "end_line": 535
+   },
+   "output_chars": 1759,
+   "output_tokens": 460
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "NAMED_ARG"
+   },
+   "output_chars": 28,
+   "output_tokens": 7
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FARROW|DARROW|=>|named",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 2349,
+   "output_tokens": 637
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 250,
+    "end_line": 325
+   },
+   "output_chars": 2998,
+   "output_tokens": 765
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_flatten",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4520,
+    "end_line": 4560
+   },
+   "output_chars": 1743,
+   "output_tokens": 519
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 320,
+    "end_line": 420
+   },
+   "output_chars": 3592,
+   "output_tokens": 922
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "old": "def _build_generator(args: list) -> exp.Generator:\n",
+    "new": "def _build_flatten(args: list) -> exp.Explode:\n    \"\"\"Build FLATTEN, unwrapping Snowflake's named INPUT argument.\"\"\"\n    for arg in args:\n        if isinstance(arg, exp.Kwarg):\n            if arg.this.name.upper() == \"INPUT\":\n                return exp.Explode(this=arg.expression)\n        else:\n            return exp.Explode(this=arg)\n\n    return exp.Explode()\n\n\ndef _build_generator(args: list) -> exp.Generator:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "old": "        \"FLATTEN\": exp.Explode.from_arg_list,",
+    "new": "        \"FLATTEN\": _build_flatten,"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1956
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7280,
+    "end_line": 7320
+   },
+   "output_chars": 1709,
+   "output_tokens": 428
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TokenType.FARROW:",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 74,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1014,
+    "end_line": 1028
+   },
+   "output_chars": 614,
+   "output_tokens": 149
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "old": "class SnowflakeParser(parser.Parser):\n    IDENTIFY_PIVOT_STRINGS = True",
+    "new": "class SnowflakeParser(parser.Parser):\n    LAMBDAS = {\n        **parser.Parser.LAMBDAS,\n        TokenType.FARROW: lambda self, expressions: self.expression(\n            exp.Kwarg(\n                this=exp.var(expressions[0].name),\n                expression=self._parse_select_or_expression(),\n            )\n        ),\n    }\n\n    IDENTIFY_PIVOT_STRINGS = True"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1957
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added Snowflake FLATTEN named-INPUT argument handling and parser support for keyword arguments. The targeted test still fails because the parser continues to use the base FARROW handler for this syntax; the fix is incomplete."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 509,
+   "cached_tokens": 0,
+   "output_tokens": 70,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3028,
+   "cached_tokens": 0,
+   "output_tokens": 103,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5878,
+   "cached_tokens": 3025,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6711,
+   "cached_tokens": 5875,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6855,
+   "cached_tokens": 6708,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7480,
+   "cached_tokens": 6852,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7987,
+   "cached_tokens": 7477,
+   "output_tokens": 50,
+   "reasoning_tokens": 29,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8054,
+   "cached_tokens": 7984,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8737,
+   "cached_tokens": 8051,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9549,
+   "cached_tokens": 8734,
+   "output_tokens": 76,
+   "reasoning_tokens": 41,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9646,
+   "cached_tokens": 9546,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10214,
+   "cached_tokens": 9643,
+   "output_tokens": 65,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11212,
+   "cached_tokens": 10211,
+   "output_tokens": 269,
+   "reasoning_tokens": 103,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11493,
+   "cached_tokens": 11209,
+   "output_tokens": 56,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11561,
+   "cached_tokens": 11490,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13564,
+   "cached_tokens": 11558,
+   "output_tokens": 88,
+   "reasoning_tokens": 52,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14091,
+   "cached_tokens": 13561,
+   "output_tokens": 156,
+   "reasoning_tokens": 123,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14276,
+   "cached_tokens": 14088,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14470,
+   "cached_tokens": 14273,
+   "output_tokens": 190,
+   "reasoning_tokens": 40,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14672,
+   "cached_tokens": 14467,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16676,
+   "cached_tokens": 14669,
+   "output_tokens": 113,
+   "reasoning_tokens": 52,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 72.7,
+ "usage": {
+  "input_tokens": 206663,
+  "cached_tokens": 189421,
+  "output_tokens": 1593,
+  "reasoning_tokens": 467
+ },
+ "diff": "diff --git a/sqlglot/parsers/snowflake.py b/sqlglot/parsers/snowflake.py\nindex 6db19e8..6ea23e4 100644\n--- a/sqlglot/parsers/snowflake.py\n+++ b/sqlglot/parsers/snowflake.py\n@@ -297,6 +297,18 @@ def _build_array_sort(args: list) -> exp.SortArray:\n     return exp.SortArray(this=seq_get(args, 0), asc=asc, nulls_first=nulls_first)\n \n \n+def _build_flatten(args: list) -> exp.Explode:\n+    \"\"\"Build FLATTEN, unwrapping Snowflake's named INPUT argument.\"\"\"\n+    for arg in args:\n+        if isinstance(arg, exp.Kwarg):\n+            if arg.this.name.upper() == \"INPUT\":\n+                return exp.Explode(this=arg.expression)\n+        else:\n+            return exp.Explode(this=arg)\n+\n+    return exp.Explode()\n+\n+\n def _build_generator(args: list) -> exp.Generator:\n     \"\"\"\n     Build Generator expression, unwrapping Snowflake's named parameters.\n@@ -328,6 +340,16 @@ def _show_parser(*args: t.Any, **kwargs: t.Any) -> t.Callable[[SnowflakeParser],\n \n \n class SnowflakeParser(parser.Parser):\n+    LAMBDAS = {\n+        **parser.Parser.LAMBDAS,\n+        TokenType.FARROW: lambda self, expressions: self.expression(\n+            exp.Kwarg(\n+                this=exp.var(expressions[0].name),\n+                expression=self._parse_select_or_expression(),\n+            )\n+        ),\n+    }\n+\n     IDENTIFY_PIVOT_STRINGS = True\n     TYPED_LAMBDA_ARGS = True\n     DEFAULT_SAMPLING_METHOD = \"BERNOULLI\"\n@@ -521,7 +543,7 @@ class SnowflakeParser(parser.Parser):\n         \"EDITDISTANCE\": lambda args: exp.Levenshtein(\n             this=seq_get(args, 0), expression=seq_get(args, 1), max_dist=seq_get(args, 2)\n         ),\n-        \"FLATTEN\": exp.Explode.from_arg_list,\n+        \"FLATTEN\": _build_flatten,\n         \"GENERATOR\": _build_generator,\n         \"GET\": exp.GetExtract.from_arg_list,\n         \"GETDATE\": exp.CurrentTimestamp.from_arg_list,\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": false,
+  "failed_tests": [
+   "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten",
+   "tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake",
+   "tests/test_lineage.py::TestLineage::test_lineage_lateral_flatten"
+  ]
+ }
+}

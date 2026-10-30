@@ -1,0 +1,12 @@
+diff -ruN a/src/refunds.js b/src/refunds.js
+--- a/src/refunds.js	2026-10-30 13:50:52
++++ b/src/refunds.js	2026-10-30 13:51:51
+@@ -51,7 +51,7 @@
+   order.status = complete ? "refunded" : "partially_refunded";
+   order.refundedByLine = refundedByLine;
+   order.refundedCents += amount;
+-  release(lines);
++  if (complete) release(lines);
+   adjustSpend(order.customerId, -amount);
+   record("refund", orderId, String(amount));
+   const customer = getCustomer(order.customerId);

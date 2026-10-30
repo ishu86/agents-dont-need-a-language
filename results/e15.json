@@ -1,0 +1,99 @@
+{
+ "method": "same-trajectory ceiling. savings_pct = 100 * (read_chars - new_chars) / visible_chars. Biased high: system prompt is in the bill and not in the denominator. Negatives kept.",
+ "kill_threshold_pct": 10,
+ "claude": {
+  "sessions": 92,
+  "usage": {
+   "input_tokens": 43792,
+   "output_tokens": 8323918,
+   "cache_read_input_tokens": 2636389168,
+   "cache_creation_input_tokens": 46518232
+  },
+  "e2_anchor_ok": true,
+  "input_side_cost_units": 321830498.8,
+  "visible_chars": 53252793,
+  "image_chars": 234064662,
+  "reads": {
+   "image": 932,
+   "text": 224,
+   "code_outlined": 101,
+   "non_code": 112,
+   "short": 11,
+   "unparsed": 0,
+   "partial": 147,
+   "whole": 77
+  },
+  "chars": {
+   "read_raw": 1006468,
+   "outline": 231077,
+   "symbol": 65217
+  },
+  "savings_pct_of_input_side": {
+   "outline": 1.46,
+   "symbol": 1.77,
+   "outline_whole_only": 0.73,
+   "outline_partial_only": 0.73
+  },
+  "dollars_saved_units": {
+   "outline": 4686035.4,
+   "symbol": 5688401.7
+  }
+ },
+ "codex": {
+  "sessions": 543,
+  "dollar_ok": false,
+  "sessions_failing_identity": 334,
+  "sessions_with_usage": 472,
+  "usage_sum_of_last_totals": {
+   "input_tokens": 1262852840,
+   "cached_input_tokens": 1191412694,
+   "cache_write_input_tokens": 68732313,
+   "output_tokens": 4015211,
+   "reasoning_output_tokens": 1020628
+  },
+  "input_side_cost_units": null,
+  "visible_chars": 44060031,
+  "shell_stdout_chars": 40253912,
+  "read_stdout_chars": 10012933,
+  "reads": {
+   "pure_read": 903,
+   "mixed_shell": 404,
+   "code_outlined": 245,
+   "non_code": 632,
+   "short": 26,
+   "unparsed": 0
+  },
+  "chars": {
+   "read_raw": 3067423,
+   "outline": 1304079,
+   "symbol": 295015
+  },
+  "savings_pct_of_input_side": null
+ },
+ "cursor": {
+  "stores": 93,
+  "dollar": null,
+  "visible_chars": 30910793,
+  "reads": {
+   "read": 2431,
+   "read_file": 174,
+   "code_outlined": 1643,
+   "non_code": 824,
+   "short": 138,
+   "unparsed": 0,
+   "odd_result": 7,
+   "partial": 1555,
+   "whole": 1050
+  },
+  "chars": {
+   "read_raw": 6646148,
+   "outline": 5095733,
+   "symbol": 1304498
+  },
+  "savings_pct_of_visible_chars": {
+   "outline": 5.02,
+   "symbol": 17.28
+  }
+ },
+ "kill": true
+}

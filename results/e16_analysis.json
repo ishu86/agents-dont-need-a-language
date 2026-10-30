@@ -1,0 +1,299 @@
+{
+ "codebase_tokens": {
+  "strict_ts": 8435,
+  "loose_ts": 6999,
+  "loose_js": 6528
+ },
+ "arms": {
+  "haiku/loose_js": {
+   "n": 30,
+   "pass_rate": 1.0,
+   "mean_tool_result_tokens": 7379.0,
+   "mean_total_input_tokens": 280956.4,
+   "mean_cost_usd": 0.0116,
+   "mean_turns": 12.6,
+   "mean_files_read": 1,
+   "read_tokens_per_codebase": 1.13
+  },
+  "haiku/loose_ts": {
+   "n": 30,
+   "pass_rate": 1.0,
+   "mean_tool_result_tokens": 6771.3,
+   "mean_total_input_tokens": 213209.9,
+   "mean_cost_usd": 0.0103,
+   "mean_turns": 11.0,
+   "mean_files_read": 0.8,
+   "read_tokens_per_codebase": 0.97
+  },
+  "haiku/strict_ts": {
+   "n": 30,
+   "pass_rate": 1.0,
+   "mean_tool_result_tokens": 7634,
+   "mean_total_input_tokens": 263142.3,
+   "mean_cost_usd": 0.0115,
+   "mean_turns": 12.8,
+   "mean_files_read": 1.8,
+   "read_tokens_per_codebase": 0.91
+  },
+  "sonnet/loose_js": {
+   "n": 20,
+   "pass_rate": 1.0,
+   "mean_tool_result_tokens": 3378.7,
+   "mean_total_input_tokens": 149951.5,
+   "mean_cost_usd": 0.1086,
+   "mean_turns": 8.7,
+   "mean_files_read": 1.6,
+   "read_tokens_per_codebase": 0.52
+  },
+  "sonnet/loose_ts": {
+   "n": 20,
+   "pass_rate": 0.9,
+   "mean_tool_result_tokens": 2872.8,
+   "mean_total_input_tokens": 108524.4,
+   "mean_cost_usd": 0.0974,
+   "mean_turns": 6.5,
+   "mean_files_read": 1.6,
+   "read_tokens_per_codebase": 0.41
+  },
+  "sonnet/strict_ts": {
+   "n": 20,
+   "pass_rate": 1.0,
+   "mean_tool_result_tokens": 3357.2,
+   "mean_total_input_tokens": 107516.5,
+   "mean_cost_usd": 0.1005,
+   "mean_turns": 5.8,
+   "mean_files_read": 0.8,
+   "read_tokens_per_codebase": 0.4
+  }
+ },
+ "ratios": {
+  "haiku strict_ts/loose_js tool_result_tokens": [
+   1.03,
+   [
+    0.87,
+    1.17
+   ]
+  ],
+  "haiku strict_ts/loose_js total_input_tokens": [
+   0.94,
+   [
+    0.8,
+    1.07
+   ]
+  ],
+  "haiku strict_ts/loose_js cost_usd": [
+   0.99,
+   [
+    0.87,
+    1.09
+   ]
+  ],
+  "haiku strict_ts/loose_js turns": [
+   1.02,
+   [
+    0.92,
+    1.1
+   ]
+  ],
+  "haiku strict_ts/loose_ts tool_result_tokens": [
+   1.13,
+   [
+    0.98,
+    1.25
+   ]
+  ],
+  "haiku strict_ts/loose_ts total_input_tokens": [
+   1.23,
+   [
+    1.03,
+    1.43
+   ]
+  ],
+  "haiku strict_ts/loose_ts cost_usd": [
+   1.11,
+   [
+    0.99,
+    1.22
+   ]
+  ],
+  "haiku strict_ts/loose_ts turns": [
+   1.16,
+   [
+    1.03,
+    1.28
+   ]
+  ],
+  "haiku loose_ts/loose_js tool_result_tokens": [
+   0.92,
+   [
+    0.86,
+    0.99
+   ]
+  ],
+  "sonnet strict_ts/loose_js tool_result_tokens": [
+   0.99,
+   [
+    0.82,
+    1.13
+   ]
+  ],
+  "sonnet strict_ts/loose_js total_input_tokens": [
+   0.72,
+   [
+    0.62,
+    0.84
+   ]
+  ],
+  "sonnet strict_ts/loose_js cost_usd": [
+   0.93,
+   [
+    0.88,
+    0.98
+   ]
+  ],
+  "sonnet strict_ts/loose_js turns": [
+   0.67,
+   [
+    0.56,
+    0.8
+   ]
+  ],
+  "sonnet strict_ts/loose_ts tool_result_tokens": [
+   1.17,
+   [
+    0.91,
+    1.42
+   ]
+  ],
+  "sonnet strict_ts/loose_ts total_input_tokens": [
+   0.99,
+   [
+    0.82,
+    1.21
+   ]
+  ],
+  "sonnet strict_ts/loose_ts cost_usd": [
+   1.03,
+   [
+    0.94,
+    1.13
+   ]
+  ],
+  "sonnet strict_ts/loose_ts turns": [
+   0.89,
+   [
+    0.77,
+    1.0
+   ]
+  ],
+  "sonnet loose_ts/loose_js tool_result_tokens": [
+   0.85,
+   [
+    0.76,
+    0.94
+   ]
+  ]
+ },
+ "per_task_pass": {
+  "haiku T01": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T02": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T03": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T04": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T05": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T06": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T07": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T08": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T09": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "haiku T10": {
+   "strict_ts": "3/3",
+   "loose_ts": "3/3",
+   "loose_js": "3/3"
+  },
+  "sonnet T01": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T02": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T03": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T04": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T05": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T06": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T07": {
+   "strict_ts": "2/2",
+   "loose_ts": "0/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T08": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T09": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  },
+  "sonnet T10": {
+   "strict_ts": "2/2",
+   "loose_ts": "2/2",
+   "loose_js": "2/2"
+  }
+ }
+}

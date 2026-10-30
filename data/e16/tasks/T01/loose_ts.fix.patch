@@ -1,0 +1,14 @@
+diff -ruN a/src/rules/vip.ts b/src/rules/vip.ts
+--- a/src/rules/vip.ts	2026-10-30 13:51:17
++++ b/src/rules/vip.ts	2026-10-30 13:51:51
+@@ -1,8 +1,6 @@
+ import { percentOf } from "../money.ts";
+-import { getCoupon, registerRule } from "../pricing.ts";
++import { registerRule } from "../pricing.ts";
+ 
+-registerRule("vip", ({ order, tier, remaining }: any) => {
+-  const coupon = getCoupon(order.couponCode);
+-  if (coupon && !coupon.stackable) return 0;
++registerRule("vip", ({ tier, remaining }: any) => {
+   return percentOf(remaining, tier.discountBps);
+ });

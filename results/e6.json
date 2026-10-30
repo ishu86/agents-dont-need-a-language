@@ -1,0 +1,15 @@
+{
+ "bash_outputs_total": 11446,
+ "sampled": 4000,
+ "median_tokens": 170.0,
+ "p90_tokens": 1406.6,
+ "max_tokens": 9499,
+ "share_of_tokens_from_top5pct_outputs": 36.4,
+ "cumulative_pct_after_filter": {
+  "strip_ansi": 100.0,
+  "progress_bars": 99.9,
+  "trailing_ws": 99.9,
+  "dedupe_similar": 98.5,
+  "cap_head60_tail40(lossy)": 80.5
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(doris): CURRENT_DATE\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_doris.py::TestDoris::test_time",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "CURRENT_DATE|test_time",
+    "path": "tests/dialects/test_doris.py"
+   },
+   "output_chars": 82,
+   "output_tokens": 19
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_doris.py",
+    "start_line": 80,
+    "end_line": 125
+   },
+   "output_chars": 2347,
+   "output_tokens": 621
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "CURRENT_DATE",
+    "path": "sqlglot"
+   },
+   "output_chars": 1098,
+   "output_tokens": 311
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/doris.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 1908
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3365,
+    "end_line": 3390
+   },
+   "output_chars": 1403,
+   "output_tokens": 361
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/doris.py",
+    "old": "            exp.CurrentTimestamp: lambda self, _: self.func(\"NOW\"),\n",
+    "new": "            exp.CurrentDate: lambda self, _: self.func(\"CURRENT_DATE\"),\n            exp.CurrentTimestamp: lambda self, _: self.func(\"NOW\"),\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_doris.py::TestDoris::test_time -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated Doris SQL generation to render CURRENT_DATE with parentheses, preserving CURRENT_DATE() during identity parsing and generation. The targeted test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 301,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 402,
+   "cached_tokens": 0,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 465,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1132,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1489,
+   "cached_tokens": 1129,
+   "output_tokens": 55,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3463,
+   "cached_tokens": 1486,
+   "output_tokens": 89,
+   "reasoning_tokens": 52,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3924,
+   "cached_tokens": 3460,
+   "output_tokens": 131,
+   "reasoning_tokens": 45,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4067,
+   "cached_tokens": 3921,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4127,
+   "cached_tokens": 4064,
+   "output_tokens": 42,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 21.2,
+ "usage": {
+  "input_tokens": 19370,
+  "cached_tokens": 14060,
+  "output_tokens": 472,
+  "reasoning_tokens": 132
+ },
+ "diff": "diff --git a/sqlglot/dialects/doris.py b/sqlglot/dialects/doris.py\nindex f4f20d8..00a8e8c 100644\n--- a/sqlglot/dialects/doris.py\n+++ b/sqlglot/dialects/doris.py\n@@ -157,6 +157,7 @@ class Doris(MySQL):\n             exp.ArrayAgg: rename_func(\"COLLECT_LIST\"),\n             exp.ArrayToString: rename_func(\"ARRAY_JOIN\"),\n             exp.ArrayUniqueAgg: rename_func(\"COLLECT_SET\"),\n+            exp.CurrentDate: lambda self, _: self.func(\"CURRENT_DATE\"),\n             exp.CurrentTimestamp: lambda self, _: self.func(\"NOW\"),\n             exp.DateTrunc: lambda self, e: self.func(\"DATE_TRUNC\", e.this, unit_to_str(e)),\n             exp.GroupConcat: lambda self, e: self.func(\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

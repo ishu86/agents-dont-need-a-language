@@ -1,0 +1,208 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix: don't crash in exp.cast() when the input is already a cast to INTERVAL (CLAUDE)\n\n* Fix: don't crash in exp.cast() when the input is already a cast to INTERVAL\n\nThe \"don't re-cast if already the right type\" shortcut read\nexpr.to.this.value, assuming `this` is a plain type enum. For a complex type\nsuch as INTERVAL, `this` nests another expression (e.g. Interval(unit=HOUR)),\nwhich has no `value`, so casting it raised \"AttributeError: 'Interval' object\nhas no attribute 'value'\" (reachable e.g. via DATE_ADD(..., CAST(-1 AS\nINTERVAL HOUR)) -> Presto).\n\nOnly apply the equivalence check when both types are plain enums.\n\n* Apply suggestion from @georgesittas\n\n---------\n\nThe following tests currently fail and should pass after your change:\ntests/test_expressions.py::TestExprs::test_cast",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "cast"
+   },
+   "output_chars": 85,
+   "output_tokens": 28
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Cast"
+   },
+   "output_chars": 1042,
+   "output_tokens": 328
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "cast"
+   },
+   "output_chars": 2575,
+   "output_tokens": 1209
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "to.this.value|this.value",
+    "path": "sqlglot"
+   },
+   "output_chars": 2604,
+   "output_tokens": 668
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/builders.py",
+    "start_line": 430,
+    "end_line": 490
+   },
+   "output_chars": 2502,
+   "output_tokens": 605
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/builders.py",
+    "start_line": 488,
+    "end_line": 525
+   },
+   "output_chars": 1347,
+   "output_tokens": 334
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions/builders.py",
+    "old": "        types_are_equivalent = type_mapping.get(\n            existing_cast_type, existing_cast_type.value\n        ) == type_mapping.get(new_cast_type, new_cast_type.value)\n",
+    "new": "        types_are_equivalent = (\n            existing_cast_type.is_type and new_cast_type.is_type\n            and type_mapping.get(existing_cast_type, existing_cast_type.value)\n            == type_mapping.get(new_cast_type, new_cast_type.value)\n        )\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/test_expressions.py -k test_cast"
+   },
+   "output_chars": 4227,
+   "output_tokens": 983
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/builders.py",
+    "start_line": 1,
+    "end_line": 70
+   },
+   "output_chars": 1884,
+   "output_tokens": 495
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions/builders.py",
+    "old": "            existing_cast_type.is_type and new_cast_type.is_type\n",
+    "new": "            isinstance(existing_cast_type, DType) and isinstance(new_cast_type, DType)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/test_expressions.py -k test_cast"
+   },
+   "output_chars": 511,
+   "output_tokens": 159
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated cast type-equivalence handling to run only when both cast targets are plain DType enum values, avoiding attribute access on nested complex types such as INTERVAL. The targeted test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 660,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 780,
+   "cached_tokens": 0,
+   "output_tokens": 87,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3137,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3789,
+   "cached_tokens": 3134,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4170,
+   "cached_tokens": 3786,
+   "output_tokens": 124,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4306,
+   "cached_tokens": 4167,
+   "output_tokens": 56,
+   "reasoning_tokens": 28,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5356,
+   "cached_tokens": 4303,
+   "output_tokens": 54,
+   "reasoning_tokens": 16,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5916,
+   "cached_tokens": 5353,
+   "output_tokens": 90,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6018,
+   "cached_tokens": 5913,
+   "output_tokens": 26,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6214,
+   "cached_tokens": 6015,
+   "output_tokens": 53,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 29.4,
+ "usage": {
+  "input_tokens": 40346,
+  "cached_tokens": 32671,
+  "output_tokens": 580,
+  "reasoning_tokens": 68
+ },
+ "diff": "diff --git a/sqlglot/expressions/builders.py b/sqlglot/expressions/builders.py\nindex cd071a2..4a98f2c 100644\n--- a/sqlglot/expressions/builders.py\n+++ b/sqlglot/expressions/builders.py\n@@ -497,9 +497,11 @@ def cast(\n \n         existing_cast_type: DType = expr.to.this\n         new_cast_type: DType = data_type.this\n-        types_are_equivalent = type_mapping.get(\n-            existing_cast_type, existing_cast_type.value\n-        ) == type_mapping.get(new_cast_type, new_cast_type.value)\n+        types_are_equivalent = (\n+            isinstance(existing_cast_type, DType) and isinstance(new_cast_type, DType)\n+            and type_mapping.get(existing_cast_type, existing_cast_type.value)\n+            == type_mapping.get(new_cast_type, new_cast_type.value)\n+        )\n \n         if expr.is_type(data_type) or types_are_equivalent:\n             return expr\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

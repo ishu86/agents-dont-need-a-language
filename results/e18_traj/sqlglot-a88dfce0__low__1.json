@@ -1,0 +1,266 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "fix(mysql): support SHOW TABLES IN <schema> parsing\n\nMariaDB and MySQL both accept `SHOW TABLES IN schema` as a synonym\nfor `SHOW TABLES FROM schema`, but the parser only handled `FROM`.\nThe `IN` token was being consumed as a potential log-file specifier\n(for BINLOG/RELAYLOG EVENTS) and then lost, leaving the schema\nidentifier unconsumed and raising a ParseError.\n\nSave the parser index before consuming `IN`; if no string literal\nfollows, retreat so the schema-name branch can match `IN` as an\nalias for `FROM`. BINLOG/RELAYLOG EVENTS behavior is preserved by\nthe existing test_show_events coverage.\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_mysql.py::TestMySQL::test_show_tables",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "show.*tables|SHOW TABLES|RELAYLOG|BINLOG EVENTS",
+    "path": "sqlglot"
+   },
+   "output_chars": 260,
+   "output_tokens": 75
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 370,
+    "end_line": 435
+   },
+   "output_chars": 2647,
+   "output_tokens": 581
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_index|_curr",
+    "path": "sqlglot/parsers/mysql.py"
+   },
+   "output_chars": 534,
+   "output_tokens": 134
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_index =|index = self._index|_index -=",
+    "path": "sqlglot"
+   },
+   "output_chars": 4182,
+   "output_tokens": 1273
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "        log = self._parse_string() if self._match_text_seq(\"IN\") else None\n\n        if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"):",
+    "new": "        in_index = self._index\n        log = self._parse_string() if self._match_text_seq(\"IN\") else None\n        if log is None:\n            self._index = in_index\n\n        if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"): "
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "        if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"): \n",
+    "new": "        if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "            if self._match(TokenType.FROM):\n                db = self._parse_id_var()\n",
+    "new": "            if self._match(TokenType.FROM) or self._match_text_seq(\"IN\"):\n                db = self._parse_id_var()\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_mysql.py -k 'test_show_tables or test_show_events'"
+   },
+   "output_chars": 3945,
+   "output_tokens": 987
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "start_line": 405,
+    "end_line": 428
+   },
+   "output_chars": 919,
+   "output_tokens": 214
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _match_text_seq|def _match\\(",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 100,
+   "output_tokens": 33
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1901,
+    "end_line": 1955
+   },
+   "output_chars": 2136,
+   "output_tokens": 543
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/mysql.py",
+    "old": "        if log is None:\n            self._index = in_index\n",
+    "new": "        if log is None:\n            self._retreat(in_index)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_mysql.py -k 'test_show_tables or test_show_events'"
+   },
+   "output_chars": 506,
+   "output_tokens": 158
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated MySQL SHOW parsing to rewind when IN is not followed by a string literal, then accept IN as a schema separator alongside FROM. The MySQL SHOW TABLES and SHOW EVENTS tests pass."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 439,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 559,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 683,
+   "cached_tokens": 0,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1309,
+   "cached_tokens": 0,
+   "output_tokens": 65,
+   "reasoning_tokens": 31,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1519,
+   "cached_tokens": 1306,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2840,
+   "cached_tokens": 1516,
+   "output_tokens": 174,
+   "reasoning_tokens": 43,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3026,
+   "cached_tokens": 2837,
+   "output_tokens": 186,
+   "reasoning_tokens": 117,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3224,
+   "cached_tokens": 3023,
+   "output_tokens": 83,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3319,
+   "cached_tokens": 3221,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4352,
+   "cached_tokens": 3316,
+   "output_tokens": 156,
+   "reasoning_tokens": 120,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4733,
+   "cached_tokens": 4349,
+   "output_tokens": 100,
+   "reasoning_tokens": 63,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4877,
+   "cached_tokens": 4730,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5465,
+   "cached_tokens": 4874,
+   "output_tokens": 110,
+   "reasoning_tokens": 47,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5587,
+   "cached_tokens": 5462,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5791,
+   "cached_tokens": 5584,
+   "output_tokens": 55,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 58.1,
+ "usage": {
+  "input_tokens": 47723,
+  "cached_tokens": 40218,
+  "output_tokens": 1160,
+  "reasoning_tokens": 421
+ },
+ "diff": "diff --git a/sqlglot/parsers/mysql.py b/sqlglot/parsers/mysql.py\nindex d8abbea..3edf259 100644\n--- a/sqlglot/parsers/mysql.py\n+++ b/sqlglot/parsers/mysql.py\n@@ -408,7 +408,10 @@ class MySQLParser(parser.Parser):\n         else:\n             target_id = None\n \n+        in_index = self._index\n         log = self._parse_string() if self._match_text_seq(\"IN\") else None\n+        if log is None:\n+            self._retreat(in_index)\n \n         if this in (\"BINLOG EVENTS\", \"RELAYLOG EVENTS\"):\n             position = self._parse_number() if self._match_text_seq(\"FROM\") else None\n@@ -417,7 +420,7 @@ class MySQLParser(parser.Parser):\n             position = None\n             db = None\n \n-            if self._match(TokenType.FROM):\n+            if self._match(TokenType.FROM) or self._match_text_seq(\"IN\"):\n                 db = self._parse_id_var()\n             elif self._match(TokenType.DOT):\n                 db = target_id\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

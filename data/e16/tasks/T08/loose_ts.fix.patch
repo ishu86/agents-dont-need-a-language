@@ -1,0 +1,106 @@
+diff -ruN a/src/config.ts b/src/config.ts
+--- a/src/config.ts	2026-10-30 13:51:17
++++ b/src/config.ts	2026-10-30 13:51:51
+@@ -8,9 +8,9 @@
+     bulkQty: 10,
+     bulkBps: 1000,
+     vipTiers: [
+-      { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false },
+-      { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false },
+-      { name: "gold", minSpendCents: 100000, discountBps: 1000, freeShipping: true },
++      { name: "none", minSpendCents: 0, discountBps: 0, freeShipping: false, pointsMultiplier: 1 },
++      { name: "silver", minSpendCents: 20000, discountBps: 500, freeShipping: false, pointsMultiplier: 1 },
++      { name: "gold", minSpendCents: 100000, discountBps: 1000, freeShipping: true, pointsMultiplier: 2 },
+     ],
+   };
+ }
+diff -ruN a/src/customers.ts b/src/customers.ts
+--- a/src/customers.ts	2026-10-30 13:51:17
++++ b/src/customers.ts	2026-10-30 13:51:51
+@@ -9,6 +9,7 @@
+     email: input.email,
+     region: input.region || state.config.defaultRegion,
+     lifetimeSpendCents: 0,
++    points: 0,
+   };
+   state.db.customers.set(customer.id, customer);
+   return customer;
+@@ -36,6 +37,13 @@
+   const c = getCustomer(id);
+   if (!c) return;
+   c.lifetimeSpendCents = Math.max(0, c.lifetimeSpendCents + deltaCents);
++}
++
++// Adds `delta` (may be negative) loyalty points, never below 0.
++export function adjustPoints(id: string, delta: number): void {
++  const c = getCustomer(id);
++  if (!c) return;
++  c.points = Math.max(0, c.points + delta);
+ }
+ 
+ export function listCustomers(): any[] {
+diff -ruN a/src/index.ts b/src/index.ts
+--- a/src/index.ts	2026-10-30 13:51:17
++++ b/src/index.ts	2026-10-30 13:51:51
+@@ -56,6 +56,7 @@
+       const c = getCustomer(id);
+       return c ? tierOf(c).name : undefined;
+     }),
++    points: plain((id: string) => { const c = getCustomer(id); return c ? c.points : undefined; }),
+     stock: plain(stockOf),
+     outbox: plain(listOutbox),
+     audit: plain(entries),
+diff -ruN a/src/orders.ts b/src/orders.ts
+--- a/src/orders.ts	2026-10-30 13:51:17
++++ b/src/orders.ts	2026-10-30 13:51:51
+@@ -1,5 +1,5 @@
+ import { state, nextOrderId } from "./state.ts";
+-import { getCustomer, adjustSpend } from "./customers.ts";
++import { getCustomer, adjustSpend, adjustPoints, tierOf } from "./customers.ts";
+ import { getProduct } from "./catalog.ts";
+ import { reserve } from "./inventory.ts";
+ import { checkCoupon, computeTotal, getCoupon, recordCouponUse } from "./pricing.ts";
+@@ -18,6 +18,7 @@
+   lineNetCents: any;
+   refundedByLine: any;
+   refundedCents: number;
++  pointsMultiplier: number;
+   createdAt: number;
+   paidAt: number | null;
+ 
+@@ -32,6 +33,7 @@
+     this.lineNetCents = {};
+     this.refundedByLine = {};
+     this.refundedCents = 0;
++    this.pointsMultiplier = 1;
+     this.createdAt = state.clock.now();
+     this.paidAt = null;
+   }
+@@ -109,8 +111,10 @@
+   if (order.couponCode) recordCouponUse(order.couponCode);
+ 
+   order.status = "paid";
++  order.pointsMultiplier = tierOf(customer).pointsMultiplier || 1;
+   order.paidAt = state.clock.now();
+   adjustSpend(customer.id, order.pricing.totalCents);
++  adjustPoints(customer.id, Math.floor(order.pricing.totalCents / 100) * order.pointsMultiplier);
+   record("checkout", orderId, String(order.pricing.totalCents));
+   queueEmail(customer, "order_confirmation", orderId);
+   return order;
+diff -ruN a/src/refunds.ts b/src/refunds.ts
+--- a/src/refunds.ts	2026-10-30 13:51:17
++++ b/src/refunds.ts	2026-10-30 13:51:51
+@@ -1,4 +1,4 @@
+-import { getCustomer, adjustSpend } from "./customers.ts";
++import { getCustomer, adjustSpend, adjustPoints } from "./customers.ts";
+ import { release } from "./inventory.ts";
+ import { record } from "./audit.ts";
+ import { queueEmail } from "./notifications.ts";
+@@ -53,6 +53,7 @@
+   order.refundedCents += amount;
+   release(lines);
+   adjustSpend(order.customerId, -amount);
++  adjustPoints(order.customerId, -Math.floor(amount / 100) * order.pointsMultiplier);
+   record("refund", orderId, String(amount));
+   const customer = getCustomer(order.customerId);
+   if (customer) queueEmail(customer, "refund_issued", orderId);

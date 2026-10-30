@@ -1,0 +1,12 @@
+diff -ruN a/src/refunds.ts b/src/refunds.ts
+--- a/src/refunds.ts	2026-10-30 13:39:56
++++ b/src/refunds.ts	2026-10-30 13:46:37
+@@ -61,7 +61,7 @@
+   const status: OrderStatus = complete ? "refunded" : "partially_refunded";
+   const updated: Order = { ...order, status, refundedByLine, refundedCents: order.refundedCents + amount };
+   ctx.db.orders.set(orderId, updated);
+-  release(ctx.db, lines);
++  if (complete) release(ctx.db, lines);
+   adjustSpend(ctx.db, order.customerId, -amount);
+   record(ctx.log, ctx.clock, "refund", orderId, String(amount));
+   const customer = getCustomer(ctx.db, order.customerId);

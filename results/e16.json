@@ -1,0 +1,362 @@
+{
+ "haiku/loose_js": {
+  "n": 30,
+  "pass_rate": 1.0,
+  "files_read": {
+   "mean": 1,
+   "median": 0.0
+  },
+  "read_calls": {
+   "mean": 1,
+   "median": 0.0
+  },
+  "grep_glob": {
+   "mean": 0.2333,
+   "median": 0.0
+  },
+  "tool_result_tokens": {
+   "mean": 7378.9667,
+   "median": 6766.5
+  },
+  "read_tool_tokens": {
+   "mean": 868.5667,
+   "median": 0.0
+  },
+  "bash_calls": {
+   "mean": 6.4667,
+   "median": 6.0
+  },
+  "bash_tokens": {
+   "mean": 6052.8333,
+   "median": 5911.0
+  },
+  "total_input_tokens": {
+   "mean": 280956.4,
+   "median": 256893.0
+  },
+  "cost_usd": {
+   "mean": 0.0116,
+   "median": 0.0112
+  },
+  "turns": {
+   "mean": 12.6,
+   "median": 11.5
+  },
+  "wall_s": {
+   "mean": 50.2967,
+   "median": 47.55
+  },
+  "per_task_pass": {
+   "T01": "3/3",
+   "T02": "3/3",
+   "T03": "3/3",
+   "T04": "3/3",
+   "T05": "3/3",
+   "T06": "3/3",
+   "T07": "3/3",
+   "T08": "3/3",
+   "T09": "3/3",
+   "T10": "3/3"
+  }
+ },
+ "haiku/loose_ts": {
+  "n": 30,
+  "pass_rate": 1.0,
+  "files_read": {
+   "mean": 0.7667,
+   "median": 0.0
+  },
+  "read_calls": {
+   "mean": 0.7667,
+   "median": 0.0
+  },
+  "grep_glob": {
+   "mean": 0.4,
+   "median": 0.0
+  },
+  "tool_result_tokens": {
+   "mean": 6771.3333,
+   "median": 6517.5
+  },
+  "read_tool_tokens": {
+   "mean": 552.5667,
+   "median": 0.0
+  },
+  "bash_calls": {
+   "mean": 4.9667,
+   "median": 5.0
+  },
+  "bash_tokens": {
+   "mean": 5742.3667,
+   "median": 5911.5
+  },
+  "total_input_tokens": {
+   "mean": 213209.9,
+   "median": 211893.5
+  },
+  "cost_usd": {
+   "mean": 0.0103,
+   "median": 0.0104
+  },
+  "turns": {
+   "mean": 11.0333,
+   "median": 10.0
+  },
+  "wall_s": {
+   "mean": 43.4467,
+   "median": 41.1
+  },
+  "per_task_pass": {
+   "T01": "3/3",
+   "T02": "3/3",
+   "T03": "3/3",
+   "T04": "3/3",
+   "T05": "3/3",
+   "T06": "3/3",
+   "T07": "3/3",
+   "T08": "3/3",
+   "T09": "3/3",
+   "T10": "3/3"
+  }
+ },
+ "haiku/strict_ts": {
+  "n": 30,
+  "pass_rate": 1.0,
+  "files_read": {
+   "mean": 1.7667,
+   "median": 1.0
+  },
+  "read_calls": {
+   "mean": 1.9,
+   "median": 1.0
+  },
+  "grep_glob": {
+   "mean": 0.4667,
+   "median": 0.0
+  },
+  "tool_result_tokens": {
+   "mean": 7634,
+   "median": 6415.5
+  },
+  "read_tool_tokens": {
+   "mean": 3043.5667,
+   "median": 2104.5
+  },
+  "bash_calls": {
+   "mean": 5,
+   "median": 5.0
+  },
+  "bash_tokens": {
+   "mean": 3990.5333,
+   "median": 2800.0
+  },
+  "total_input_tokens": {
+   "mean": 263142.2667,
+   "median": 220034.0
+  },
+  "cost_usd": {
+   "mean": 0.0115,
+   "median": 0.0103
+  },
+  "turns": {
+   "mean": 12.8,
+   "median": 12.0
+  },
+  "wall_s": {
+   "mean": 47.8433,
+   "median": 42.2
+  },
+  "per_task_pass": {
+   "T01": "3/3",
+   "T02": "3/3",
+   "T03": "3/3",
+   "T04": "3/3",
+   "T05": "3/3",
+   "T06": "3/3",
+   "T07": "3/3",
+   "T08": "3/3",
+   "T09": "3/3",
+   "T10": "3/3"
+  }
+ },
+ "sonnet/loose_js": {
+  "n": 20,
+  "pass_rate": 1.0,
+  "files_read": {
+   "mean": 1.55,
+   "median": 1.0
+  },
+  "read_calls": {
+   "mean": 1.55,
+   "median": 1.0
+  },
+  "grep_glob": {
+   "mean": 1.35,
+   "median": 1.0
+  },
+  "tool_result_tokens": {
+   "mean": 3378.7,
+   "median": 2876.0
+  },
+  "read_tool_tokens": {
+   "mean": 1076.4,
+   "median": 888.5
+  },
+  "bash_calls": {
+   "mean": 3.65,
+   "median": 2.0
+  },
+  "bash_tokens": {
+   "mean": 1932.1,
+   "median": 707.0
+  },
+  "total_input_tokens": {
+   "mean": 149951.5,
+   "median": 125692.5
+  },
+  "cost_usd": {
+   "mean": 0.1086,
+   "median": 0.0936
+  },
+  "turns": {
+   "mean": 8.7,
+   "median": 7.5
+  },
+  "wall_s": {
+   "mean": 29.02,
+   "median": 24.55
+  },
+  "per_task_pass": {
+   "T01": "2/2",
+   "T02": "2/2",
+   "T03": "2/2",
+   "T04": "2/2",
+   "T05": "2/2",
+   "T06": "2/2",
+   "T07": "2/2",
+   "T08": "2/2",
+   "T09": "2/2",
+   "T10": "2/2"
+  }
+ },
+ "sonnet/loose_ts": {
+  "n": 20,
+  "pass_rate": 0.9,
+  "files_read": {
+   "mean": 1.6,
+   "median": 1.0
+  },
+  "read_calls": {
+   "mean": 1.6,
+   "median": 1.0
+  },
+  "grep_glob": {
+   "mean": 1.25,
+   "median": 1.0
+  },
+  "tool_result_tokens": {
+   "mean": 2872.85,
+   "median": 2820.0
+  },
+  "read_tool_tokens": {
+   "mean": 1207.65,
+   "median": 946.0
+  },
+  "bash_calls": {
+   "mean": 2.1,
+   "median": 2.0
+  },
+  "bash_tokens": {
+   "mean": 1350.3,
+   "median": 338.0
+  },
+  "total_input_tokens": {
+   "mean": 108524.35,
+   "median": 110418.5
+  },
+  "cost_usd": {
+   "mean": 0.0974,
+   "median": 0.0942
+  },
+  "turns": {
+   "mean": 6.55,
+   "median": 6.5
+  },
+  "wall_s": {
+   "mean": 24.25,
+   "median": 21.6
+  },
+  "per_task_pass": {
+   "T01": "2/2",
+   "T02": "2/2",
+   "T03": "2/2",
+   "T04": "2/2",
+   "T05": "2/2",
+   "T06": "2/2",
+   "T07": "0/2",
+   "T08": "2/2",
+   "T09": "2/2",
+   "T10": "2/2"
+  }
+ },
+ "sonnet/strict_ts": {
+  "n": 20,
+  "pass_rate": 1.0,
+  "files_read": {
+   "mean": 0.75,
+   "median": 1.0
+  },
+  "read_calls": {
+   "mean": 0.75,
+   "median": 1.0
+  },
+  "grep_glob": {
+   "mean": 1.25,
+   "median": 1.0
+  },
+  "tool_result_tokens": {
+   "mean": 3357.2,
+   "median": 2635.0
+  },
+  "read_tool_tokens": {
+   "mean": 853.3,
+   "median": 716.5
+  },
+  "bash_calls": {
+   "mean": 2.25,
+   "median": 1.0
+  },
+  "bash_tokens": {
+   "mean": 2113.8,
+   "median": 338.0
+  },
+  "total_input_tokens": {
+   "mean": 107516.5,
+   "median": 83802.0
+  },
+  "cost_usd": {
+   "mean": 0.1005,
+   "median": 0.0907
+  },
+  "turns": {
+   "mean": 5.8,
+   "median": 5.0
+  },
+  "wall_s": {
+   "mean": 24.435,
+   "median": 24.45
+  },
+  "per_task_pass": {
+   "T01": "2/2",
+   "T02": "2/2",
+   "T03": "2/2",
+   "T04": "2/2",
+   "T05": "2/2",
+   "T06": "2/2",
+   "T07": "2/2",
+   "T08": "2/2",
+   "T09": "2/2",
+   "T10": "2/2"
+  }
+ }
+}

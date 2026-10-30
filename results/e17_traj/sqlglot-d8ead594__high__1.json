@@ -1,0 +1,204 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "high",
+ "prompt": "fix(doris): CURRENT_DATE\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_doris.py::TestDoris::test_time",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_doris.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2117
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 355,
+   "output_tokens": 130
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "CURRENT_DATE",
+    "path": "sqlglot"
+   },
+   "output_chars": 1098,
+   "output_tokens": 311
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_doris.py::TestDoris::test_time -q"
+   },
+   "output_chars": 1073,
+   "output_tokens": 257
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/doris.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 1908
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/doris.py",
+    "start_line": 175,
+    "end_line": 235
+   },
+   "output_chars": 2161,
+   "output_tokens": 511
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "exp.CurrentDate|CurrentDate:",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 1067,
+   "output_tokens": 295
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/mysql.py",
+    "start_line": 740,
+    "end_line": 775
+   },
+   "output_chars": 1786,
+   "output_tokens": 433
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/doris.py",
+    "old": "            exp.CurrentTimestamp: lambda self, _: self.func(\"NOW\"),\n            exp.DateTrunc: lambda self, e: self.func(\"DATE_TRUNC\", e.this, unit_to_str(e)),",
+    "new": "            exp.CurrentDate: lambda self, _: self.func(\"CURRENT_DATE\"),\n            exp.CurrentTimestamp: lambda self, _: self.func(\"NOW\"),\n            exp.DateTrunc: lambda self, e: self.func(\"DATE_TRUNC\", e.this, unit_to_str(e)),"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_doris.py::TestDoris::test_time -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_doris.py -q"
+   },
+   "output_chars": 74,
+   "output_tokens": 21
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 301,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 412,
+   "cached_tokens": 0,
+   "output_tokens": 81,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3080,
+   "cached_tokens": 0,
+   "output_tokens": 44,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3392,
+   "cached_tokens": 3077,
+   "output_tokens": 44,
+   "reasoning_tokens": 16,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5355,
+   "cached_tokens": 3389,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5913,
+   "cached_tokens": 5352,
+   "output_tokens": 170,
+   "reasoning_tokens": 135,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6389,
+   "cached_tokens": 5910,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6868,
+   "cached_tokens": 6386,
+   "output_tokens": 189,
+   "reasoning_tokens": 51,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7070,
+   "cached_tokens": 6865,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7130,
+   "cached_tokens": 7067,
+   "output_tokens": 43,
+   "reasoning_tokens": 14,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7205,
+   "cached_tokens": 7127,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 28.6,
+ "usage": {
+  "input_tokens": 53115,
+  "cached_tokens": 45173,
+  "output_tokens": 739,
+  "reasoning_tokens": 232
+ },
+ "diff": "diff --git a/sqlglot/dialects/doris.py b/sqlglot/dialects/doris.py\nindex f4f20d8..00a8e8c 100644\n--- a/sqlglot/dialects/doris.py\n+++ b/sqlglot/dialects/doris.py\n@@ -157,6 +157,7 @@ class Doris(MySQL):\n             exp.ArrayAgg: rename_func(\"COLLECT_LIST\"),\n             exp.ArrayToString: rename_func(\"ARRAY_JOIN\"),\n             exp.ArrayUniqueAgg: rename_func(\"COLLECT_SET\"),\n+            exp.CurrentDate: lambda self, _: self.func(\"CURRENT_DATE\"),\n             exp.CurrentTimestamp: lambda self, _: self.func(\"NOW\"),\n             exp.DateTrunc: lambda self, e: self.func(\"DATE_TRUNC\", e.this, unit_to_str(e)),\n             exp.GroupConcat: lambda self, e: self.func(\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

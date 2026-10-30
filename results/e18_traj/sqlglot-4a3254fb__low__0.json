@@ -1,0 +1,283 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK\n\n* feat(snowflake)!: transpilation support MAP_PICK. printf cleanup\n\n* feat(snowflake)!: transpilation support MAP_PICK. single args, list and array handled\n\n* feat(snowflake)!: transpilation support MAP_PICK. review comments and simplified single args, list and array handled\n\n* feat(snowflake)!: transpilation support MAP_PICK. review comments and simplified single args, list and array handled\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_duckdb.py::TestDuckDB::test_map_pick",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 269,
+   "output_tokens": 87
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MAP_PICK|map_pick",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MapPick|MAP_PICK",
+    "path": "tests"
+   },
+   "output_chars": 752,
+   "output_tokens": 235
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 2540,
+    "end_line": 2620
+   },
+   "output_chars": 3633,
+   "output_tokens": 1009
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "Map.*Pick|Map.*Entries|MapFilter",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 139,
+   "output_tokens": 39
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MAP_DELETE|MAP_KEYS|MAP_ENTRIES",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 452,
+   "output_tokens": 132
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "map_delete|MapDelete",
+    "path": "sqlglot"
+   },
+   "output_chars": 226,
+   "output_tokens": 66
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/array.py",
+    "start_line": 280,
+    "end_line": 320
+   },
+   "output_chars": 960,
+   "output_tokens": 254
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 3690,
+    "end_line": 3760
+   },
+   "output_chars": 3505,
+   "output_tokens": 807
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "ArrayContains\\(|is_type\\(.*ARRAY|exp.DataType.Type.ARRAY",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def .*_sql\\(self, expression: exp.MapPick",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/array.py",
+    "start_line": 1,
+    "end_line": 30
+   },
+   "output_chars": 671,
+   "output_tokens": 178
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "\\.type.this == exp.DataType.Type.ARRAY|type.this.*ARRAY|is_type\\(",
+    "path": "sqlglot"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2237
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class ArrayContains",
+    "path": "sqlglot/expressions"
+   },
+   "output_chars": 163,
+   "output_tokens": 43
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "        def mapsize_sql(self, expression: exp.MapSize) -> str:\n            return self.func(\"CARDINALITY\", expression.this)\n",
+    "new": "        def mappick_sql(self, expression: exp.MapPick) -> str:\n            map_arg = expression.this\n            keys = expression.expressions\n            x_dot_key = exp.Dot(this=exp.to_identifier(\"x\"), expression=exp.to_identifier(\"key\"))\n\n            if len(keys) == 1 and (isinstance(keys[0], exp.Array) or keys[0].is_type(exp.DType.ARRAY)):\n                predicate = exp.func(\"ARRAY_CONTAINS\", keys[0], x_dot_key)\n            else:\n                predicate = exp.In(this=x_dot_key, expressions=keys)\n\n            result = exp.func(\n                \"MAP_FROM_ENTRIES\",\n                exp.ArrayFilter(\n                    this=exp.func(\"MAP_ENTRIES\", map_arg),\n                    expression=exp.Lambda(this=predicate, expressions=[exp.to_identifier(\"x\")]),\n                ),\n            )\n            return self.sql(result)\n\n        def mapsize_sql(self, expression: exp.MapSize) -> str:\n            return self.func(\"CARDINALITY\", expression.this)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_map_pick -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added DuckDB generation for MAP_PICK, using MAP_ENTRIES/LIST_FILTER/MAP_FROM_ENTRIES with scalar-key and array-key predicates. The targeted test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 434,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 560,
+   "cached_tokens": 0,
+   "output_tokens": 28,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 602,
+   "cached_tokens": 0,
+   "output_tokens": 26,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 874,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1932,
+   "cached_tokens": 0,
+   "output_tokens": 124,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2322,
+   "cached_tokens": 1929,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2623,
+   "cached_tokens": 2319,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3480,
+   "cached_tokens": 2620,
+   "output_tokens": 157,
+   "reasoning_tokens": 108,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3651,
+   "cached_tokens": 3477,
+   "output_tokens": 51,
+   "reasoning_tokens": 13,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3716,
+   "cached_tokens": 3648,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3941,
+   "cached_tokens": 3713,
+   "output_tokens": 68,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6257,
+   "cached_tokens": 3938,
+   "output_tokens": 65,
+   "reasoning_tokens": 34,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6376,
+   "cached_tokens": 6254,
+   "output_tokens": 300,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6688,
+   "cached_tokens": 6373,
+   "output_tokens": 43,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6757,
+   "cached_tokens": 6685,
+   "output_tokens": 49,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 53.1,
+ "usage": {
+  "input_tokens": 50213,
+  "cached_tokens": 40956,
+  "output_tokens": 1088,
+  "reasoning_tokens": 202
+ },
+ "diff": "diff --git a/sqlglot/dialects/duckdb.py b/sqlglot/dialects/duckdb.py\nindex 8f3f00d..1670aff 100644\n--- a/sqlglot/dialects/duckdb.py\n+++ b/sqlglot/dialects/duckdb.py\n@@ -3741,6 +3741,25 @@ class DuckDB(Dialect):\n             )\n             return self.sql(result)\n \n+        def mappick_sql(self, expression: exp.MapPick) -> str:\n+            map_arg = expression.this\n+            keys = expression.expressions\n+            x_dot_key = exp.Dot(this=exp.to_identifier(\"x\"), expression=exp.to_identifier(\"key\"))\n+\n+            if len(keys) == 1 and (isinstance(keys[0], exp.Array) or keys[0].is_type(exp.DType.ARRAY)):\n+                predicate = exp.func(\"ARRAY_CONTAINS\", keys[0], x_dot_key)\n+            else:\n+                predicate = exp.In(this=x_dot_key, expressions=keys)\n+\n+            result = exp.func(\n+                \"MAP_FROM_ENTRIES\",\n+                exp.ArrayFilter(\n+                    this=exp.func(\"MAP_ENTRIES\", map_arg),\n+                    expression=exp.Lambda(this=predicate, expressions=[exp.to_identifier(\"x\")]),\n+                ),\n+            )\n+            return self.sql(result)\n+\n         def mapsize_sql(self, expression: exp.MapSize) -> str:\n             return self.func(\"CARDINALITY\", expression.this)\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

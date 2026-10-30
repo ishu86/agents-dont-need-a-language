@@ -1,0 +1,4 @@
+{
+  "compilerOptions": { "strict": false },
+  "tasks": { "test": "deno test -A tests/", "check": "deno check src/" }
+}

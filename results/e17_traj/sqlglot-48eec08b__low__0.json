@@ -1,0 +1,341 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(duckdb): warn on unsupported IGNORE/RESPECT NULLS\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_duckdb.py::TestDuckDB::test_ignore_nulls",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "IGNORE NULLS|ignore_nulls|RESPECT NULLS",
+    "path": "sqlglot"
+   },
+   "output_chars": 1771,
+   "output_tokens": 510
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2105
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 1060,
+    "end_line": 1140
+   },
+   "output_chars": 4159,
+   "output_tokens": 959
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "unsupported.*NULL|unsupported.*IGNORE|unsupported.*RESPECT|warn",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 538,
+   "output_tokens": 139
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def respectnulls_sql|respectnulls_sql|def unsupported",
+    "path": "sqlglot"
+   },
+   "output_chars": 215,
+   "output_tokens": 62
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 210,
+    "end_line": 280
+   },
+   "output_chars": 6943,
+   "output_tokens": 2385
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def test_ignore_nulls",
+    "path": "tests/dialects/test_duckdb.py"
+   },
+   "output_chars": 38,
+   "output_tokens": 11
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_duckdb.py",
+    "start_line": 1410,
+    "end_line": 1455
+   },
+   "output_chars": 2267,
+   "output_tokens": 558
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 3455,
+    "end_line": 3478
+   },
+   "output_chars": 1097,
+   "output_tokens": 298
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 830,
+    "end_line": 930
+   },
+   "output_chars": 4180,
+   "output_tokens": 900
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "            return self.sql(expression, \"this\")\n\n        def arraytostring_sql",
+    "new": "            self.unsupported(\"IGNORE NULLS is not supported for non-window functions.\")\n            return self.sql(expression, \"this\")\n\n        def respectnulls_sql(self, expression: exp.RespectNulls) -> str:\n            self.unsupported(\"RESPECT NULLS is not supported by DuckDB.\")\n            return self.sql(expression, \"this\")\n\n        def arraytostring_sql"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_ignore_nulls -q"
+   },
+   "output_chars": 1084,
+   "output_tokens": 228
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "IGNORE_RESPECT_NULLS_WINDOW_FUNCTIONS",
+    "path": "sqlglot"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class Generator",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 46,
+   "output_tokens": 9
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 602,
+    "end_line": 660
+   },
+   "output_chars": 2958,
+   "output_tokens": 712
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "WINDOW_FUNCTIONS|FirstValue|Lead",
+    "path": "sqlglot/dialects/duckdb.py"
+   },
+   "output_chars": 40,
+   "output_tokens": 14
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "start_line": 35,
+    "end_line": 62
+   },
+   "output_chars": 764,
+   "output_tokens": 221
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/duckdb.py",
+    "old": "        IGNORE_NULLS_IN_FUNC = True\n",
+    "new": "        IGNORE_NULLS_IN_FUNC = True\n        IGNORE_RESPECT_NULLS_WINDOW_FUNCTIONS = WINDOW_FUNCS_WITH_IGNORE_NULLS\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_duckdb.py::TestDuckDB::test_ignore_nulls -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 313,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 414,
+   "cached_tokens": 0,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 970,
+   "cached_tokens": 0,
+   "output_tokens": 113,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4315,
+   "cached_tokens": 0,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4424,
+   "cached_tokens": 4312,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6856,
+   "cached_tokens": 4421,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6912,
+   "cached_tokens": 6853,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7519,
+   "cached_tokens": 6909,
+   "output_tokens": 80,
+   "reasoning_tokens": 43,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7908,
+   "cached_tokens": 7516,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8856,
+   "cached_tokens": 7905,
+   "output_tokens": 286,
+   "reasoning_tokens": 145,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9154,
+   "cached_tokens": 8853,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9430,
+   "cached_tokens": 9151,
+   "output_tokens": 50,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9494,
+   "cached_tokens": 9427,
+   "output_tokens": 32,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9546,
+   "cached_tokens": 9491,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10306,
+   "cached_tokens": 9543,
+   "output_tokens": 58,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10389,
+   "cached_tokens": 10303,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10658,
+   "cached_tokens": 10386,
+   "output_tokens": 84,
+   "reasoning_tokens": 10,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10754,
+   "cached_tokens": 10655,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10817,
+   "cached_tokens": 10751,
+   "output_tokens": 47,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "no_tool_call",
+ "wall_s": 56.9,
+ "usage": {
+  "input_tokens": 139035,
+  "cached_tokens": 126476,
+  "output_tokens": 1132,
+  "reasoning_tokens": 233
+ },
+ "diff": "diff --git a/sqlglot/dialects/duckdb.py b/sqlglot/dialects/duckdb.py\nindex 932f028..3834d75 100644\n--- a/sqlglot/dialects/duckdb.py\n+++ b/sqlglot/dialects/duckdb.py\n@@ -615,6 +615,7 @@ class DuckDB(Dialect):\n         LAST_DAY_SUPPORTS_DATE_PART = False\n         JSON_KEY_VALUE_PAIR_SEP = \",\"\n         IGNORE_NULLS_IN_FUNC = True\n+        IGNORE_RESPECT_NULLS_WINDOW_FUNCTIONS = WINDOW_FUNCS_WITH_IGNORE_NULLS\n         JSON_PATH_BRACKETED_KEY_SUPPORTED = False\n         SUPPORTS_CREATE_TABLE_LIKE = False\n         MULTI_ARG_DISTINCT = False\n@@ -1103,6 +1104,11 @@ class DuckDB(Dialect):\n                 # window functions that accept it e.g. FIRST_VALUE(... IGNORE NULLS) OVER (...)\n                 return super().ignorenulls_sql(expression)\n \n+            self.unsupported(\"IGNORE NULLS is not supported for non-window functions.\")\n+            return self.sql(expression, \"this\")\n+\n+        def respectnulls_sql(self, expression: exp.RespectNulls) -> str:\n+            self.unsupported(\"RESPECT NULLS is not supported by DuckDB.\")\n             return self.sql(expression, \"this\")\n \n         def arraytostring_sql(self, expression: exp.ArrayToString) -> str:\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

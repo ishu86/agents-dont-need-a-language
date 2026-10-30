@@ -1,0 +1,68 @@
+60 runs to do, 90 done
+T01|loose_ts|sonnet|1: pass=True cost=$0.097 turns=7 reads=3 wall=20.2s
+T01|strict_ts|sonnet|0: pass=True cost=$0.084 turns=5 reads=1 wall=26.2s
+T01|strict_ts|sonnet|1: pass=True cost=$0.084 turns=5 reads=1 wall=28.1s
+T01|loose_ts|sonnet|0: pass=True cost=$0.102 turns=8 reads=2 wall=31.4s
+T01|loose_js|sonnet|0: pass=True cost=$0.098 turns=8 reads=3 wall=24.5s
+T02|strict_ts|sonnet|1: pass=True cost=$0.090 turns=6 reads=1 wall=17.8s
+T02|strict_ts|sonnet|0: pass=True cost=$0.088 turns=6 reads=1 wall=21.8s
+T01|loose_js|sonnet|1: pass=True cost=$0.094 turns=7 reads=2 wall=24.6s
+T02|loose_ts|sonnet|0: pass=True cost=$0.086 turns=7 reads=1 wall=21.7s
+T02|loose_js|sonnet|0: pass=True cost=$0.091 turns=7 reads=1 wall=17.1s
+T02|loose_js|sonnet|1: pass=True cost=$0.091 turns=7 reads=1 wall=16.9s
+T03|strict_ts|sonnet|1: pass=True cost=$0.076 turns=5 reads=1 wall=15.0s
+T03|strict_ts|sonnet|0: pass=True cost=$0.079 turns=6 reads=1 wall=16.4s
+T02|loose_ts|sonnet|1: pass=True cost=$0.086 turns=6 reads=1 wall=35.3s
+T03|loose_ts|sonnet|0: pass=True cost=$0.091 turns=7 reads=2 wall=20.5s
+T03|loose_ts|sonnet|1: pass=True cost=$0.088 turns=6 reads=2 wall=17.7s
+T04|strict_ts|sonnet|0: pass=True cost=$0.076 turns=5 reads=1 wall=14.6s
+T03|loose_js|sonnet|1: pass=True cost=$0.091 turns=7 reads=2 wall=18.4s
+T03|loose_js|sonnet|0: pass=True cost=$0.093 turns=7 reads=2 wall=25.0s
+T04|strict_ts|sonnet|1: pass=True cost=$0.075 turns=5 reads=1 wall=18.7s
+T04|loose_ts|sonnet|0: pass=True cost=$0.075 turns=5 reads=1 wall=16.7s
+T04|loose_ts|sonnet|1: pass=True cost=$0.079 turns=6 reads=1 wall=17.4s
+T04|loose_js|sonnet|0: pass=True cost=$0.084 turns=7 reads=1 wall=16.3s
+T05|loose_ts|sonnet|0: pass=True cost=$0.091 turns=7 reads=1 wall=16.7s
+T04|loose_js|sonnet|1: pass=True cost=$0.084 turns=7 reads=1 wall=23.8s
+T05|strict_ts|sonnet|0: pass=True cost=$0.104 turns=9 reads=2 wall=24.4s
+T05|strict_ts|sonnet|1: pass=True cost=$0.104 turns=7 reads=1 wall=30.5s
+T05|loose_js|sonnet|0: pass=True cost=$0.090 turns=7 reads=1 wall=18.4s
+T05|loose_js|sonnet|1: pass=True cost=$0.094 turns=8 reads=1 wall=22.5s
+T06|strict_ts|sonnet|0: pass=True cost=$0.075 turns=5 reads=1 wall=16.0s
+T05|loose_ts|sonnet|1: pass=True cost=$0.090 turns=7 reads=1 wall=29.2s
+T06|strict_ts|sonnet|1: pass=True cost=$0.075 turns=5 reads=1 wall=17.8s
+T06|loose_ts|sonnet|0: pass=True cost=$0.075 turns=5 reads=1 wall=16.1s
+T06|loose_ts|sonnet|1: pass=True cost=$0.075 turns=5 reads=1 wall=17.8s
+T06|loose_js|sonnet|0: pass=True cost=$0.079 turns=6 reads=1 wall=18.6s
+T06|loose_js|sonnet|1: pass=True cost=$0.080 turns=6 reads=1 wall=16.5s
+T07|strict_ts|sonnet|0: pass=True cost=$0.137 turns=7 reads=0 wall=27.0s
+T07|loose_ts|sonnet|0: pass=False cost=$0.102 turns=6 reads=3 wall=21.5s
+T07|strict_ts|sonnet|1: pass=True cost=$0.138 turns=7 reads=0 wall=34.0s
+T07|loose_ts|sonnet|1: pass=False cost=$0.108 turns=7 reads=3 wall=27.6s
+T07|loose_js|sonnet|1: pass=True cost=$0.130 turns=8 reads=0 wall=32.0s
+T08|strict_ts|sonnet|1: pass=True cost=$0.131 turns=5 reads=0 wall=24.5s
+T08|strict_ts|sonnet|0: pass=True cost=$0.142 turns=6 reads=0 wall=36.8s
+T08|loose_ts|sonnet|0: pass=True cost=$0.106 turns=5 reads=0 wall=23.9s
+T07|loose_js|sonnet|0: pass=True cost=$0.145 turns=12 reads=4 wall=57.3s
+T08|loose_ts|sonnet|1: pass=True cost=$0.115 turns=5 reads=0 wall=25.9s
+T09|strict_ts|sonnet|1: pass=True cost=$0.091 turns=5 reads=1 wall=19.7s
+T09|strict_ts|sonnet|0: pass=True cost=$0.097 turns=7 reads=1 wall=36.7s
+T08|loose_js|sonnet|1: pass=True cost=$0.146 turns=10 reads=0 wall=40.7s
+T08|loose_js|sonnet|0: pass=True cost=$0.148 turns=15 reads=0 wall=58.1s
+T09|loose_ts|sonnet|0: pass=True cost=$0.106 turns=9 reads=5 wall=21.3s
+T09|loose_ts|sonnet|1: pass=True cost=$0.103 turns=10 reads=4 wall=32.1s
+T09|loose_js|sonnet|0: pass=True cost=$0.113 turns=13 reads=4 wall=36.5s
+T10|strict_ts|sonnet|0: pass=True cost=$0.131 turns=5 reads=0 wall=34.6s
+T09|loose_js|sonnet|1: pass=True cost=$0.117 turns=11 reads=6 wall=43.4s
+T10|strict_ts|sonnet|1: pass=True cost=$0.133 turns=5 reads=0 wall=28.1s
+T10|loose_ts|sonnet|1: pass=True cost=$0.141 turns=8 reads=0 wall=31.7s
+T10|loose_ts|sonnet|0: pass=True cost=$0.132 turns=5 reads=0 wall=40.3s
+T10|loose_js|sonnet|0: pass=True cost=$0.162 turns=13 reads=0 wall=37.2s
+T10|loose_js|sonnet|1: pass=True cost=$0.144 turns=8 reads=0 wall=32.6s
+model/arm               n  pass files_rea read_call grep_glob tool_resu read_tool bash_call bash_toke total_inp  cost_usd     turns    wall_s
+haiku/loose_js         30   1.0         1         1    0.2333 7378.9667  868.5667    6.4667 6052.8333  280956.4    0.0116      12.6   50.2967
+haiku/loose_ts         30   1.0    0.7667    0.7667       0.4 6771.3333  552.5667    4.9667 5742.3667  213209.9    0.0103   11.0333   43.4467
+haiku/strict_ts        30   1.0    1.7667       1.9    0.4667      7634 3043.5667         5 3990.5333263142.2667    0.0115      12.8   47.8433
+sonnet/loose_js        20   1.0      1.55      1.55      1.35    3378.7    1076.4      3.65    1932.1  149951.5    0.1086       8.7     29.02
+sonnet/loose_ts        20   0.9       1.6       1.6      1.25   2872.85   1207.65       2.1    1350.3 108524.35    0.0974      6.55     24.25
+sonnet/strict_ts       20   1.0      0.75      0.75      1.25    3357.2     853.3      2.25    2113.8  107516.5    0.1005       5.8    24.435

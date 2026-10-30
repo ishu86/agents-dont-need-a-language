@@ -1,0 +1,102 @@
+diff --git a/sqlglot/expressions/query.py b/sqlglot/expressions/query.py
+index 782ac713a..e31201805 100644
+--- a/sqlglot/expressions/query.py
++++ b/sqlglot/expressions/query.py
+@@ -572,7 +572,7 @@ class ConditionalInsert(Expression):
+ 
+ 
+ class MultitableInserts(Expression):
+-    arg_types = {"expressions": True, "kind": True, "source": True}
++    arg_types = {"with_": False, "expressions": True, "kind": False, "source": True}
+ 
+ 
+ class OnCondition(Expression):
+diff --git a/sqlglot/generator.py b/sqlglot/generator.py
+index e0d16e8e4..324418c74 100644
+--- a/sqlglot/generator.py
++++ b/sqlglot/generator.py
+@@ -480,6 +480,9 @@ class Generator:
+     # Whether the SELECT .. INTO syntax is used instead of CTAS
+     SUPPORTS_SELECT_INTO = False
+ 
++    # Whether FROM-first multi-table INSERT is supported
++    SUPPORTS_FROM_FIRST_INSERT = False
++
+     # Whether UNLOGGED tables can be created
+     SUPPORTS_UNLOGGED_TABLES = False
+ 
+@@ -5764,9 +5767,16 @@ class Generator:
+ 
+     def multitableinserts_sql(self, expression: exp.MultitableInserts) -> str:
+         kind = self.sql(expression, "kind")
++        if not kind:
++            if not self.SUPPORTS_FROM_FIRST_INSERT:
++                self.unsupported("FROM-first multi-table INSERT is not supported in this dialect")
++            inserts = self.sep().join(self.sql(e) for e in expression.expressions)
++            sql = f"FROM {self.sql(expression, 'source')}{self.seg(inserts)}"
++            return self.prepend_ctes(expression, sql)
++
+         expressions = self.seg(self.expressions(expression, sep=" "))
+         res = f"INSERT {kind}{expressions}{self.seg(self.sql(expression, 'source'))}"
+-        return res
++        return self.prepend_ctes(expression, res)
+ 
+     def oncondition_sql(self, expression: exp.OnCondition) -> str:
+         # Static options like "NULL ON ERROR" are stored as strings, in contrast to "DEFAULT <expr> ON ERROR"
+diff --git a/sqlglot/generators/hive.py b/sqlglot/generators/hive.py
+index 0bf87c02d..5ca121c17 100644
+--- a/sqlglot/generators/hive.py
++++ b/sqlglot/generators/hive.py
+@@ -225,6 +225,7 @@ class HiveGenerator(generator.Generator):
+     TRY_SUPPORTED = False
+     SUPPORTS_UESCAPE = False
+     SUPPORTS_GROUPING_SETS_AS_SUFFIX = True
++    SUPPORTS_FROM_FIRST_INSERT = True
+     SUPPORTS_DECODE_CASE = False
+     LIMIT_FETCH = "LIMIT"
+     TABLESAMPLE_WITH_METHOD = False
+diff --git a/sqlglot/parser.py b/sqlglot/parser.py
+index 0106fadaf..0b2793734 100644
+--- a/sqlglot/parser.py
++++ b/sqlglot/parser.py
+@@ -4110,6 +4110,24 @@ class Parser:
+             if self._match(TokenType.FROM, advance=False)
+             else None
+         )
++        laterals = list(iter(self._parse_lateral, None)) if from_ else None
++
++        # Hive supports multi-table inserts: FROM x INSERT ... SELECT ... [INSERT ... SELECT ...]
++        if from_ and not nested and not table and self._match(TokenType.INSERT, advance=False):
++            source = from_.this
++            source.set("laterals", laterals or None)
++
++            inserts = []
++            while self._match(TokenType.INSERT):
++                comments = self._prev_comments
++                insert = self._parse_insert()
++                insert.add_comments(comments, prepend=True)
++                inserts.append(insert)
++
++            return self.expression(
++                exp.MultitableInserts(expressions=inserts, source=source),
++                comments=from_.comments,
++            )
+ 
+         if self._match(TokenType.SELECT):
+             comments = self._prev_comments
+@@ -4172,6 +4190,7 @@ class Parser:
+                     limit=limit,
+                     exclude=exclude,
+                     operation_modifiers=operation_modifiers or None,
++                    laterals=laterals or None,
+                 )
+             )
+             this.comments = comments
+@@ -4202,6 +4221,7 @@ class Parser:
+             this = self._parse_derived_table_values()
+         elif from_:
+             this = exp.select("*").from_(from_.this, copy=False)
++            this.set("laterals", laterals or None)
+             this = self._parse_query_modifiers(this)
+         elif self._match(TokenType.SUMMARIZE):
+             table = self._match(TokenType.TABLE)

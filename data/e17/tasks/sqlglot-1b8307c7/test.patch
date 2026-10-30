@@ -1,0 +1,15 @@
+diff --git a/tests/dialects/test_duckdb.py b/tests/dialects/test_duckdb.py
+index 6cc42f30e..a9b32004a 100644
+--- a/tests/dialects/test_duckdb.py
++++ b/tests/dialects/test_duckdb.py
+@@ -910,6 +910,10 @@ class TestDuckDB(Validator):
+                 "postgres": "SELECT 'ThOmAs' ~* 'thomas'",
+             },
+         )
++        self.validate_identity(
++            "SELECT DATE_ADD(CAST('2020-01-01' AS DATE), INTERVAL 1 DAY)",
++            "SELECT CAST('2020-01-01' AS DATE) + INTERVAL '1' DAY",
++        )
+ 
+     def test_array_index(self):
+         with self.assertLogs(helper_logger) as cm:

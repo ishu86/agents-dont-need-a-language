@@ -1,0 +1,19 @@
+app.py:20: error: Missing positional argument "email" in call to "User"  [call-arg]
+app.py:21: error: Argument 2 to "find" has incompatible type "str"; expected "int"  [arg-type]
+app.py:22: error: Item "None" of "User | None" has no attribute "name"  [union-attr]
+app.py:23: error: "User" has no attribute "nmae"  [attr-defined]
+app.py:24: error: Too many arguments for "total_age"  [call-arg]
+app.py:25: error: Name "undefined_var" is not defined  [name-defined]
+app.py:26: error: Incompatible types in assignment (expression has type "int", variable has type "str")  [assignment]
+app.py:27: error: Item "None" of "str | None" has no attribute "upper"  [union-attr]
+Found 8 errors in 1 file (checked 1 source file)
+
+---compact---
+app.py:20 Missing positional argument "email" in call to "User"  [call-arg]
+app.py:21 Argument 2 to "find" has incompatible type "str"; expected "int"  [arg-type]
+app.py:22 Item "None" of "User | None" has no attribute "name"  [union-attr]
+app.py:23 "User" has no attribute "nmae"  [attr-defined]
+app.py:24 Too many arguments for "total_age"  [call-arg]
+app.py:25 Name "undefined_var" is not defined  [name-defined]
+app.py:26 Incompatible types in assignment (expression has type "int", variable has type "str")  [assignment]
+app.py:27 Item "None" of "str | None" has no attribute "upper"  [union-attr]

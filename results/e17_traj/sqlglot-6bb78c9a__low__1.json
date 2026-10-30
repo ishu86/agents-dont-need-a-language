@@ -1,0 +1,354 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Feat(snowflake): add support for input => select ... kwarg syntax\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_snowflake.py::TestSnowflake::test_flatten",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 279,
+   "output_tokens": 91
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "flatten",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 165,
+   "output_tokens": 45
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_flatten",
+    "path": "tests/dialects/test_snowflake.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 10
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py"
+   },
+   "output_chars": 7488,
+   "output_tokens": 2074
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4520,
+    "end_line": 4565
+   },
+   "output_chars": 1945,
+   "output_tokens": 566
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_snowflake.py",
+    "start_line": 4560,
+    "end_line": 4615
+   },
+   "output_chars": 2150,
+   "output_tokens": 555
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLATTEN|flatten",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 347,
+   "output_tokens": 99
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "=>",
+    "path": "sqlglot"
+   },
+   "output_chars": 3126,
+   "output_tokens": 941
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "parse.*kwargs|named argument|PROPERTY_EQ",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 1499,
+   "output_tokens": 436
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 840,
+    "end_line": 880
+   },
+   "output_chars": 1694,
+   "output_tokens": 457
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1060,
+    "end_line": 1095
+   },
+   "output_chars": 1766,
+   "output_tokens": 426
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions/core.py",
+    "start_line": 1890,
+    "end_line": 1925
+   },
+   "output_chars": 886,
+   "output_tokens": 241
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_function",
+    "path": "sqlglot/parsers"
+   },
+   "output_chars": 369,
+   "output_tokens": 107
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 1140,
+    "end_line": 1195
+   },
+   "output_chars": 2315,
+   "output_tokens": 555
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1975
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7280,
+    "end_line": 7320
+   },
+   "output_chars": 1709,
+   "output_tokens": 428
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1015,
+    "end_line": 1028
+   },
+   "output_chars": 566,
+   "output_tokens": 140
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "old": "    FLATTEN_COLUMNS = [\"SEQ\", \"KEY\", \"PATH\", \"INDEX\", \"VALUE\", \"THIS\"]\n",
+    "new": "    FLATTEN_COLUMNS = [\"SEQ\", \"KEY\", \"PATH\", \"INDEX\", \"VALUE\", \"THIS\"]\n\n    LAMBDAS = {\n        **parser.Parser.LAMBDAS,\n        TokenType.FARROW: lambda self, expressions: self.expression(\n            exp.Kwarg(\n                this=exp.var(expressions[0].name),\n                expression=self._parse_select() if self._match(TokenType.SELECT) else self._parse_disjunction(),\n            )\n        ),\n    }\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 1975
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class SnowflakeParser|LAMBDAS",
+    "path": "sqlglot/parsers/snowflake.py"
+   },
+   "output_chars": 156,
+   "output_tokens": 49
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parsers/snowflake.py",
+    "start_line": 905,
+    "end_line": 920
+   },
+   "output_chars": 503,
+   "output_tokens": 110
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": ""
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 312,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 432,
+   "cached_tokens": 0,
+   "output_tokens": 94,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2684,
+   "cached_tokens": 0,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3299,
+   "cached_tokens": 2681,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3903,
+   "cached_tokens": 3296,
+   "output_tokens": 120,
+   "reasoning_tokens": 18,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5528,
+   "cached_tokens": 3900,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6032,
+   "cached_tokens": 5525,
+   "output_tokens": 49,
+   "reasoning_tokens": 9,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6518,
+   "cached_tokens": 6029,
+   "output_tokens": 105,
+   "reasoning_tokens": 66,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6875,
+   "cached_tokens": 6515,
+   "output_tokens": 56,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7049,
+   "cached_tokens": 6872,
+   "output_tokens": 38,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7653,
+   "cached_tokens": 7046,
+   "output_tokens": 63,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9702,
+   "cached_tokens": 7650,
+   "output_tokens": 175,
+   "reasoning_tokens": 139,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10316,
+   "cached_tokens": 9699,
+   "output_tokens": 127,
+   "reasoning_tokens": 91,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10594,
+   "cached_tokens": 10313,
+   "output_tokens": 206,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10812,
+   "cached_tokens": 10591,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12834,
+   "cached_tokens": 10809,
+   "output_tokens": 99,
+   "reasoning_tokens": 60,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12993,
+   "cached_tokens": 12831,
+   "output_tokens": 62,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13176,
+   "cached_tokens": 12990,
+   "output_tokens": 16,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 66.0,
+ "usage": {
+  "input_tokens": 130712,
+  "cached_tokens": 116747,
+  "output_tokens": 1376,
+  "reasoning_tokens": 484
+ },
+ "diff": "diff --git a/sqlglot/parsers/snowflake.py b/sqlglot/parsers/snowflake.py\nindex 6db19e8..59457bd 100644\n--- a/sqlglot/parsers/snowflake.py\n+++ b/sqlglot/parsers/snowflake.py\n@@ -865,6 +865,16 @@ class SnowflakeParser(parser.Parser):\n \n     FLATTEN_COLUMNS = [\"SEQ\", \"KEY\", \"PATH\", \"INDEX\", \"VALUE\", \"THIS\"]\n \n+    LAMBDAS = {\n+        **parser.Parser.LAMBDAS,\n+        TokenType.FARROW: lambda self, expressions: self.expression(\n+            exp.Kwarg(\n+                this=exp.var(expressions[0].name),\n+                expression=self._parse_select() if self._match(TokenType.SELECT) else self._parse_disjunction(),\n+            )\n+        ),\n+    }\n+\n     SCHEMA_KINDS = {\"OBJECTS\", \"TABLES\", \"VIEWS\", \"SEQUENCES\", \"UNIQUE KEYS\", \"IMPORTED KEYS\"}\n \n     NON_TABLE_CREATABLES = {\"STORAGE INTEGRATION\", \"TAG\", \"WAREHOUSE\", \"STREAMLIT\"}\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_snowflake.py::TestSnowflake::test_flatten"
+  ]
+ }
+}

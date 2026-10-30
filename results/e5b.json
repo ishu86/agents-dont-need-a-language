@@ -1,0 +1,12 @@
+{
+ "tokens": {
+  "plain": 546773,
+  "cat_n": 764042,
+  "hashline": 817038
+ },
+ "pct_of_plain": {
+  "plain": 100.0,
+  "cat_n": 139.7,
+  "hashline": 149.4
+ }
+}

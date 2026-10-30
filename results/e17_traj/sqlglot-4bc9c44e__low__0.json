@@ -1,0 +1,526 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Feat(sqlite): support binary `MATCH` operator\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_sqlite.py::TestSQLite::test_sqlite",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": ""
+   },
+   "output_chars": 221,
+   "output_tokens": 72
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MATCH",
+    "path": "sqlglot"
+   },
+   "output_chars": 5098,
+   "output_tokens": 1478
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class SQLite|SQLite",
+    "path": "sqlglot/dialects/sqlite.py"
+   },
+   "output_chars": 346,
+   "output_tokens": 70
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "start_line": 80,
+    "end_line": 180
+   },
+   "output_chars": 3984,
+   "output_tokens": 951
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_sqlite.py",
+    "pattern": "test_sqlite"
+   },
+   "output_chars": 80,
+   "output_tokens": 18
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "MATCH",
+    "path": "tests/dialects/test_sqlite.py"
+   },
+   "output_chars": 81,
+   "output_tokens": 21
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_sqlite.py",
+    "start_line": 1,
+    "end_line": 40
+   },
+   "output_chars": 2192,
+   "output_tokens": 577
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1360,
+    "end_line": 1410
+   },
+   "output_chars": 1829,
+   "output_tokens": 558
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_match_against|class Match",
+    "path": "sqlglot"
+   },
+   "output_chars": 346,
+   "output_tokens": 97
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 1230,
+    "end_line": 1270
+   },
+   "output_chars": 2249,
+   "output_tokens": 584
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "BINARY_OPS|MATCH_AGAINST|MATCH.*exp",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TokenType.MATCH|\"REGEXP\"",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 211,
+   "output_tokens": 57
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "BINARY_PARSERS|_parse_binary|BINARY",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 129,
+   "output_tokens": 35
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_conjunction|_parse_comparison|_parse_bitwise",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 4933,
+   "output_tokens": 1226
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 5026,
+    "end_line": 5085
+   },
+   "output_chars": 2616,
+   "output_tokens": 659
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "\"MATCH\"",
+    "path": "sqlglot/tokens.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "class .*Match|class Binary",
+    "path": "sqlglot/expressions.py"
+   },
+   "output_chars": 188,
+   "output_tokens": 47
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "start_line": 5080,
+    "end_line": 5115
+   },
+   "output_chars": 811,
+   "output_tokens": 231
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "        def _parse_unique(self) -> exp.UniqueColumnConstraint:\n",
+    "new": "        def _parse_comparison(self, this=None):\n            this = this or self._parse_range()\n            if self._match_text_seq(\"MATCH\"):\n                return self.expression(exp.Match, this=this, expression=self._parse_range())\n            return super()._parse_comparison()\n\n        def _parse_unique(self) -> exp.UniqueColumnConstraint:\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "        def _parse_comparison(self, this=None):\n            this = this or self._parse_range()\n            if self._match_text_seq(\"MATCH\"):\n                return self.expression(exp.Match, this=this, expression=self._parse_range())\n            return super()._parse_comparison()\n",
+    "new": "        def _parse_comparison(self, this=None):\n            if self._curr.text.upper() == \"MATCH\":\n                return super()._parse_comparison(this)\n\n            left = self._parse_range(this)\n            if self._match_text_seq(\"MATCH\"):\n                return self.expression(exp.Match, this=left, expression=self._parse_range())\n            return left\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "        def _parse_comparison(self, this=None):\n            if self._curr.text.upper() == \"MATCH\":\n                return super()._parse_comparison(this)\n\n            left = self._parse_range(this)\n            if self._match_text_seq(\"MATCH\"):\n                return self.expression(exp.Match, this=left, expression=self._parse_range())\n            return left\n",
+    "new": "        def _parse_comparison(self, this=None):\n            left = self._parse_range(this)\n            if self._match_text_seq(\"MATCH\"):\n                return self.expression(exp.Match, this=left, expression=self._parse_range())\n            return super()._parse_comparison(left)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/expressions.py",
+    "old": "class RegexpFullMatch(Binary, Func):\n",
+    "new": "class Match(Binary):\n    pass\n\n\nclass RegexpFullMatch(Binary, Func):\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_sqlite.py::TestSQLite::test_sqlite -q"
+   },
+   "output_chars": 3285,
+   "output_tokens": 800
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "            return super()._parse_comparison(left)\n",
+    "new": "            return left\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_sqlite.py::TestSQLite::test_sqlite -q"
+   },
+   "output_chars": 3886,
+   "output_tokens": 889
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def .*_sql\\(self, expression.*Binary|binary_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 12,
+   "output_tokens": 3
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def add_sql|def eq_sql",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 110,
+   "output_tokens": 35
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/sqlite.py",
+    "old": "    class Generator(generator.Generator):\n",
+    "new": "    class Generator(generator.Generator):\n        def match_sql(self, expression):\n            return self.binary(expression, \"MATCH\")\n\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def binary\\(",
+    "path": "sqlglot/generator.py"
+   },
+   "output_chars": 67,
+   "output_tokens": 20
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_sqlite.py::TestSQLite::test_sqlite -q"
+   },
+   "output_chars": 89,
+   "output_tokens": 21
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added SQLite parsing and SQL generation support for the binary MATCH operator. The targeted SQLite test now passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 305,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 406,
+   "cached_tokens": 0,
+   "output_tokens": 24,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1919,
+   "cached_tokens": 0,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2033,
+   "cached_tokens": 1916,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3031,
+   "cached_tokens": 2030,
+   "output_tokens": 31,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3091,
+   "cached_tokens": 3028,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3152,
+   "cached_tokens": 3088,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3775,
+   "cached_tokens": 3149,
+   "output_tokens": 66,
+   "reasoning_tokens": 30,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4410,
+   "cached_tokens": 3772,
+   "output_tokens": 31,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4549,
+   "cached_tokens": 4407,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5178,
+   "cached_tokens": 4546,
+   "output_tokens": 67,
+   "reasoning_tokens": 27,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5259,
+   "cached_tokens": 5175,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5360,
+   "cached_tokens": 5256,
+   "output_tokens": 37,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5443,
+   "cached_tokens": 5357,
+   "output_tokens": 39,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6719,
+   "cached_tokens": 5440,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7423,
+   "cached_tokens": 6716,
+   "output_tokens": 46,
+   "reasoning_tokens": 15,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7483,
+   "cached_tokens": 7420,
+   "output_tokens": 95,
+   "reasoning_tokens": 60,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7636,
+   "cached_tokens": 7480,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7914,
+   "cached_tokens": 7633,
+   "output_tokens": 194,
+   "reasoning_tokens": 67,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8120,
+   "cached_tokens": 7911,
+   "output_tokens": 254,
+   "reasoning_tokens": 72,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8386,
+   "cached_tokens": 8117,
+   "output_tokens": 233,
+   "reasoning_tokens": 50,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8631,
+   "cached_tokens": 8383,
+   "output_tokens": 63,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 8706,
+   "cached_tokens": 8628,
+   "output_tokens": 42,
+   "reasoning_tokens": 6,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9559,
+   "cached_tokens": 8703,
+   "output_tokens": 192,
+   "reasoning_tokens": 143,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9763,
+   "cached_tokens": 9556,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10697,
+   "cached_tokens": 9760,
+   "output_tokens": 59,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10770,
+   "cached_tokens": 10694,
+   "output_tokens": 33,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10849,
+   "cached_tokens": 10767,
+   "output_tokens": 91,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10952,
+   "cached_tokens": 10846,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11012,
+   "cached_tokens": 10949,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11078,
+   "cached_tokens": 11009,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 106.7,
+ "usage": {
+  "input_tokens": 203609,
+  "cached_tokens": 191736,
+  "output_tokens": 2018,
+  "reasoning_tokens": 504
+ },
+ "diff": "diff --git a/sqlglot/dialects/sqlite.py b/sqlglot/dialects/sqlite.py\nindex edad636..42fd33a 100644\n--- a/sqlglot/dialects/sqlite.py\n+++ b/sqlglot/dialects/sqlite.py\n@@ -127,6 +127,12 @@ class SQLite(Dialect):\n             TokenType.DETACH: lambda self: self._parse_attach_detach(is_attach=False),\n         }\n \n+        def _parse_comparison(self, this=None):\n+            left = self._parse_range(this)\n+            if self._match_text_seq(\"MATCH\"):\n+                return self.expression(exp.Match, this=left, expression=self._parse_range())\n+            return left\n+\n         def _parse_unique(self) -> exp.UniqueColumnConstraint:\n             # Do not consume more tokens if UNIQUE is used as a standalone constraint, e.g:\n             # CREATE TABLE foo (bar TEXT UNIQUE REFERENCES baz ...)\n@@ -146,6 +152,9 @@ class SQLite(Dialect):\n             )\n \n     class Generator(generator.Generator):\n+        def match_sql(self, expression):\n+            return self.binary(expression, \"MATCH\")\n+\n         JOIN_HINTS = False\n         TABLE_HINTS = False\n         QUERY_HINTS = False\ndiff --git a/sqlglot/expressions.py b/sqlglot/expressions.py\nindex 9866b0e..ec9edaa 100644\n--- a/sqlglot/expressions.py\n+++ b/sqlglot/expressions.py\n@@ -7452,6 +7452,10 @@ class RegexpILike(Binary, Func):\n     arg_types = {\"this\": True, \"expression\": True, \"flag\": False}\n \n \n+class Match(Binary):\n+    pass\n+\n+\n class RegexpFullMatch(Binary, Func):\n     arg_types = {\"this\": True, \"expression\": True, \"options\": False}\n \n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

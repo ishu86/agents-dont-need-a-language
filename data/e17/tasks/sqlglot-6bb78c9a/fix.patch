@@ -1,0 +1,16 @@
+diff --git a/sqlglot/parser.py b/sqlglot/parser.py
+index 6a4c2f1dc..650cb59e6 100644
+--- a/sqlglot/parser.py
++++ b/sqlglot/parser.py
+@@ -1019,7 +1019,10 @@ class Parser:
+             )
+         ),
+         TokenType.FARROW: lambda self, expressions: self.expression(
+-            exp.Kwarg(this=exp.var(expressions[0].name), expression=self._parse_disjunction())
++            exp.Kwarg(
++                this=exp.var(expressions[0].name),
++                expression=self._parse_disjunction() or self._parse_select(),
++            )
+         ),
+     }
+ 

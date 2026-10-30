@@ -1,0 +1,309 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "Fix(postgres): generate float if the type has precision\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 194,
+   "output_tokens": 63
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "precision|Float",
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 2902,
+   "output_tokens": 801
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 390,
+    "end_line": 450
+   },
+   "output_chars": 3028,
+   "output_tokens": 649
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "FLOAT.*precision|FLOAT\\(",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 69,
+   "output_tokens": 16
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 290,
+    "end_line": 340
+   },
+   "output_chars": 3248,
+   "output_tokens": 912
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "DataType.Type.FLOAT",
+    "path": "sqlglot"
+   },
+   "output_chars": 721,
+   "output_tokens": 210
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 480,
+    "end_line": 550
+   },
+   "output_chars": 3130,
+   "output_tokens": 716
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def datatype_sql",
+    "path": "sqlglot"
+   },
+   "output_chars": 960,
+   "output_tokens": 274
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "start_line": 670,
+    "end_line": 705
+   },
+   "output_chars": 1908,
+   "output_tokens": 419
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "        def datatype_sql(self, expression: exp.DataType) -> str:\n            if expression.is_type(exp.DataType.Type.ARRAY):",
+    "new": "        def datatype_sql(self, expression: exp.DataType) -> str:\n            # PostgreSQL's FLOAT(p) spelling distinguishes it from REAL, which is\n            # what an unparameterized FLOAT is mapped to.\n            if expression.is_type(exp.DataType.Type.FLOAT) and expression.expressions:\n                return super(generator.Generator, self).datatype_sql(expression)\n\n            if expression.is_type(exp.DataType.Type.ARRAY):"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 1310,
+    "end_line": 1355
+   },
+   "output_chars": 2238,
+   "output_tokens": 540
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            if expression.is_type(exp.DataType.Type.FLOAT) and expression.expressions:\n                return super(generator.Generator, self).datatype_sql(expression)\n",
+    "new": "            if expression.is_type(exp.DataType.Type.FLOAT) and expression.expressions:\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 1054,
+   "output_tokens": 243
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "TYPE_MAPPING",
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 80,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "start_line": 158,
+    "end_line": 180
+   },
+   "output_chars": 1026,
+   "output_tokens": 246
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/postgres.py",
+    "old": "            if expression.is_type(exp.DataType.Type.FLOAT) and expression.expressions:\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n",
+    "new": "            if expression.is_type(exp.DataType.Type.FLOAT, exp.DataType.Type.DOUBLE) and expression.expressions:\n                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 98,
+   "output_tokens": 15
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Updated PostgreSQL-family datatype generation so parameterized FLOAT types retain FLOAT(p) instead of being emitted as REAL or DOUBLE PRECISION. The Redshift identity test passes."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 306,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 398,
+   "cached_tokens": 0,
+   "output_tokens": 29,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1239,
+   "cached_tokens": 0,
+   "output_tokens": 82,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2006,
+   "cached_tokens": 1236,
+   "output_tokens": 35,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 2964,
+   "cached_tokens": 2003,
+   "output_tokens": 46,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3231,
+   "cached_tokens": 2961,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 3994,
+   "cached_tokens": 3228,
+   "output_tokens": 48,
+   "reasoning_tokens": 20,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4327,
+   "cached_tokens": 3991,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4793,
+   "cached_tokens": 4324,
+   "output_tokens": 188,
+   "reasoning_tokens": 36,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 4993,
+   "cached_tokens": 4790,
+   "output_tokens": 102,
+   "reasoning_tokens": 65,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5646,
+   "cached_tokens": 4990,
+   "output_tokens": 144,
+   "reasoning_tokens": 45,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5802,
+   "cached_tokens": 5643,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6090,
+   "cached_tokens": 5799,
+   "output_tokens": 50,
+   "reasoning_tokens": 17,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6169,
+   "cached_tokens": 6087,
+   "output_tokens": 36,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6462,
+   "cached_tokens": 6166,
+   "output_tokens": 249,
+   "reasoning_tokens": 140,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6723,
+   "cached_tokens": 6459,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6783,
+   "cached_tokens": 6720,
+   "output_tokens": 49,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 52.9,
+ "usage": {
+  "input_tokens": 71926,
+  "cached_tokens": 64397,
+  "output_tokens": 1216,
+  "reasoning_tokens": 340
+ },
+ "diff": "diff --git a/sqlglot/dialects/postgres.py b/sqlglot/dialects/postgres.py\nindex e0f3c1b..ae38943 100644\n--- a/sqlglot/dialects/postgres.py\n+++ b/sqlglot/dialects/postgres.py\n@@ -682,6 +682,11 @@ class Postgres(Dialect):\n             return f\"SET {exprs}{access_method}{tablespace}{option}\"\n \n         def datatype_sql(self, expression: exp.DataType) -> str:\n+            # PostgreSQL's FLOAT(p) spelling distinguishes it from REAL, which is\n+            # what an unparameterized FLOAT is mapped to.\n+            if expression.is_type(exp.DataType.Type.FLOAT, exp.DataType.Type.DOUBLE) and expression.expressions:\n+                return f\"FLOAT({self.expressions(expression, flat=True)})\"\n+\n             if expression.is_type(exp.DataType.Type.ARRAY):\n                 if expression.expressions:\n                     values = self.expressions(expression, key=\"values\", flat=True)\n",
+ "grade": {
+  "f2p_pass": true,
+  "p2p_pass": true,
+  "failed_tests": []
+ }
+}

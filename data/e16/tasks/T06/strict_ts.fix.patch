@@ -1,0 +1,12 @@
+diff -ruN a/src/refunds.ts b/src/refunds.ts
+--- a/src/refunds.ts	2026-10-30 13:46:37
++++ b/src/refunds.ts	2026-10-30 13:39:56
+@@ -63,7 +63,7 @@
+   ctx.db.orders.set(orderId, updated);
+   release(ctx.db, lines);
+   adjustSpend(ctx.db, order.customerId, -amount);
+-  if (complete) record(ctx.log, ctx.clock, "refund", orderId, String(amount));
++  record(ctx.log, ctx.clock, "refund", orderId, String(amount));
+   const customer = getCustomer(ctx.db, order.customerId);
+   if (customer) queueEmail(ctx, customer, "refund_issued", orderId);
+   return ok({ orderId, amountCents: amount, status });

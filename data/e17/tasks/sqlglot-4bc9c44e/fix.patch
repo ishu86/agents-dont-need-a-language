@@ -1,0 +1,86 @@
+diff --git a/sqlglot/dialects/sqlite.py b/sqlglot/dialects/sqlite.py
+index edad636b3..80660d812 100644
+--- a/sqlglot/dialects/sqlite.py
++++ b/sqlglot/dialects/sqlite.py
+@@ -18,6 +18,7 @@ from sqlglot.dialects.dialect import (
+     strposition_sql,
+ )
+ from sqlglot.generator import unsupported_args
++from sqlglot.parser import binary_range_parser
+ from sqlglot.tokens import TokenType
+ 
+ 
+@@ -101,6 +102,7 @@ class SQLite(Dialect):
+             **tokens.Tokenizer.KEYWORDS,
+             "ATTACH": TokenType.ATTACH,
+             "DETACH": TokenType.DETACH,
++            "MATCH": TokenType.MATCH,
+         }
+ 
+         KEYWORDS.pop("/*+")
+@@ -127,6 +129,12 @@ class SQLite(Dialect):
+             TokenType.DETACH: lambda self: self._parse_attach_detach(is_attach=False),
+         }
+ 
++        RANGE_PARSERS = {
++            **parser.Parser.RANGE_PARSERS,
++            # https://www.sqlite.org/lang_expr.html
++            TokenType.MATCH: binary_range_parser(exp.Match),
++        }
++
+         def _parse_unique(self) -> exp.UniqueColumnConstraint:
+             # Do not consume more tokens if UNIQUE is used as a standalone constraint, e.g:
+             # CREATE TABLE foo (bar TEXT UNIQUE REFERENCES baz ...)
+diff --git a/sqlglot/expressions.py b/sqlglot/expressions.py
+index 9866b0e86..29b05daef 100644
+--- a/sqlglot/expressions.py
++++ b/sqlglot/expressions.py
+@@ -5233,6 +5233,10 @@ class Like(Binary, Predicate):
+     pass
+ 
+ 
++class Match(Binary, Predicate):
++    pass
++
++
+ class LT(Binary, Predicate):
+     pass
+ 
+diff --git a/sqlglot/generator.py b/sqlglot/generator.py
+index 632da37f3..d08b26123 100644
+--- a/sqlglot/generator.py
++++ b/sqlglot/generator.py
+@@ -3839,6 +3839,9 @@ class Generator(metaclass=_Generator):
+     def ilike_sql(self, expression: exp.ILike) -> str:
+         return self._like_sql(expression)
+ 
++    def match_sql(self, expression: exp.Match) -> str:
++        return self.binary(expression, "MATCH")
++
+     def similarto_sql(self, expression: exp.SimilarTo) -> str:
+         return self.binary(expression, "SIMILAR TO")
+ 
+diff --git a/sqlglot/parser.py b/sqlglot/parser.py
+index fdaead6fd..1c75a0591 100644
+--- a/sqlglot/parser.py
++++ b/sqlglot/parser.py
+@@ -537,6 +537,7 @@ class Parser(metaclass=_Parser):
+         TokenType.LIMIT,
+         TokenType.LOAD,
+         TokenType.LOCK,
++        TokenType.MATCH,
+         TokenType.MERGE,
+         TokenType.NATURAL,
+         TokenType.NEXT,
+diff --git a/sqlglot/tokens.py b/sqlglot/tokens.py
+index c196506c9..a79d317fa 100644
+--- a/sqlglot/tokens.py
++++ b/sqlglot/tokens.py
+@@ -336,6 +336,7 @@ class TokenType(AutoName):
+     LOAD = auto()
+     LOCK = auto()
+     MAP = auto()
++    MATCH = auto()
+     MATCH_CONDITION = auto()
+     MATCH_RECOGNIZE = auto()
+     MEMBER_OF = auto()

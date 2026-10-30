@@ -1,0 +1,442 @@
+{
+ "model": "gpt-6-luna",
+ "effort": "low",
+ "prompt": "feat(parser)!: robust STAR with EXCLUDE (redshift)\n\n* feat(parser)!: robust STAR with EXCLUDE (redshift)\n\n* add test\n\n* refactor\n\n* PR feedback 1 (george)\n\n* refactor comments\n\n* fix parsing\n\n* add more tests\n\n* fix style\n\n* remove comment\n\n* ref\n\n* refactor roundtrips\n\n* revert change\n\n* mypy\n\n* refactor\n\n* Update sqlglot/dialects/redshift.py\n\n---------\n\nThe following tests currently fail and should pass after your change:\ntests/dialects/test_redshift.py::TestRedshift::test_identity",
+ "steps": [
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "."
+   },
+   "output_chars": 231,
+   "output_tokens": 77
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "Star"
+   },
+   "output_chars": 50,
+   "output_tokens": 14
+  },
+  {
+   "tool": "hierarchy",
+   "args": {
+    "class_name": "Redshift"
+   },
+   "output_chars": 991,
+   "output_tokens": 276
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "Star"
+   },
+   "output_chars": 552,
+   "output_tokens": 238
+  },
+  {
+   "tool": "list_dir",
+   "args": {
+    "path": "sqlglot/dialects"
+   },
+   "output_chars": 363,
+   "output_tokens": 134
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py"
+   },
+   "output_chars": 8061,
+   "output_tokens": 2001
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "EXCLUDE|exclude",
+    "path": "sqlglot"
+   },
+   "output_chars": 5710,
+   "output_tokens": 1554
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "test_identity",
+    "path": "tests/dialects/test_redshift.py"
+   },
+   "output_chars": 33,
+   "output_tokens": 8
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "tests/dialects/test_redshift.py",
+    "start_line": 315,
+    "end_line": 370
+   },
+   "output_chars": 3248,
+   "output_tokens": 832
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8800,
+    "end_line": 8850
+   },
+   "output_chars": 2103,
+   "output_tokens": 529
+  },
+  {
+   "tool": "definitions",
+   "args": {
+    "name": "_parse_star_op"
+   },
+   "output_chars": 50,
+   "output_tokens": 16
+  },
+  {
+   "tool": "references",
+   "args": {
+    "name": "STAR_EXCEPT"
+   },
+   "output_chars": 34,
+   "output_tokens": 13
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7640,
+    "end_line": 7705
+   },
+   "output_chars": 2789,
+   "output_tokens": 682
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2079
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/dialects/snowflake.py",
+    "start_line": 1580,
+    "end_line": 1595
+   },
+   "output_chars": 699,
+   "output_tokens": 184
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 8910,
+    "end_line": 8990
+   },
+   "output_chars": 3138,
+   "output_tokens": 813
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/generator.py",
+    "start_line": 450,
+    "end_line": 465
+   },
+   "output_chars": 635,
+   "output_tokens": 148
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "_parse_select",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 1570,
+   "output_tokens": 370
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3420,
+    "end_line": 3545
+   },
+   "output_chars": 5042,
+   "output_tokens": 1191
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 7708,
+    "end_line": 7755
+   },
+   "output_chars": 1875,
+   "output_tokens": 444
+  },
+  {
+   "tool": "grep",
+   "args": {
+    "pattern": "def _parse_projections",
+    "path": "sqlglot/parser.py"
+   },
+   "output_chars": 65,
+   "output_tokens": 18
+  },
+  {
+   "tool": "read_file",
+   "args": {
+    "path": "sqlglot/parser.py",
+    "start_line": 3350,
+    "end_line": 3385
+   },
+   "output_chars": 1807,
+   "output_tokens": 418
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_table(",
+    "new": "        SUPPORTS_IMPLICIT_UNNEST = True\n\n        def _parse_projections(self) -> t.List[exp.Expression]:\n            projections = super()._parse_projections()\n\n            # Redshift permits EXCLUDE after the complete projection list, e.g.\n            # `SELECT *, value AS v EXCLUDE (a, b)`. Store it on the star so\n            # the common star-exclusion generation and transforms can handle it.\n            if self._match_text_seq(\"EXCLUDE\"):\n                exclude = self._parse_star_op(\"EXCLUDE\")\n                star = next((projection for projection in projections if isinstance(projection, exp.Star)), None)\n                if star and exclude:\n                    star.set(\"except_\", exclude)\n                elif exclude:\n                    self.raise_error(\"EXCLUDE requires a star projection\")\n\n            return projections\n\n        def _parse_table("
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "        LIMIT_FETCH = \"LIMIT\"\n",
+    "new": "        LIMIT_FETCH = \"LIMIT\"\n        STAR_EXCEPT = \"EXCLUDE\"\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2077
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "            if self._match_text_seq(\"EXCLUDE\"):\n                exclude = self._parse_star_op(\"EXCLUDE\")\n",
+    "new": "            if self._match_text_seq(\"EXCLUDE\"):\n                exclude = self._parse_wrapped_csv(self._parse_expression)\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2120
+  },
+  {
+   "tool": "edit_file",
+   "args": {
+    "path": "sqlglot/dialects/redshift.py",
+    "old": "                exclude = self._parse_wrapped_csv(self._parse_expression)\n",
+    "new": "                exclude = (\n                    self._parse_wrapped_csv(self._parse_expression)\n                    if self._match(TokenType.L_PAREN, advance=False)\n                    else self._parse_csv(self._parse_expression)\n                )\n"
+   },
+   "output_chars": 2,
+   "output_tokens": 1
+  },
+  {
+   "tool": "run_tests",
+   "args": {
+    "args": "tests/dialects/test_redshift.py::TestRedshift::test_identity -q"
+   },
+   "output_chars": 8000,
+   "output_tokens": 2226
+  },
+  {
+   "tool": "finish",
+   "args": {
+    "summary": "Added Redshift EXCLUDE parsing and generation support; the targeted test exposed additional placement forms that still need handling."
+   },
+   "output_chars": 4,
+   "output_tokens": 1
+  }
+ ],
+ "responses": [
+  {
+   "input_tokens": 592,
+   "cached_tokens": 0,
+   "output_tokens": 18,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 698,
+   "cached_tokens": 0,
+   "output_tokens": 63,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1317,
+   "cached_tokens": 0,
+   "output_tokens": 23,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 1485,
+   "cached_tokens": 1314,
+   "output_tokens": 91,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 5168,
+   "cached_tokens": 1482,
+   "output_tokens": 113,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 6708,
+   "cached_tokens": 5165,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 7435,
+   "cached_tokens": 6705,
+   "output_tokens": 99,
+   "reasoning_tokens": 63,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 9624,
+   "cached_tokens": 7432,
+   "output_tokens": 180,
+   "reasoning_tokens": 64,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 10978,
+   "cached_tokens": 9621,
+   "output_tokens": 71,
+   "reasoning_tokens": 41,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 11430,
+   "cached_tokens": 10975,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 12666,
+   "cached_tokens": 11427,
+   "output_tokens": 194,
+   "reasoning_tokens": 158,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13315,
+   "cached_tokens": 12663,
+   "output_tokens": 40,
+   "reasoning_tokens": 8,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13384,
+   "cached_tokens": 13312,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 13847,
+   "cached_tokens": 13381,
+   "output_tokens": 347,
+   "reasoning_tokens": 103,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14206,
+   "cached_tokens": 13844,
+   "output_tokens": 84,
+   "reasoning_tokens": 24,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 14302,
+   "cached_tokens": 14203,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16424,
+   "cached_tokens": 14299,
+   "output_tokens": 114,
+   "reasoning_tokens": 25,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 16550,
+   "cached_tokens": 16421,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18715,
+   "cached_tokens": 16547,
+   "output_tokens": 96,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 18823,
+   "cached_tokens": 18712,
+   "output_tokens": 34,
+   "reasoning_tokens": 0,
+   "status": "completed"
+  },
+  {
+   "input_tokens": 21094,
+   "cached_tokens": 18820,
+   "output_tokens": 119,
+   "reasoning_tokens": 79,
+   "status": "completed"
+  }
+ ],
+ "stop_reason": "finish",
+ "wall_s": 64.9,
+ "usage": {
+  "input_tokens": 228761,
+  "cached_tokens": 206323,
+  "output_tokens": 1856,
+  "reasoning_tokens": 565
+ },
+ "diff": "diff --git a/sqlglot/dialects/redshift.py b/sqlglot/dialects/redshift.py\nindex b988957..a4e2a3d 100644\n--- a/sqlglot/dialects/redshift.py\n+++ b/sqlglot/dialects/redshift.py\n@@ -94,6 +94,26 @@ class Redshift(Postgres):\n \n         SUPPORTS_IMPLICIT_UNNEST = True\n \n+        def _parse_projections(self) -> t.List[exp.Expression]:\n+            projections = super()._parse_projections()\n+\n+            # Redshift permits EXCLUDE after the complete projection list, e.g.\n+            # `SELECT *, value AS v EXCLUDE (a, b)`. Store it on the star so\n+            # the common star-exclusion generation and transforms can handle it.\n+            if self._match_text_seq(\"EXCLUDE\"):\n+                exclude = (\n+                    self._parse_wrapped_csv(self._parse_expression)\n+                    if self._match(TokenType.L_PAREN, advance=False)\n+                    else self._parse_csv(self._parse_expression)\n+                )\n+                star = next((projection for projection in projections if isinstance(projection, exp.Star)), None)\n+                if star and exclude:\n+                    star.set(\"except_\", exclude)\n+                elif exclude:\n+                    self.raise_error(\"EXCLUDE requires a star projection\")\n+\n+            return projections\n+\n         def _parse_table(\n             self,\n             schema: bool = False,\n@@ -175,6 +195,7 @@ class Redshift(Postgres):\n         SUPPORTS_DECODE_CASE = True\n         SUPPORTS_BETWEEN_FLAGS = False\n         LIMIT_FETCH = \"LIMIT\"\n+        STAR_EXCEPT = \"EXCLUDE\"\n \n         # Redshift doesn't have `WITH` as part of their with_properties so we remove it\n         WITH_PROPERTIES_PREFIX = \" \"\n",
+ "grade": {
+  "f2p_pass": false,
+  "p2p_pass": true,
+  "failed_tests": [
+   "tests/dialects/test_redshift.py::TestRedshift::test_identity"
+  ]
+ }
+}

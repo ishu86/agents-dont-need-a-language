@@ -1,0 +1,71 @@
+{
+ "python": {
+  "edits": 301,
+  "median_hunks": 2,
+  "total_tokens": {
+   "rewrite": 2276493,
+   "str_replace": 96221,
+   "unified_diff": 121844,
+   "hashline": 59937
+  },
+  "pct_of_rewrite": {
+   "rewrite": 100.0,
+   "str_replace": 4.2,
+   "unified_diff": 5.4,
+   "hashline": 2.6
+  },
+  "hashline_vs_str_replace_pct": 62.3,
+  "median_tokens": {
+   "rewrite": 2809,
+   "str_replace": 216,
+   "unified_diff": 292,
+   "hashline": 128
+  }
+ },
+ "typescript": {
+  "edits": 111,
+  "median_hunks": 2,
+  "total_tokens": {
+   "rewrite": 351352,
+   "str_replace": 41544,
+   "unified_diff": 56024,
+   "hashline": 24422
+  },
+  "pct_of_rewrite": {
+   "rewrite": 100.0,
+   "str_replace": 11.8,
+   "unified_diff": 15.9,
+   "hashline": 7.0
+  },
+  "hashline_vs_str_replace_pct": 58.8,
+  "median_tokens": {
+   "rewrite": 1682,
+   "str_replace": 205,
+   "unified_diff": 279,
+   "hashline": 114
+  }
+ },
+ "rust": {
+  "edits": 248,
+  "median_hunks": 3.0,
+  "total_tokens": {
+   "rewrite": 1301411,
+   "str_replace": 224678,
+   "unified_diff": 264481,
+   "hashline": 150839
+  },
+  "pct_of_rewrite": {
+   "rewrite": 100.0,
+   "str_replace": 17.3,
+   "unified_diff": 20.3,
+   "hashline": 11.6
+  },
+  "hashline_vs_str_replace_pct": 67.1,
+  "median_tokens": {
+   "rewrite": 3232.5,
+   "str_replace": 420.0,
+   "unified_diff": 548.5,
+   "hashline": 230.0
+  }
+ }
+}
